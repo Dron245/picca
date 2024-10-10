@@ -1,0 +1,18 @@
+.notfound {
+	padding: 100px;
+	max-width: 750px;
+	margin: 0 auto;
+	text-align: center;
+ 
+	span {
+	  font-size: 64px;
+	}
+	&__title {
+	  font-size: 22px;
+	}
+	&__description {
+	  font-size: 22px;
+	  margin-top: 20px;
+	}
+ }
+ 
