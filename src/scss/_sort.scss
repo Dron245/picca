@@ -3,7 +3,7 @@
   &__label {
     display: flex;
     align-items: center;
-
+	cursor: pointer;
     svg {
       margin-right: 8px;
     }
@@ -28,9 +28,19 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 10px 0;
-
+		
     ul {
       overflow: hidden;
+		transform: translateY(20px);
+		animation: movie 0.3s forwards;
+		@keyframes movie {
+			from {
+				transform: translateY(20px);
+			}
+			to {
+				transform: translateY(0px);
+			}
+		}
       li {
         padding: 12px 20px;
         cursor: pointer;

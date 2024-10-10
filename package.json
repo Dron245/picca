@@ -29,7 +29,7 @@
 		"autoprefixer": "^10.4.19",
 		"babel-loader": "latest",
 		"copy-webpack-plugin": "latest",
-		"css-loader": "latest",
+		"css-loader": "^7.1.2",
 		"del": "latest",
 		"eslint": "latest",
 		"eslint-plugin-react": "latest",
@@ -69,11 +69,11 @@
 		"postcss-preset-env": "latest",
 		"pug": "latest",
 		"pug-loader": "latest",
-		"sass": "latest",
+		"sass": "^1.79.4",
 		"sass-loader": "latest",
 		"smooth-scroll": "latest",
 		"string-replace-loader": "latest",
-		"style-loader": "latest",
+		"style-loader": "^4.0.0",
 		"swiper": "latest",
 		"tailwindcss": "latest",
 		"terser-webpack-plugin": "latest",
@@ -88,10 +88,14 @@
 		"webpack-stream": "latest"
 	},
 	"dependencies": {
+		"axios": "^1.7.7",
 		"gulp-cheerio": "^1.0.0",
 		"isotope-layout": "^3.0.6",
 		"react": "^18.2.0",
+		"react-content-loader": "^7.0.2",
+		"react-css-modules": "^4.7.11",
 		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.26.2",
 		"simplebar": "latest"
 	}
 }
