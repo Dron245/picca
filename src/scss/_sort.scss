@@ -6,6 +6,11 @@
 	cursor: pointer;
     svg {
       margin-right: 8px;
+		rotate: 180deg;
+		transition: rotate 0.3s;
+		&._view {
+			rotate: 0deg;
+		}
     }
 
     b {
@@ -21,6 +26,7 @@
 
   &__popup {
     position: absolute;
+	 z-index: 2;
     right: 0;
     margin-top: 15px;
     background: #ffffff;
@@ -31,6 +37,7 @@
 		
     ul {
       overflow: hidden;
+		min-width: 220px;
 		transform: translateY(20px);
 		animation: movie 0.3s forwards;
 		@keyframes movie {
