@@ -95,6 +95,7 @@
 		"react-content-loader": "^7.0.2",
 		"react-css-modules": "^4.7.11",
 		"react-dom": "^18.2.0",
+		"react-paginate": "^8.2.0",
 		"react-router-dom": "^6.26.2",
 		"simplebar": "latest"
 	}

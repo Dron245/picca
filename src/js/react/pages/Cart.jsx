@@ -432,7 +432,6 @@ const Cart = () => {
 									strokeLinecap="round"
 									strokeLinejoin="round"></path>
 							</svg>
-
 							<Link to="/">Вернуться назад</Link>
 						</Link>
 						<div className="button pay-btn">

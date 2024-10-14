@@ -6,8 +6,12 @@
   .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+	 gap: 20px;
+   //  justify-content: space-between;
+	.header__cart {
+		margin-left: auto;
 
+	}
     @media (max-width: 645px) {
       flex-direction: column;
 

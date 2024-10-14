@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Sort = ({ sortType, changeSort, visible, changeVisible, qwe }) => {
+const Sort = ({ sortType, changeSort, visible, changeVisible }) => {
 	// const [visible, setvisible] = useState(false);
 
 	const list = [
@@ -35,7 +35,7 @@ const Sort = ({ sortType, changeSort, visible, changeVisible, qwe }) => {
 				<span>{sortType.name}</span>
 			</div>
 			<div className='sort__popup'>
-				{visible && qwe && (
+				{visible && (
 					<ul>
 						{list.map((item, index) => (
 							<li
