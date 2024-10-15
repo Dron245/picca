@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Axios from "axios";
 import Categories from "../components/Categories.jsx";
 import Sort from "../components/Sort.jsx";
 import PizzaBlock from "../components/PizzaBlock.jsx";
 import Sceleton from "../components/Sceleton.jsx";
 import Pagination from "../components/Pagination/Pagination.jsx";
-const Home = ({ searchValue }) => {
+import { SearchContext } from "../App.jsx";
+
+const Home = () => {
+	const {searchValue} = useContext(SearchContext)
 	const [load, setLoad] = useState(true);
 	const [items, setitems] = useState([]);
 	const [categoryIndex, setcategoryIndex] = useState(0);
@@ -13,7 +16,7 @@ const Home = ({ searchValue }) => {
 		name: "популярности",
 		sortName: "rating",
 	});
-	const [sortvisible, setsortvisible] = useState(false);
+	
 	const [changeCurrentPage, setChangeCurrentPage] = useState(1)
 	useEffect(() => {
 		async function fethData() {
@@ -27,7 +30,6 @@ const Home = ({ searchValue }) => {
 				const resp = await Axios.get(
 					`${url}?${category}&${search}&sortBy=${sort}&order=${sortDirection}&page=${changeCurrentPage}&limit=4`
 				);
-				// console.log(resp.data);
 				setitems(resp.data);
 				setLoad(false);
 			} catch (error) {
@@ -37,12 +39,9 @@ const Home = ({ searchValue }) => {
 
 		fethData();
 	}, [categoryIndex, activeSort, searchValue, changeCurrentPage]);
-	function closeSortMenu() {
-		sortvisible && setsortvisible(false);
-	}
-	// console.log({sortvisible});
+	
 	return (
-		<div onClick={() => closeSortMenu()} className="container">
+		<div className="container">
 			<div className="content__top">
 				<Categories
 					value={categoryIndex}
@@ -51,8 +50,6 @@ const Home = ({ searchValue }) => {
 				<Sort
 					sortType={activeSort}
 					changeSort={(index) => setactiveSort(index)}
-					visible={sortvisible}
-					changeVisible={setsortvisible}
 				/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
@@ -65,7 +62,7 @@ const Home = ({ searchValue }) => {
 					</>
 				) : (
 					items
-						// .filter((pizza) => pizza.title.toLowerCase().includes(searchValue.toLowerCase()))
+						.filter((pizza) => pizza.title.toLowerCase().includes(searchValue.toLowerCase()))
 						.map((pizza, index) => <PizzaBlock key={index} {...pizza} />)
 				)}
 			</div>

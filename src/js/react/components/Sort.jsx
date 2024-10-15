@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { SearchContext } from '../App.jsx';
 
-const Sort = ({ sortType, changeSort, visible, changeVisible }) => {
-	// const [visible, setvisible] = useState(false);
-
+const Sort = ({ sortType, changeSort }) => {
+	const {sortvisible, setSortvisible} = useContext(SearchContext)
 	const list = [
 		{name:'популярности', sortName:'rating'},
 		{name:'популярности (убывание)', sortName:'-rating'},
 		{name:'цене', sortName:'price'},
 		{name:'цене (сначала дешёвые)', sortName:'-price'},
 		{name:'алфавиту', sortName:'-name'},
-		// {name:'алфавиту (ASC)', sortName:'-name'},
 	]
 	function isActivesort(index) {
 		changeSort(index);
-		changeVisible(false);
+		setSortvisible(false);
 	}
-	// console.log(visible);
+	
 	return (
 		<div className='sort'>
-			<div onClick={() => changeVisible(!visible)} className='sort__label'>
-				<svg className= {visible ? '_view' : ''}
+			<div onClick={() => setSortvisible(!sortvisible)} className='sort__label'>
+				<svg className= {sortvisible ? '_view' : ''}
 					width='10'
 					height='6'
 					viewBox='0 0 10 6'
@@ -35,7 +34,7 @@ const Sort = ({ sortType, changeSort, visible, changeVisible }) => {
 				<span>{sortType.name}</span>
 			</div>
 			<div className='sort__popup'>
-				{visible && (
+				{sortvisible && (
 					<ul>
 						{list.map((item, index) => (
 							<li
