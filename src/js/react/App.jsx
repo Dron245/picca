@@ -10,8 +10,7 @@ import NotFound from './pages/NotFound.jsx';
 
 export const SearchContext = createContext({});
 const App = () => {
-	const count = useSelector((state) => state.counter.value);
-	console.log(count);
+	const count = useSelector((state)=> state.value);
 	const dispatch = useDispatch();
 	const [searchValue, setsearchValue] = useState('');
 	const [sortvisible, setSortvisible] = useState(false);
