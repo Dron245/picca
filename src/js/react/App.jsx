@@ -15,7 +15,7 @@ const App = () => {
 		sortvisible && setSortvisible(false);
 	}
 	return (
-		<div onClick={() => closeSortMenu()}>
+		<div onClick={closeSortMenu}>
 			<SearchContext.Provider
 				value={{ searchValue, setsearchValue, sortvisible, setSortvisible }}
 			>

@@ -15,8 +15,8 @@ const Sort = () => {
 	const sortR = useSelector((state)=> state.filter.sort);
 	const dispatch = useDispatch();
 
-	function isActivesort(index) {
-		dispatch(sortId(index))
+	function isActivesort(obj) {
+		dispatch(sortId(obj))
 		setSortvisible(false);
 	}
 	

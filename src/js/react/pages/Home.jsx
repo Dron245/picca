@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {categoryId} from '../redux/slises/filter.js';
+import {paginationId} from '../redux/slises/filter.js';
 import Axios from 'axios';
 import Categories from '../components/Categories.jsx';
 import Sort from '../components/Sort.jsx';
@@ -12,7 +13,7 @@ import { SearchContext } from '../App.jsx';
 const Home = () => {
 	const categoryR = useSelector((state)=> state.filter.value);
 	const sortR = useSelector((state)=> state.filter.sort);
-	console.log(sortR);
+	const paginationR = useSelector((state)=> state.filter.paginationNumber);
 	
 	const dispatch = useDispatch();
 	const { searchValue } = useContext(SearchContext);
@@ -22,8 +23,9 @@ const Home = () => {
 	const changeCategoryRedux =(i)=> {
 		dispatch(categoryId(i))
 	}
-	
-	const [changeCurrentPage, setChangeCurrentPage] = useState(1);
+	function changePaginationPage(i) {
+		dispatch(paginationId(i))
+	}
 	useEffect(() => {
 		async function fethData() {
 			try {
@@ -34,7 +36,7 @@ const Home = () => {
 				const sort = sortR.sortName.replace('-', '');
 				const sortDirection = sortR.sortName.includes('-') ? 'asc' : 'desc';
 				const resp = await Axios.get(
-					`${url}?${categoryIndex}&${search}&sortBy=${sort}&order=${sortDirection}&page=${changeCurrentPage}&limit=4`
+					`${url}?${categoryIndex}&${search}&sortBy=${sort}&order=${sortDirection}&page=${paginationR}&limit=4`
 				);
 				setitems(resp.data);
 				setLoad(false);
@@ -44,7 +46,7 @@ const Home = () => {
 		}
 
 		fethData();
-	}, [categoryR, sortR, searchValue, changeCurrentPage]);
+	}, [categoryR, sortR.sortName, searchValue, paginationR]);
 
 	return (
 		<div className='container'>
@@ -71,7 +73,7 @@ const Home = () => {
 						.map((pizza, index) => <PizzaBlock key={index} {...pizza} />)
 				)}
 			</div>
-			<Pagination onChangePage={(number) => setChangeCurrentPage(number)} />
+			<Pagination onChangePage={changePaginationPage} />
 		</div>
 	);
 };
