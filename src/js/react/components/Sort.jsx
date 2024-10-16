@@ -1,17 +1,22 @@
 import React, { useContext } from 'react';
 import { SearchContext } from '../App.jsx';
-
-const Sort = ({ sortType, changeSort }) => {
-	const {sortvisible, setSortvisible} = useContext(SearchContext)
-	const list = [
-		{name:'популярности', sortName:'rating'},
-		{name:'популярности (убывание)', sortName:'-rating'},
-		{name:'цене', sortName:'price'},
-		{name:'цене (сначала дешёвые)', sortName:'-price'},
-		{name:'алфавиту', sortName:'-name'},
+import { sortId } from '../redux/slises/filter.js';
+import { useSelector, useDispatch } from 'react-redux';
+const list = [
+		{name:'popular', sortName:'rating'},
+		{name:'popular (in min)', sortName:'-rating'},
+		{name:'cost', sortName:'price'},
+		{name:'cost (snachala min)', sortName:'-price'},
+		{name:'alfavit', sortName:'-name'},
 	]
+	
+const Sort = () => {
+	const {sortvisible, setSortvisible} = useContext(SearchContext)
+	const sortR = useSelector((state)=> state.filter.sort);
+	const dispatch = useDispatch();
+
 	function isActivesort(index) {
-		changeSort(index);
+		dispatch(sortId(index))
 		setSortvisible(false);
 	}
 	
@@ -31,7 +36,7 @@ const Sort = ({ sortType, changeSort }) => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>{sortType.name}</span>
+				<span>{sortR.name}</span>
 			</div>
 			<div className='sort__popup'>
 				{sortvisible && (
@@ -40,7 +45,7 @@ const Sort = ({ sortType, changeSort }) => {
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortType.name === item.name ? 'active' : null}
+								className={sortR.name === item.name ? 'active' : null}
 							>
 								{item.name}
 							</li>
