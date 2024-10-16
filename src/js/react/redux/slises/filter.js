@@ -12,10 +12,10 @@ export const filter = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
-		categoryId: (state, action) => {
+		categoryId(state, action) {
 			state.value = action.payload;
 		},
-		sortId: (state, action) => {
+		sortId(state, action) {
 			state.sort = action.payload;
 		},
 	},

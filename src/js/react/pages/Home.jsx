@@ -12,7 +12,6 @@ import { SearchContext } from '../App.jsx';
 const Home = () => {
 	const categoryR = useSelector((state)=> state.filter.value);
 	const sortR = useSelector((state)=> state.filter.sort);
-	// console.log(category);
 	console.log(sortR);
 	
 	const dispatch = useDispatch();
@@ -20,7 +19,7 @@ const Home = () => {
 	const [load, setLoad] = useState(true);
 	const [items, setitems] = useState([]);
 
-	const changeCatehoryRedux =(i)=> {
+	const changeCategoryRedux =(i)=> {
 		dispatch(categoryId(i))
 	}
 	
@@ -52,7 +51,7 @@ const Home = () => {
 			<div className='content__top'>
 				<Categories
 					value={categoryR}
-					changeCatehory={changeCatehoryRedux}
+					changeCategory={changeCategoryRedux}
 				/>
 				<Sort />
 			</div>
