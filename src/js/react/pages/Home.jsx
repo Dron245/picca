@@ -23,8 +23,8 @@ const Home = () => {
 	const changeCategoryRedux =(i)=> {
 		dispatch(categoryId(i))
 	}
-	function changePaginationPage(i) {
-		dispatch(paginationId(i))
+	function changePaginationPage(number) {
+		dispatch(paginationId(number))
 	}
 	useEffect(() => {
 		async function fethData() {
@@ -33,10 +33,11 @@ const Home = () => {
 				const url = 'https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas';
 				const categoryIndex = categoryR > 0 ? `category=${categoryR}` : '';
 				const search = searchValue ? `search=${searchValue}` : '';
-				const sort = sortR.sortName.replace('-', '');
+				const sort = `sortBy=${sortR.sortName.replace('-', '')}`;
 				const sortDirection = sortR.sortName.includes('-') ? 'asc' : 'desc';
+				console.log(sort);
 				const resp = await Axios.get(
-					`${url}?${categoryIndex}&${search}&sortBy=${sort}&order=${sortDirection}&page=${paginationR}&limit=4`
+					`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationR}&limit=4&${search}`
 				);
 				setitems(resp.data);
 				setLoad(false);
