@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import { SearchContext } from '../App.jsx';
 import { sortId } from '../redux/slises/filter.js';
 import { useSelector, useDispatch } from 'react-redux';
-const list = [
-		{name:'popular', sortName:'rating'},
-		{name:'popular (in min)', sortName:'-rating'},
-		{name:'cost', sortName:'price'},
-		{name:'cost (snachala min)', sortName:'-price'},
-		{name:'alfavit', sortName:'-name'},
+export const list = [
+		{name:'popular', sortProperty:'rating'},
+		{name:'popular (in min)', sortProperty:'-rating'},
+		{name:'cost', sortProperty:'price'},
+		{name:'cost (snachala min)', sortProperty:'-price'},
+		{name:'alfavit', sortProperty:'-name'},
 	]
-	
-const Sort = () => {
-	const {sortvisible, setSortvisible} = useContext(SearchContext)
+	const Sort = () => {
+		const {sortvisible, setSortvisible} = useContext(SearchContext)
 	const sortR = useSelector((state)=> state.filter.sort);
 	const dispatch = useDispatch();
 
