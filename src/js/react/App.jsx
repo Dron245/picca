@@ -10,14 +10,11 @@ import NotFound from './pages/NotFound.jsx';
 export const SearchContext = createContext({});
 const App = () => {
 	const [searchValue, setsearchValue] = useState('');
-	const [sortvisible, setSortvisible] = useState(false);
-	function closeSortMenu() {
-		sortvisible && setSortvisible(false);
-	}
+	// const [sortvisible, setSortvisible] = useState(false);
+	
 	return (
-		<div onClick={closeSortMenu}>
 			<SearchContext.Provider
-				value={{ searchValue, setsearchValue, sortvisible, setSortvisible }}
+				value={{ searchValue, setsearchValue }}
 			>
 				<Header />
 				<div className='content'>
@@ -28,7 +25,6 @@ const App = () => {
 					</Routes>
 				</div>
 			</SearchContext.Provider>
-		</div>
 	);
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +17,8 @@ const Home = () => {
 	const paginationR = useSelector((state) => state.filter.paginationNumber);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const isSearch = React.useRef(false);
+	const isMounted = React.useRef(false);
 	const { searchValue } = useContext(SearchContext);
 	const [load, setLoad] = useState(true);
 	const [items, setitems] = useState([]);
@@ -27,31 +29,37 @@ const Home = () => {
 	function changePaginationPage(number) {
 		dispatch(paginationId(number));
 	}
-	useEffect(() => {
-		async function fethData() {
-			try {
-				setLoad(true);
-				const url = 'https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas';
-				const categoryIndex = categoryR > 0 ? `category=${categoryR}` : '';
-				const search = searchValue ? `search=${searchValue}` : '';
-				const sort = `sortBy=${sortR.sortProperty.replace('-', '')}`;
-				const sortDirection = sortR.sortProperty.includes('-') ? 'asc' : 'desc';
-				const resp = await Axios.get(
-					`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationR}&limit=4&${search}`
-				);
-				setitems(resp.data);
-				setLoad(false);
-			} catch (error) {
-				console.log(error);
-			}
-		}
 
-		fethData();
+	
+	useEffect(() => {
+		if (!isSearch.current) {
+			async function fethData() {
+				try {
+					setLoad(true);
+					const url = 'https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas';
+					const categoryIndex = categoryR > 0 ? `category=${categoryR}` : '';
+					const search = searchValue ? `search=${searchValue}` : '';
+					const sort = `sortBy=${sortR.sortProperty.replace('-', '')}`;
+					const sortDirection = sortR.sortProperty.includes('-') ? 'asc' : 'desc';
+					const resp = await Axios.get(
+						`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationR}&limit=4&${search}`
+					);
+					setitems(resp.data);
+					setLoad(false);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+			fethData();
+		}
+		// console.log(sortR);
+
+		isSearch.current = false;
 	}, [categoryR, sortR.sortProperty, searchValue, paginationR]);
 
 	// Если изменили параметры и был первый рендер
 	useEffect(() => {
-		// if (isMounted.current) {
+		if (isMounted.current) {
 
 		const queryString = qs.stringify({
 			sortProperty: sortR.sortProperty,
@@ -60,8 +68,8 @@ const Home = () => {
 		});
 		// console.log(queryString, typeof(queryString));
 		navigate(`?${queryString}`);
-		// }
-		// isMounted.current = true;
+		}
+		isMounted.current = true;
 	}, [categoryR, sortR.sortProperty, paginationR]);
 
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
@@ -78,10 +86,10 @@ const Home = () => {
 					sort,
 				})
 			);
-			//   isSearch.current = true;
+			console.log(sortR);
+			  isSearch.current = true;
 		}
 	}, []);
-	console.log(sortR);
 	return (
 		<div className='container'>
 			<div className='content__top'>

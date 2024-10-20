@@ -1,23 +1,38 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { addItem } from "../redux/slises/cartSlice.js";
 const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
 	const [sizeindex, setsizeindex] = useState(0);
-	const [typePizza, settypePizza] = types.length === 1 && types[0] === 1 ? useState(1) : useState(0)
-	const typeNames = ["тонкое", "традиционное"]
-	
+	const [typePizza, settypePizza] =
+		types.length === 1 && types[0] === 1 ? useState(1) : useState(0);
+	const typeNames = ["тонкое", "традиционное"];
+	const pizzaR = useSelector((state) => state.cart.items);
+	const dispatch = useDispatch();
+	function addPizza() {
+		const pizza = {
+			title,
+			price,
+			imageUrl,
+			types: typePizza,
+			sizes: sizeindex,
+		};
+		dispatch(addItem(pizza));
+	}
 	return (
 		<div className="pizza-block">
 			<img className="pizza-block__image" src={imageUrl} alt="Pizza" />
 			<h4 className="pizza-block__title">{title}</h4>
 			<div className="pizza-block__selector">
 				<ul>
-					{
-						types.map(type=>(
-							<li onClick={()=>settypePizza(type)} 
-							key={type} className = {typePizza===type ? "active" : null} >{
-								typeNames[type]}</li>
-						))
-					}
+					{types.map((type) => (
+						<li
+							onClick={() => settypePizza(type)}
+							key={type}
+							className={typePizza === type ? "active" : null}>
+							{typeNames[type]}
+						</li>
+					))}
 				</ul>
 				<ul>
 					{sizes.map((size, index) => (
@@ -44,8 +59,8 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
 							fill="white"
 						/>
 					</svg>
-					<span>Добавить</span>
-					<i>2</i>
+					<span onClick={addPizza}>Добавить</span>
+					{/* <i>2</i> */}
 				</button>
 			</div>
 		</div>

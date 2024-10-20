@@ -25,9 +25,10 @@ export const filter = createSlice({
 			state.paginationNumber = action.payload;
 		},
 		setFilters(state, action) {
-			state.sort = action.payload;
-			state.paginationNumber = Number(action.payload.paginationR);
 			state.categoryId = Number(action.payload.categoryR);
+			state.sort = action.payload.sort;
+			state.paginationNumber = Number(action.payload.paginationR);
+			console.log(action.payload);
 		}
 	},
 });

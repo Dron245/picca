@@ -12,12 +12,15 @@ const root = document.querySelector('#root')
 // Main rendering
 ReactDOM.createRoot(root).render(
 	// <React.StrictMode>
-	//<BrowserRouter>
-	<HashRouter>
+	<BrowserRouter>
 		<Provider store={store}>
 			<App />
 		</Provider>
-		</HashRouter>
-	//</BrowserRouter>
-	//   </React.StrictMode> 
+	</BrowserRouter>
+// 	<HashRouter>
+// 	<Provider store={store}>
+// 		<App />
+// 	</Provider>
+// </HashRouter>
+	// </React.StrictMode>
 );
