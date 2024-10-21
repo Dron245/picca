@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Search from "./Search/Search.jsx";
-import {prices} from "../redux/slises/cartSlice.js"
 const Header = () => {
-	const totalPrice = useSelector((state) => state.cart.prices);
 	const totalPizzas = useSelector((state) => state.cart.items);
+	const totalPrice = totalPizzas.reduce((sum, item)=> sum+item.price*item.count,0)
+	const totalCount = totalPizzas.reduce((sum, item)=> sum+item.count,0)
 	return (
 		<div className="header">
 			<div className="container">
@@ -49,7 +49,7 @@ const Header = () => {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span>{totalPizzas.length}</span>
+						<span>{totalCount}</span>
 					</Link>
 				</div>
 			</div>

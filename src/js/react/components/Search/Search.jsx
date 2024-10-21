@@ -30,6 +30,7 @@ const Search = () => {
 			<input
 				ref={inputRef}
 				value={value}
+				name='search'
 				onChange={changeSearch}
 				placeholder='Поиск пиццы...'
 				type='text'
