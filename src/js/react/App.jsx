@@ -7,15 +7,16 @@ import Home from './pages/Home.jsx';
 import Cart from './pages/Cart.jsx';
 import NotFound from './pages/NotFound.jsx';
 
-export const SearchContext = createContext({});
+// export const SearchContext = createContext({});
 const App = () => {
-	const [searchValue, setsearchValue] = useState('');
-	// const [sortvisible, setSortvisible] = useState(false);
+	// const [searchValue, setsearchValue] = useState('');
 	
 	return (
-			<SearchContext.Provider
-				value={{ searchValue, setsearchValue }}
-			>
+		
+			// <SearchContext.Provider
+				// value={{ searchValue, setsearchValue }}
+			// >
+			<>
 				<Header />
 				<div className='content'>
 					<Routes>
@@ -24,7 +25,8 @@ const App = () => {
 						<Route path='*' element={<NotFound />}></Route>
 					</Routes>
 				</div>
-			</SearchContext.Provider>
+			</>
+			/* </SearchContext.Provider> */
 	);
 };
 

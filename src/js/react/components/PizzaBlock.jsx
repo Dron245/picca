@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addItem } from '../redux/slises/cartSlice.js';
+import { setindex } from '../redux/slises/pizzaSlice.js';
 const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
-	const [sizeindex, setsizeindex] = useState(0);
+	// const [sizeindex, setsizeindex] = useState(0);
 	const [typePizza, settypePizza] =
 		types.length === 1 && types[0] === 1 ? useState(1) : useState(0);
 	const typeNames = ['тонкое', 'традиционное'];
-	const pizzaR = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+	const pizzaR = useSelector((state) => state.cart.items
+	.find((obj) => obj.id === id));
+	const sizeindexR = useSelector(state=>state.pizzas.sizeindex)
 	const dispatch = useDispatch();
 	const count = pizzaR ? pizzaR.count : null;
 
@@ -18,9 +21,12 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
 			price,
 			imageUrl,
 			types: typeNames[typePizza],
-			sizes: sizes[sizeindex],
+			sizes: sizes[sizeindexR],
 		};
 		dispatch(addItem(pizza));
+	}
+	function changeIndex(index) {
+		dispatch(setindex(index))
 	}
 	return (
 		<div className='pizza-block'>
@@ -42,8 +48,8 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
 					{sizes.map((size, index) => (
 						<li
 							key={index}
-							onClick={() => setsizeindex(index)}
-							className={sizeindex === index ? 'active' : null}
+							onClick={()=> changeIndex(index)}
+							className={sizeindexR === index ? 'active' : null}
 						>
 							{size}
 						</li>

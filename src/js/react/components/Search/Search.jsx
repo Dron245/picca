@@ -1,42 +1,46 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import './Search.scss';
-import { SearchContext } from '../../App.jsx';
-
-
+// import { SearchContext } from '../../App.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchValueR } from '../../redux/slises/pizzaSlice';
 const Search = () => {
-	const { setsearchValue } = useContext(SearchContext);
+	const dispatch = useDispatch();
+	const searchR = useSelector((state) => state.pizzas.searhValue);
+	// const { setsearchValue } = useContext(SearchContext);
 	const inputRef = useRef();
-	const [value, setValue] = useState('');
+	const [value, setValue] = React.useState('');
 	const searhValueFunction = () => {
+		dispatch(setSearchValueR(''));
 		setValue('');
-		setsearchValue('');
+		// setsearchValue('');
 		inputRef.current.focus();
 	};
 
-
 	const searchResp = useCallback(
 		debounce((str) => {
-			setsearchValue(str);
-		}, 200)
-		,[]);
+			dispatch(setSearchValueR(str));
+		}, 200),
+		[]
+	);
 
-	 const changeSearch = ((e)=> {
+	const changeSearch = (e) => {
 		setValue(e.target.value)
-		searchResp(e.target.value)
-	})
+		// dispatch(setSearchValueR(e.target.value));
+		searchResp(e.target.value);
+	};
 	return (
 		<div className='input-search'>
 			<input
 				ref={inputRef}
 				value={value}
 				name='search'
-				onChange={changeSearch}
+				onChange={(e) => changeSearch(e)}
 				placeholder='Поиск пиццы...'
 				type='text'
 				className='input-search__input'
 			/>
-			{value && (
+			{searchR && (
 				<img
 					onClick={searhValueFunction}
 					className='input-search__icon'

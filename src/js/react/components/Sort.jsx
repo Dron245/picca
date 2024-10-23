@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import { sortId } from "../redux/slises/filter.js";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useRef, useState } from 'react';
+import { sortId } from '../redux/slises/filter.js';
+import { useSelector, useDispatch } from 'react-redux';
 export const list = [
-	{ name: "popular", sortProperty: "rating" },
-	{ name: "popular (in min)", sortProperty: "-rating" },
-	{ name: "cost", sortProperty: "price" },
-	{ name: "cost (snachala min)", sortProperty: "-price" },
-	{ name: "alfavit", sortProperty: "-name" },
+	{ name: 'популярности', sortProperty: 'rating' },
+	{ name: 'популярности (сначала мин)', sortProperty: '-rating' },
+	{ name: 'цене', sortProperty: 'price' },
+	{ name: 'цене (сначала мин)', sortProperty: '-price' },
+	{ name: 'алфавиту', sortProperty: '-name' },
 ];
 const Sort = () => {
 	const [sortvisible, setSortvisible] = useState(false);
-	const sortR = useSelector((state) => state.filter.sort);
+	const sortR = useSelector((state) => state.filter.sortR);
 	const dispatch = useDispatch();
-const sortMenu =useRef()
+	const sortMenu = useRef();
 	function isActivesort(obj) {
 		dispatch(sortId(obj));
 		setSortvisible(false);
@@ -23,40 +23,41 @@ const sortMenu =useRef()
 		}
 	}
 	useEffect(() => {
-		document.addEventListener("click", closeSortMenu);
-		
+		document.addEventListener('click', closeSortMenu);
+
 		return () => {
-			document.removeEventListener("click", closeSortMenu);
+			document.removeEventListener('click', closeSortMenu);
 		};
 	}, []);
 
 	return (
-		<div ref={sortMenu} className="sort">
-			<div onClick={() => setSortvisible(!sortvisible)} className="sort__label">
+		<div ref={sortMenu} className='sort'>
+			<div onClick={() => setSortvisible(!sortvisible)} className='sort__label'>
 				<svg
-					className={sortvisible ? "_view" : ""}
-					width="10"
-					height="6"
-					viewBox="0 0 10 6"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg">
+					className={sortvisible ? '_view' : ''}
+					width='10'
+					height='6'
+					viewBox='0 0 10 6'
+					fill='none'
+					xmlns='http://www.w3.org/2000/svg'
+				>
 					<path
-						d="M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z"
-						fill="#2C2C2C"
+						d='M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z'
+						fill='#2C2C2C'
 					/>
 				</svg>
 				<b>Сортировка по:</b>
 				<span>{sortR.name}</span>
-				{/* {console.log(sortR)} */}
 			</div>
-			<div className="sort__popup">
+			<div className='sort__popup'>
 				{sortvisible && (
 					<ul>
 						{list.map((item, index) => (
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortR.name === item.name ? "active" : null}>
+								className={sortR.name === item.name ? 'active' : null}
+							>
 								{item.name}
 							</li>
 						))}

@@ -3,9 +3,9 @@ import Axios from 'axios';
 
 export const fetchPizzas = createAsyncThunk(
 	'pizzas/pizzasStatus',
-	async ({ url, categoryIndex, search, sort, sortDirection, paginationR }) => {
-		const {data} = await Axios.get(
-			`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationR}&limit=4&${search}`
+	async ({ url, categoryIndex, search, sort, sortDirection, paginationNumber }) => {
+		const { data } = await Axios.get(
+			`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationNumber}&limit=14&${search}`
 		);
 		return data;
 	}
@@ -13,6 +13,8 @@ export const fetchPizzas = createAsyncThunk(
 const initialState = {
 	items: [],
 	status: '',
+	sizeindex: 0,
+	searhValue: '',
 };
 
 export const pizzas = createSlice({
@@ -21,6 +23,13 @@ export const pizzas = createSlice({
 	reducers: {
 		setpizzas(state, action) {
 			state.items = action.payload;
+		},
+		setindex(state, action) {
+			state.sizeindex = action.payload;
+		},
+		setSearchValueR(state, action) {
+			state.searhValue = action.payload;
+			console.log(action.payload);
 		},
 	},
 	extraReducers: (builder) => {
@@ -38,6 +47,6 @@ export const pizzas = createSlice({
 		});
 	},
 });
-export const { setpizzas } = pizzas.actions;
+export const { setpizzas, setindex, setSearchValueR } = pizzas.actions;
 
 export default pizzas.reducer;

@@ -11,7 +11,9 @@ const Cart = () => {
 	const totalCount = cartR.reduce((sum, item)=> sum+item.count,0)
 	const dispatch = useDispatch();
 	function clearCart() {
-		dispatch(clearItem())
+		if (window.confirm("Точно хотите удалить всё")) {
+			dispatch(clearItem())
+		}
 	}
 	if (totalCount === 0) {
 		return <CartEmpty/>
@@ -89,7 +91,6 @@ const Cart = () => {
 								strokeLinejoin='round'
 							></path>
 						</svg>
-
 						<span>Очистить корзину</span>
 					</div>
 				</div>
