@@ -29,7 +29,8 @@ export const filter = createSlice({
 		}
 	},
 });
-// console.log(filter);
+
+export const selectorFilter = state=>state.filter
 export const { changeCategoryId, sortId, paginationId, setFilters } = filter.actions;
 
 export default filter.reducer;

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { sortId } from '../redux/slises/filter.js';
+import { selectorFilter, sortId } from '../redux/slises/filter.js';
 import { useSelector, useDispatch } from 'react-redux';
 export const list = [
 	{ name: 'популярности', sortProperty: 'rating' },
@@ -10,7 +10,7 @@ export const list = [
 ];
 const Sort = () => {
 	const [sortvisible, setSortvisible] = useState(false);
-	const sortR = useSelector((state) => state.filter.sortR);
+	const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();
 	const sortMenu = useRef();
 	function isActivesort(obj) {
@@ -29,7 +29,6 @@ const Sort = () => {
 			document.removeEventListener('click', closeSortMenu);
 		};
 	}, []);
-
 	return (
 		<div ref={sortMenu} className='sort'>
 			<div onClick={() => setSortvisible(!sortvisible)} className='sort__label'>
@@ -47,7 +46,7 @@ const Sort = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>{sortR.name}</span>
+				<span>{sortRedux.sortR.name}</span>
 			</div>
 			<div className='sort__popup'>
 				{sortvisible && (
@@ -56,7 +55,7 @@ const Sort = () => {
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortR.name === item.name ? 'active' : null}
+								className={sortRedux.sortR.name === item.name ? 'active' : null}
 							>
 								{item.name}
 							</li>

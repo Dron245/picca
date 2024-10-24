@@ -13,7 +13,7 @@ export const fetchPizzas = createAsyncThunk(
 const initialState = {
 	items: [],
 	status: '',
-	sizeindex: 0,
+	// sizeindex: 0,
 	searhValue: '',
 };
 
@@ -24,9 +24,7 @@ export const pizzas = createSlice({
 		setpizzas(state, action) {
 			state.items = action.payload;
 		},
-		setindex(state, action) {
-			state.sizeindex = action.payload;
-		},
+
 		setSearchValueR(state, action) {
 			state.searhValue = action.payload;
 			console.log(action.payload);
@@ -43,10 +41,12 @@ export const pizzas = createSlice({
 		});
 		builder.addCase(fetchPizzas.rejected, (state) => {
 			state.status = 'error';
+			alert('ошибка в получении пицц');
 			state.items = [];
 		});
 	},
 });
-export const { setpizzas, setindex, setSearchValueR } = pizzas.actions;
 
+export const selectorPizzasData = (state) => state.pizzas;
+export const { setpizzas, setSearchValueR } = pizzas.actions;
 export default pizzas.reducer;

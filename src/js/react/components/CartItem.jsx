@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { minusItem, addItem, delItem } from '../redux/slises/cartSlice.js';
 const CartItem = ({ id, title, imageUrl, price, types, sizes, count }) => {
 	const dispath = useDispatch();
-	const pizzaR = useSelector((state) => state.cart.items);
 
 	function onClickMinus() {
 		dispath(minusItem(id));

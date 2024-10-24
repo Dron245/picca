@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeCategoryId, paginationId, setFilters } from '../redux/slises/filter.js';
-import { fetchPizzas } from '../redux/slises/pizzaSlice.js';
+import { fetchPizzas, selectorPizzasData } from '../redux/slises/pizzaSlice.js';
 import Categories from '../components/Categories.jsx';
 import Sort from '../components/Sort.jsx';
 import PizzaBlock from '../components/PizzaBlock.jsx';
 import Sceleton from '../components/Sceleton.jsx';
 import Pagination from '../components/Pagination/Pagination.jsx';
-// import { SearchContext } from "../App.jsx";
+import { selectorFilter } from '../redux/slises/filter.js';
 import { list } from '../components/Sort.jsx';
 
 const Home = () => {
-	const { categoryId, paginationNumber, sortR } = useSelector((state) => state.filter);
-	const { items, status, searhValue } = useSelector((state) => state.pizzas);
+	const { categoryId, paginationNumber, sortR } = useSelector(selectorFilter);
+	const { items, status, searhValue } = useSelector(selectorPizzasData);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
-	// const { searchValue } = useContext(SearchContext);
-	// const [load, setLoad] = useState(true);
 	// console.log(items);
 	const changeCategoryRedux = (index) => {
 		dispatch(changeCategoryId(index));
@@ -42,26 +40,6 @@ const Home = () => {
 			);
 		}
 		getPizzas();
-		if (!isSearch.current) {
-			// async function fethData() {
-			// 	try {
-			// 		setLoad(true);
-			// 		const url = 'https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas';
-			// 		const categoryIndex = categoryId > 0 ? `category=${categoryId}` : '';
-			// 		const search = searchValue ? `search=${searchValue}` : '';
-			// 		const sort = `sortBy=${sortR.sortProperty.replace('-', '')}`;
-			// 		const sortDirection = sortR.sortProperty.includes('-') ? 'asc' : 'desc';
-			// 		const {data} = await Axios.get(
-			// 			`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationNumber}&limit=4&${search}`
-			// 		);
-			// 		dispatch(setpizzas(data))
-			// 		setLoad(false);
-			// 	} catch (error) {
-			// 		console.log(error);
-			// 	}
-			// }
-			// fethData();
-		}
 
 		isSearch.current = false;
 	}, [categoryId, sortR.sortProperty, searhValue, paginationNumber]);
@@ -125,19 +103,7 @@ const Home = () => {
 						.map((pizza, index) => <PizzaBlock key={index} {...pizza} />)
 				)}
 
-				{/* {load ? (
-					<>
-						{[...Array(8)].map((_, i) => (
-							<Sceleton key={i} />
-						))}
-					</>
-				) : (
-					items
-						.filter((pizza) =>
-							pizza.title.toLowerCase().includes(searchValue.toLowerCase())
-						)
-						.map((pizza, index) => <PizzaBlock key={index} {...pizza} />)
-				)} */}
+				
 			</div>
 			<Pagination onChangePage={changePaginationPage} />
 		</div>
