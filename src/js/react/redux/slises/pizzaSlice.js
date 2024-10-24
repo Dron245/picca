@@ -5,7 +5,7 @@ export const fetchPizzas = createAsyncThunk(
 	'pizzas/pizzasStatus',
 	async ({ url, categoryIndex, search, sort, sortDirection, paginationNumber }) => {
 		const { data } = await Axios.get(
-			`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationNumber}&limit=14&${search}`
+			`${url}?${categoryIndex}&${sort}&order=${sortDirection}&page=${paginationNumber}&limit=5&${search}`
 		);
 		return data;
 	}

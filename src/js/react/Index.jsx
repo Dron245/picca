@@ -9,18 +9,11 @@ const root = document.querySelector('#root')
 	? document.querySelector('#root')
 	: document.querySelector('.wrapper');
 
-// Main rendering
 ReactDOM.createRoot(root).render(
-	// <React.StrictMode>
 	<BrowserRouter>
 		<Provider store={store}>
 			<App />
 		</Provider>
 	</BrowserRouter>
-// 	<HashRouter>
-// 	<Provider store={store}>
-// 		<App />
-// 	</Provider>
-// </HashRouter>
-	// </React.StrictMode>
+
 );
