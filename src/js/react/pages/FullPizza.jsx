@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const FullPizza = () => {
+	const navigate = useNavigate();
 	const {id} = useParams();
 	const [pizza, setPizza] = useState();
-	console.log(id);
 	try {
 		useEffect(() => {
 			const fethdata = async () => {
@@ -20,6 +20,7 @@ const FullPizza = () => {
 	} catch (error) {
 		alert('ошибка в получении пицц')
 		console.log(error);
+		navigate('/')
 	}
 	
 	return <div className='container'>
