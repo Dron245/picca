@@ -1,24 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { selectorFilter, sortId } from '../redux/slises/filter.js';
 import { useSelector, useDispatch } from 'react-redux';
-export const list = [
+
+type SortItem = {
+	name: string;
+	sortProperty: string
+}
+
+export const list: SortItem[] = [
 	{ name: 'популярности', sortProperty: 'rating' },
 	{ name: 'популярности (сначала мин)', sortProperty: '-rating' },
 	{ name: 'цене', sortProperty: 'price' },
 	{ name: 'цене (сначала мин)', sortProperty: '-price' },
 	{ name: 'алфавиту', sortProperty: '-name' },
 ];
-const Sort = () => {
+
+
+const Sort: React.FC = () => {
 	const [sortvisible, setSortvisible] = useState(false);
 	const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();
-	const sortMenu = useRef();
-	function isActivesort(obj) {
+	const sortMenu = useRef<HTMLDivElement>(null);
+
+	function isActivesort(obj: SortItem) {
 		dispatch(sortId(obj));
 		setSortvisible(false);
 	}
-	function closeSortMenu(e) {
-		if (!e.composedPath().includes(sortMenu.current)) {
+
+	function closeSortMenu(event: any) {
+		if (!event.composedPath().includes(sortMenu.current)) {
 			setSortvisible(false);
 		}
 	}
@@ -55,7 +65,7 @@ const Sort = () => {
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortRedux.sortR.name === item.name ? 'active' : null}
+								className={sortRedux.sortR.name === item.name ? 'active' : ''}
 							>
 								{item.name}
 							</li>

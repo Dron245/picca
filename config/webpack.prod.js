@@ -136,7 +136,11 @@ const config = {
 						}
 					}
 				],
-			},
+			}, {
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			 },
 		],
 	},
 	plugins: [
@@ -165,6 +169,7 @@ const config = {
 		})
 	],
 	resolve: {
+		extensions: ['.tsx', '.ts', '.js'],
 		alias: {
 			"@scss": `${paths.src}/scss`,
 			"@js": `${paths.src}/js`,

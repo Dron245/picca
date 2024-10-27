@@ -1,6 +1,10 @@
 import React from "react";
 
-const Categories = ({value, changeCategory}) => {
+type CategoriesProps = {
+	value: number;
+	changeCategory: any
+}
+const Categories: React.FC<CategoriesProps> = ({value, changeCategory}) => {
 	const category = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
 	return (
 		<div className="categories">
@@ -9,7 +13,7 @@ const Categories = ({value, changeCategory}) => {
 					<li
 						onClick={() => changeCategory(index)}
 						key={index}
-						className={value === index ? "active" : null}>
+						className={value === index ? "active" : ''}>
 						{item}
 					</li>
 				))}

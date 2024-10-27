@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Search from './Search/Search.jsx';
+import Search from './Search/Search';
 import { cartSelector } from '../redux/slises/cartSlice.js';
-const Header = () => {
+const Header: React.FC = () => {
 	const { items } = useSelector(cartSelector);
-	const totalPrice = items.reduce((sum, item) => sum + item.price * item.count, 0);
-	const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+	
+	const totalPrice = items.reduce((sum: number, item: any) => sum + item.price * item.count, 0);
+	const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 	const location = useLocation();
 	return (
 		<div className='header'>

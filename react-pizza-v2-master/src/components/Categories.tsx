@@ -20,3 +20,4 @@ export const Categories: React.FC<CategoriesProps> = React.memo(({ value, onChan
     </div>
   );
 });
+ 

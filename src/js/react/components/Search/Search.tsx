@@ -3,15 +3,15 @@ import debounce from 'lodash.debounce';
 import './Search.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectorPizzasData, setSearchValueR } from '../../redux/slises/pizzaSlice';
-const Search = () => {
+const Search: React.FC = () => {
 	const dispatch = useDispatch();
 	const {searhValue} = useSelector(selectorPizzasData);
-	const inputRef = useRef();
+	const inputRef = useRef<HTMLInputElement>(null);
 	const [value, setValue] = React.useState('');
 	const searhValueFunction = () => {
 		dispatch(setSearchValueR(''));
 		setValue('');
-		inputRef.current.focus();
+		inputRef.current?.focus();
 	};
 
 	const searchResp = useCallback(
@@ -21,12 +21,12 @@ const Search = () => {
 		[]
 	);
 
-	const changeSearch = (e) => {
+	const changeSearch = (e: any) => {
 		setValue(e.target.value)
 		searchResp(e.target.value);
 	};
 	return (
-		<div className='input-search'>
+		<div className='input-search'> 
 			<input
 				ref={inputRef}
 				value={value}

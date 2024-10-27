@@ -1,7 +1,7 @@
 import React from 'react'
-import CSSModules from 'react-css-modules';
+// import CSSModules from 'react-css-modules';
 import './NotFoundBlock.scss'
-const NotFoundBlock = () => {
+const NotFoundBlock: React.FC = () => {
   return (
 	 <div className="notfound" >
 		<h1 className='notfound__title'>

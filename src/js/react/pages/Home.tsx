@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Categories from '../components/Categories';
+import Sort from '../components/Sort';
+import PizzaBlock from '../components/PizzaBlock';
+import Sceleton from '../components/Sceleton';
+import Pagination from '../components/Pagination/Pagination';
+import { list } from '../components/Sort';
 import { changeCategoryId, paginationId, setFilters } from '../redux/slises/filter.js';
 import { fetchPizzas, selectorPizzasData } from '../redux/slises/pizzaSlice.js';
-import Categories from '../components/Categories.jsx';
-import Sort from '../components/Sort.jsx';
-import PizzaBlock from '../components/PizzaBlock.jsx';
-import Sceleton from '../components/Sceleton.jsx';
-import Pagination from '../components/Pagination/Pagination.jsx';
 import { selectorFilter } from '../redux/slises/filter.js';
-import { list } from '../components/Sort.jsx';
 
 const Home = () => {
 	const { categoryId, paginationNumber, sortR } = useSelector(selectorFilter);
@@ -20,10 +20,10 @@ const Home = () => {
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	// console.log(items);
-	const changeCategoryRedux = (index) => {
+	const changeCategoryRedux = (index: number) => {
 		dispatch(changeCategoryId(index));
 	};
-	function changePaginationPage(number) {
+	function changePaginationPage(number: number) {
 		dispatch(paginationId(number));
 	}
 
@@ -36,6 +36,7 @@ const Home = () => {
 			const sortDirection = sortR.sortProperty.includes('-') ? 'asc' : 'desc';
 
 			dispatch(
+				// @ts-ignore
 				fetchPizzas({ url, categoryIndex, search, sort, sortDirection, paginationNumber })
 			);
 		}
@@ -97,10 +98,10 @@ const Home = () => {
 					</>
 				) : (
 					items
-						.filter((pizza) =>
+						.filter((pizza: any) =>
 							pizza.title.toLowerCase().includes(searhValue.toLowerCase())
 						)
-						.map((pizza, index) => <PizzaBlock key={index} {...pizza} />)
+						.map((pizza: any )=> <PizzaBlock key={pizza.id} {...pizza} />)
 				)}
 
 				

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.jsx';
-import Cart from './pages/Cart.jsx';
-import NotFound from './pages/NotFound.jsx';
-import FullPizza from './pages/FullPizza.jsx';
-import MainLayout from './components/MainLayout.jsx';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import NotFound from './pages/NotFound';
+import FullPizza from './pages/FullPizza';
+import MainLayout from './components/MainLayout';
 
-const App = () => {
+const App: React.FC = () => {
 	
 	return (
 		<>
