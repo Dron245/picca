@@ -23,9 +23,9 @@ const Home = () => {
 	const changeCategoryRedux = (index: number) => {
 		dispatch(changeCategoryId(index));
 	};
-	function changePaginationPage(number: number) {
+	const changePaginationPage = (number: number) => {
 		dispatch(paginationId(number));
-	}
+	};
 
 	useEffect(() => {
 		function getPizzas() {
@@ -101,10 +101,8 @@ const Home = () => {
 						.filter((pizza: any) =>
 							pizza.title.toLowerCase().includes(searhValue.toLowerCase())
 						)
-						.map((pizza: any )=> <PizzaBlock key={pizza.id} {...pizza} />)
+						.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)
 				)}
-
-				
 			</div>
 			<Pagination onChangePage={changePaginationPage} />
 		</div>

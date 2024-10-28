@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 type SortItem = {
 	name: string;
-	sortProperty: string
-}
+	sortProperty: string;
+};
 
 export const list: SortItem[] = [
 	{ name: 'популярности', sortProperty: 'rating' },
@@ -15,23 +15,22 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту', sortProperty: '-name' },
 ];
 
-
 const Sort: React.FC = () => {
 	const [sortvisible, setSortvisible] = useState(false);
 	const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();
 	const sortMenu = useRef<HTMLDivElement>(null);
 
-	function isActivesort(obj: SortItem) {
+	const isActivesort = (obj: SortItem) => {
 		dispatch(sortId(obj));
 		setSortvisible(false);
-	}
+	};
 
-	function closeSortMenu(event: any) {
-		if (!event.composedPath().includes(sortMenu.current)) {
+	const closeSortMenu = (event: MouseEvent) => {
+		if (sortMenu.current && !event.composedPath().includes(sortMenu.current)) {
 			setSortvisible(false);
 		}
-	}
+	};
 	useEffect(() => {
 		document.addEventListener('click', closeSortMenu);
 

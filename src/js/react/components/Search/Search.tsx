@@ -7,7 +7,7 @@ const Search: React.FC = () => {
 	const dispatch = useDispatch();
 	const {searhValue} = useSelector(selectorPizzasData);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [value, setValue] = React.useState('');
+	const [value, setValue] = React.useState<string>();
 	const searhValueFunction = () => {
 		dispatch(setSearchValueR(''));
 		setValue('');
@@ -21,9 +21,9 @@ const Search: React.FC = () => {
 		[]
 	);
 
-	const changeSearch = (e: any) => {
-		setValue(e.target.value)
-		searchResp(e.target.value);
+	const changeSearch = (event:React.ChangeEvent<HTMLInputElement>) => {
+		setValue(event.target.value)
+		searchResp(event.target.value);
 	};
 	return (
 		<div className='input-search'> 

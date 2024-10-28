@@ -14,12 +14,12 @@ type PizzaBlockProps = {
 	sizes: number[];
 	count: number;
 };
+const typeNames = ["тонкое", "традиционное"];
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
 	const [sizeindex, setsizeindex] = useState(0);
 	const [typePizza, settypePizza] =
 		types.length === 1 && types[0] === 1 ? useState(1) : useState(0);
-	const typeNames = ["тонкое", "традиционное"];
 	const pizzaR = useSelector(cartSelectorfindBuId(id));
 	const dispatch = useDispatch();
 	const count = pizzaR ? pizzaR.count : null;
