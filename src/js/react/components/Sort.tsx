@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { selectorFilter, sortId } from '../redux/slises/filter.js';
+import { SortType, selectorFilter, sortId } from '../redux/slises/filter';
 import { useSelector, useDispatch } from 'react-redux';
 
 type SortItem = {
@@ -7,7 +7,7 @@ type SortItem = {
 	sortProperty: string;
 };
 
-export const list: SortItem[] = [
+export const list: SortType[] = [
 	{ name: 'популярности', sortProperty: 'rating' },
 	{ name: 'популярности (сначала мин)', sortProperty: '-rating' },
 	{ name: 'цене', sortProperty: 'price' },
@@ -21,7 +21,7 @@ const Sort: React.FC = () => {
 	const dispatch = useDispatch();
 	const sortMenu = useRef<HTMLDivElement>(null);
 
-	const isActivesort = (obj: SortItem) => {
+	const isActivesort = (obj: SortType) => {
 		dispatch(sortId(obj));
 		setSortvisible(false);
 	};
@@ -55,7 +55,7 @@ const Sort: React.FC = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>{sortRedux.sortR.name}</span>
+				<span>{sortRedux.sort.name}</span>
 			</div>
 			<div className='sort__popup'>
 				{sortvisible && (
@@ -64,7 +64,7 @@ const Sort: React.FC = () => {
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortRedux.sortR.name === item.name ? 'active' : ''}
+								className={sortRedux.sort.name === item.name ? 'active' : ''}
 							>
 								{item.name}
 							</li>

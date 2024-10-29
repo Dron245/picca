@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Search from './Search/Search';
-import { cartSelector } from '../redux/slises/cartSlice.js';
+import { cartSelector } from '../redux/slises/cartSlice';
 const Header: React.FC = () => {
 	const { items } = useSelector(cartSelector);
 	

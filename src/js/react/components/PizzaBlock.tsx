@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addItem } from "../redux/slises/cartSlice.js";
-import { cartSelectorfindBuId } from "../redux/slises/cartSlice.js";
+import { addItem } from "../redux/slises/cartSlice";
+import { cartSelectorfindBuId } from "../redux/slises/cartSlice";
 import { Link } from "react-router-dom";
 
-type PizzaBlockProps = {
+export type PizzaBlockProps = {
 	id: string;
 	title: string;
 	imageUrl: string;
@@ -80,7 +80,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
 							/>
 						</svg>
 						<span onClick={addPizza}>Добавить</span>
-						{count > 0 && <i>{count}</i>}
+						{count && count > 0 && <i>{count}</i>}
 					</button>
 				</div>
 			</div>

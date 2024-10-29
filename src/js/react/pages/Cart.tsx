@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../components/CartItem';
-import { clearItem } from '../redux/slises/cartSlice.js';
+import { clearItem } from '../redux/slises/cartSlice';
 import CartEmpty from '../components/CartEmpty';
-import { cartSelector } from "../redux/slises/cartSlice.js";
+import { cartSelector } from "../redux/slises/cartSlice";
 const Cart: React.FC = () => {
 	const {items} = useSelector(cartSelector);
 	const totalPrice = items.reduce((sum: number, item:any)=> sum+item.price*item.count,0)
