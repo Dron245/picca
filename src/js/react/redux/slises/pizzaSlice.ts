@@ -2,6 +2,12 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import Axios from 'axios';
 import { RootState } from '../store';
 
+export enum CartStatusEnum {
+	LOAD = 'load',
+	SUCCESS = 'success',
+	ERROR = 'error',
+}
+
 type PizzaBlock = {
 	id: string;
 	title: string;
@@ -10,12 +16,27 @@ type PizzaBlock = {
 	types: number[];
 	sizes: number[];
 	count: number;
+};
+
+interface PizzasSLice {
+	items: PizzaBlock[];
+	status: string;
+	// sizeindex: ,
 }
+
+export type SearchPizzaParams = {
+	url: string;
+	categoryIndex: string;
+	search: string;
+	sortBy: string;
+	sortDirection: string;
+	paginationNumber: string;
+};
 export const fetchPizzas = createAsyncThunk(
 	'pizzas/pizzasStatus',
-	async (params: Record<string, string>) => {
-		const { url, categoryIndex, search, sortBy,
-			sortDirection, paginationNumber } = params;
+	async (params: SearchPizzaParams) => {
+		const { url, categoryIndex, search, sortBy, sortDirection, paginationNumber } =
+			params;
 		const { data } = await Axios.get(
 			`${url}?${categoryIndex}&${sortBy}&order=${sortDirection}&
 			page=${paginationNumber}&limit=5&${search}`
@@ -23,12 +44,6 @@ export const fetchPizzas = createAsyncThunk(
 		return data as PizzaBlock[];
 	}
 );
-
-interface PizzasSLice {
-	items: PizzaBlock[];
-	status: string;
-	// sizeindex: ,
-}
 
 const initialState: PizzasSLice = {
 	items: [],
@@ -46,15 +61,15 @@ export const pizzas = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchPizzas.pending, (state) => {
-			state.status = 'load';
+			state.status = CartStatusEnum.LOAD;
 			state.items = [];
 		});
 		builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-			state.status = 'succes';
+			state.status = CartStatusEnum.SUCCESS;
 			state.items = action.payload;
 		});
 		builder.addCase(fetchPizzas.rejected, (state) => {
-			state.status = 'error';
+			state.status = CartStatusEnum.ERROR;
 			alert('ошибка в получении пицц');
 			state.items = [];
 		});

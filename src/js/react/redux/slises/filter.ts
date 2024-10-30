@@ -1,26 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-enum sortPropertyEnum{
-	rating = 'RATING',
-	ratingd = '-RATING',
-	price = 'price',
-	priced = '-price',
-	name = '-name'
+export enum sortPropertyEnum{
+	RATING = 'rating',
+	RATINGASC = '-rating',
+	PRICE = 'price',
+	PRICEASC = '-price',
+	NAME = '-name'
 }
 
 export type SortType = {
 	name: string ;
-	// sortProperty: "rating" | "-rating" |"price" | "-price" | "-name",
 	sortProperty: sortPropertyEnum 
 }
 
-interface FilterSlice {
+export interface FilterSlice {
 	searhValue: string;
 	categoryId: number,
 	sort: SortType,
 	paginationNumber: number,
-	// sort: Sort
+
+	sortProperty: sortPropertyEnum;
 }
 
 const initialState: FilterSlice  = {
@@ -29,12 +29,10 @@ const initialState: FilterSlice  = {
 	paginationNumber: 1,
 	sort: {
 		name: "популярности",
-		sortProperty: sortPropertyEnum.rating,
+		sortProperty: sortPropertyEnum.RATING,
 	},
-	// sort: {
-	// 	name: "",
-	// 	sortProperty: "",
-	// },
+
+	sortProperty: sortPropertyEnum.RATING,
 };
 
 export const filter = createSlice({

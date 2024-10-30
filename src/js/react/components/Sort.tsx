@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SortType, selectorFilter, sortId } from '../redux/slises/filter';
+import { selectorFilter, sortId, sortPropertyEnum } from '../redux/slises/filter';
 import { useSelector, useDispatch } from 'react-redux';
 
 type SortItem = {
 	name: string;
-	sortProperty: string;
+	sortProperty: sortPropertyEnum;
 };
 
-export const list: SortType[] = [
-	{ name: 'популярности', sortProperty: 'rating' },
-	{ name: 'популярности (сначала мин)', sortProperty: '-rating' },
-	{ name: 'цене', sortProperty: 'price' },
-	{ name: 'цене (сначала мин)', sortProperty: '-price' },
-	{ name: 'алфавиту', sortProperty: '-name' },
+export const list: SortItem[] = [
+	{ name: 'популярности', sortProperty: sortPropertyEnum.RATING },
+	{ name: 'популярности (сначала мин)', sortProperty: sortPropertyEnum.RATINGASC },
+	{ name: 'цене', sortProperty: sortPropertyEnum.PRICE },
+	{ name: 'цене (сначала мин)', sortProperty: sortPropertyEnum.PRICEASC },
+	{ name: 'алфавиту', sortProperty: sortPropertyEnum.NAME },
 ];
 
 const Sort: React.FC = () => {
@@ -21,7 +21,7 @@ const Sort: React.FC = () => {
 	const dispatch = useDispatch();
 	const sortMenu = useRef<HTMLDivElement>(null);
 
-	const isActivesort = (obj: SortType) => {
+	const isActivesort = (obj: SortItem) => {
 		dispatch(sortId(obj));
 		setSortvisible(false);
 	};

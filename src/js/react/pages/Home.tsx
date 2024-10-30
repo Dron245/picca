@@ -1,23 +1,33 @@
 import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Sceleton from '../components/Sceleton';
 import Pagination from '../components/Pagination/Pagination';
 import { list } from '../components/Sort';
-import { changeCategoryId, paginationId, setFilters } from '../redux/slises/filter';
-import { fetchPizzas, selectorPizzasData } from '../redux/slises/pizzaSlice';
+import {
+	FilterSlice,
+	changeCategoryId,
+	paginationId,
+	setFilters,
+} from '../redux/slises/filter';
+import {
+	SearchPizzaParams,
+	fetchPizzas,
+	selectorPizzasData,
+} from '../redux/slises/pizzaSlice';
 import { selectorFilter } from '../redux/slises/filter';
+import { useAppDispatch } from '../redux/store';
 
 const Home = () => {
 	const { categoryId, paginationNumber, sort } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzasData);
 	const { searhValue } = useSelector(selectorFilter);
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	// console.log(items);
@@ -43,7 +53,7 @@ const Home = () => {
 					search,
 					sortBy,
 					sortDirection,
-					paginationNumber,
+					paginationNumber: String(paginationNumber),
 				})
 			);
 		}
@@ -69,18 +79,29 @@ const Home = () => {
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
 		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1));
+			const params = qs.parse(
+				window.location.search.substring(1)
+			) as unknown as /*SearchPizzaParams*/ FilterSlice;
 
+			// const sort = list.find((obj) => obj.sortProperty === params.sortBy);
 			const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
-			// const sort = {name:'dfg', sortProperty:'qqweqw'}
-			console.log(params, sort);
+			if (sort) {
+				params.sort = sort;
+			}
+			console.log(params);
 
 			dispatch(
-				setFilters({
-					...params,
-					sort,
-				})
+				setFilters(
+				// 	{
+				// 	categoryId: Number(params.categoryIndex),
+				// 	paginationNumber: Number(params.paginationNumber),
+				// 	sort: sort ? sort : list[0],
+				// 	searhValue: params.search,
+				// }
+				params
+			)
 			);
+
 			isSearch.current = true;
 		}
 	}, []);
