@@ -1,14 +1,17 @@
 import React from 'react';
+import { useWhyDidYouUpdate } from 'ahooks';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Search from './Search/Search';
-import { cartSelector } from '../redux/slises/cartSlice';
-const Header: React.FC = () => {
-	const { items } = useSelector(cartSelector);
+import { CartItem, cartSelector } from '../redux/slises/cartSlice';
+const Header: React.FC = React.memo(() => {
+	const { items, prices } = useSelector(cartSelector);
 	
-	const totalPrice = items.reduce((sum: number, item: any) => sum + item.price * item.count, 0);
-	const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
+	const totalCount = items.reduce((sum: number, item: CartItem) => sum + item.count, 0);
 	const location = useLocation();
+	useWhyDidYouUpdate( "Header", {totalCount, prices})
+	
+	
 	return (
 		<div className='header'>
 			<div className='container'>
@@ -22,7 +25,7 @@ const Header: React.FC = () => {
 				{location.pathname !== '/cart' && <Search />}
 				<div className='header__cart'>
 					<Link to='/cart' className='button button--cart'>
-						<span>{totalPrice} ₽</span>
+						<span>{ prices } ₽</span>
 						<div className='button__delimiter'></div>
 						<svg
 							width='18'
@@ -59,6 +62,6 @@ const Header: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Header;

@@ -35,8 +35,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 		const pizza = {
 			id,
 			title,
-			price,
 			imageUrl,
+			price,
 			types: typeNames[typePizza],
 			sizes: sizes[sizeindex],
 			count,

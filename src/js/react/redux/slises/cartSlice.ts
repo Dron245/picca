@@ -29,10 +29,13 @@ export const cart = createSlice({
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 			if (!findItem) {
 				state.items.push({ ...action.payload, count: 1 });
-				state.prices = state.items.reduce((sum, obj) => sum + obj.price, 0);
+				console.log(action.payload);
+				
 			} else {
 				findItem.count++;
+				// state.prices = state.items.reduce((sum, obj) => sum + obj.price * obj.count, 0);
 			}
+			state.prices = state.items.reduce((sum, obj) => sum + obj.price * obj.count, 0);
 		},
 
 		minusItem(state, action: PayloadAction<string>) {

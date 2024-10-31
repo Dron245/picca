@@ -8,7 +8,7 @@ const Search: React.FC = () => {
 	const dispatch = useDispatch();
 	const {searhValue} = useSelector(selectorFilter);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [value, setValue] = React.useState<string>();
+	const [value, setValue] = React.useState<string>('');
 	const searhValueFunction = () => {
 		dispatch(setSearchValue(''));
 		setValue('');

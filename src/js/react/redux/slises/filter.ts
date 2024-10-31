@@ -20,7 +20,7 @@ export interface FilterSlice {
 	sort: SortType,
 	paginationNumber: number,
 
-	sortProperty: sortPropertyEnum;
+	// sortProperty: sortPropertyEnum;
 }
 
 const initialState: FilterSlice  = {
@@ -32,7 +32,7 @@ const initialState: FilterSlice  = {
 		sortProperty: sortPropertyEnum.RATING,
 	},
 
-	sortProperty: sortPropertyEnum.RATING,
+	// sortProperty: sortPropertyEnum.RATING,
 };
 
 export const filter = createSlice({
@@ -41,7 +41,7 @@ export const filter = createSlice({
 	reducers: {
 		setSearchValue(state, action: PayloadAction<string>) {
 			state.searhValue = action.payload;
-			console.log(action.payload);
+			// console.log(action.payload);
 		},
 		changeCategoryId(state, action:PayloadAction<number>) {
 			state.categoryId = action.payload;

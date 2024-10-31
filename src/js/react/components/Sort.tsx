@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { selectorFilter, sortId, sortPropertyEnum } from '../redux/slises/filter';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { useWhyDidYouUpdate } from 'ahooks';
 type SortItem = {
 	name: string;
 	sortProperty: sortPropertyEnum;
 };
-
+type SortProps = {
+	value: SortItem
+}
 export const list: SortItem[] = [
 	{ name: 'популярности', sortProperty: sortPropertyEnum.RATING },
 	{ name: 'популярности (сначала мин)', sortProperty: sortPropertyEnum.RATINGASC },
@@ -15,7 +17,10 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту', sortProperty: sortPropertyEnum.NAME },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC<SortProps> = React.memo(({value}) => {
+	console.log(8);
+	
+	useWhyDidYouUpdate('Sort', {value})
 	const [sortvisible, setSortvisible] = useState(false);
 	const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();
@@ -55,7 +60,7 @@ const Sort: React.FC = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>{sortRedux.sort.name}</span>
+				<span>{value.name}</span>
 			</div>
 			<div className='sort__popup'>
 				{sortvisible && (
@@ -64,7 +69,7 @@ const Sort: React.FC = () => {
 							<li
 								onClick={() => isActivesort(item)}
 								key={index}
-								className={sortRedux.sort.name === item.name ? 'active' : ''}
+								className={value.name === item.name ? 'active' : ''}
 							>
 								{item.name}
 							</li>
@@ -74,6 +79,6 @@ const Sort: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Sort;
