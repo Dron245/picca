@@ -9,19 +9,15 @@ import PizzaBlock from '../components/PizzaBlock';
 import Sceleton from '../components/Sceleton';
 import Pagination from '../components/Pagination/Pagination';
 import { list } from '../components/Sort';
-import {
-	FilterSlice,
-	changeCategoryId,
-	paginationId,
-	setFilters,
-} from '../redux/slises/filter';
+
 import {
 	SearchPizzaParams,
 	fetchPizzas,
 	selectorPizzasData,
 } from '../redux/slises/pizzaSlice';
-import { selectorFilter } from '../redux/slises/filter';
 import { useAppDispatch } from '../redux/store';
+import { selectorFilter } from '../redux/pizza/selectors';
+import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
 const a: number=4
 
 const Home = () => {

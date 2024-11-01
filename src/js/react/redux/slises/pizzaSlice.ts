@@ -8,7 +8,7 @@ export enum CartStatusEnum {
 	ERROR = 'error',
 }
 
-type PizzaBlock = {
+export type PizzaBlock = {
 	id: string;
 	title: string;
 	imageUrl: string;
@@ -18,7 +18,7 @@ type PizzaBlock = {
 	count: number;
 };
 
-interface PizzasSLice {
+export interface PizzasSLice {
 	items: PizzaBlock[];
 	status: string;
 	// sizeindex: ,

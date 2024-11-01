@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { selectorFilter, sortId, sortPropertyEnum } from '../redux/slises/filter';
 import { useSelector, useDispatch } from 'react-redux';
 import { useWhyDidYouUpdate } from 'ahooks';
+import { sortPropertyEnum } from '../redux/filter/type';
+import { selectorFilter } from '../redux/pizza/selectors';
+import { sortId } from '../redux/filter/slice';
 type SortItem = {
 	name: string;
 	sortProperty: sortPropertyEnum;
@@ -22,7 +24,7 @@ const Sort: React.FC<SortProps> = React.memo(({value}) => {
 	
 	useWhyDidYouUpdate('Sort', {value})
 	const [sortvisible, setSortvisible] = useState(false);
-	const sortRedux = useSelector(selectorFilter);
+	// const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();
 	const sortMenu = useRef<HTMLDivElement>(null);
 

@@ -2,7 +2,8 @@ import React, { useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import './Search.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectorFilter, setSearchValue } from '../../redux/slises/filter';
+import { selectorFilter } from '../../redux/pizza/selectors';
+import { setSearchValue } from '../../redux/filter/slice';
 
 const Search: React.FC = () => {
 	const dispatch = useDispatch();

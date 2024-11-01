@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useWhyDidYouUpdate } from 'ahooks';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Search from './Search/Search';
-import { CartItem, cartSelector } from '../redux/slises/cartSlice';
+import { cartSelector } from '../redux/cart/selectors';
+import { CartItem } from '../redux/cart/type';
 const Header: React.FC = React.memo(() => {
 	const { items, prices } = useSelector(cartSelector);
-	
 	const totalCount = items.reduce((sum: number, item: CartItem) => sum + item.count, 0);
 	const location = useLocation();
-	useWhyDidYouUpdate( "Header", {totalCount, prices})
+	useWhyDidYouUpdate('Header', { totalCount, prices });
+	const ismounted = useRef(false);
 	
-	
+	useEffect(() => {
+		if ((ismounted.current = true)) {
+			const json = JSON.stringify(items);
+			localStorage.setItem('Cart', json);
+		}
+		ismounted.current = true;
+	}, [items]);
+
 	return (
 		<div className='header'>
 			<div className='container'>
@@ -25,7 +33,7 @@ const Header: React.FC = React.memo(() => {
 				{location.pathname !== '/cart' && <Search />}
 				<div className='header__cart'>
 					<Link to='/cart' className='button button--cart'>
-						<span>{ prices } ₽</span>
+						<span>{prices} ₽</span>
 						<div className='button__delimiter'></div>
 						<svg
 							width='18'
