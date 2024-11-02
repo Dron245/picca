@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useWhyDidYouUpdate } from 'ahooks';
 import { sortPropertyEnum } from '../redux/filter/type';
 import { sortId } from '../redux/filter/slice';
 type SortItem = {
@@ -19,9 +18,7 @@ export const list: SortItem[] = [
 ];
 
 const Sort: React.FC<SortProps> = React.memo(({value}) => {
-	console.log(8);
 	
-	useWhyDidYouUpdate('Sort', {value})
 	const [sortvisible, setSortvisible] = useState(false);
 	// const sortRedux = useSelector(selectorFilter);
 	const dispatch = useDispatch();

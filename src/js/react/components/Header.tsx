@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useWhyDidYouUpdate } from 'ahooks';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Search from './Search/Search';
@@ -9,7 +8,6 @@ const Header: React.FC = React.memo(() => {
 	const { items, prices } = useSelector(cartSelector);
 	const totalCount = items.reduce((sum: number, item: CartItem) => sum + item.count, 0);
 	const location = useLocation();
-	useWhyDidYouUpdate('Header', { totalCount, prices });
 	const ismounted = useRef(false);
 	
 	useEffect(() => {

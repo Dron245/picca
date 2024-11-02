@@ -10,15 +10,13 @@ import Sceleton from '../components/Sceleton';
 import Pagination from '../components/Pagination/Pagination';
 import { list } from '../components/Sort';
 
-import {
-	SearchPizzaParams,
-	fetchPizzas,
-	selectorPizzasData,
-} from '../redux/slises/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
 import { selectorFilter } from '../redux/filter/selectors';
-const a: number=4
+import { selectorPizzasData } from '../redux/pizza/selectors';
+import { fetchPizzas } from '../redux/pizza/asyncfunctions';
+import { SearchPizzaParams } from '../redux/pizza/type';
+const a: number=3
 
 const Home = () => {
 	useWhyDidYouUpdate('Home', {})
@@ -59,13 +57,13 @@ const Home = () => {
 
 	useEffect(() => {
 		getPizzas();
-		// isSearch.current = false;
+		isSearch.current = false;
 	}, [categoryId, sort.sortProperty, searhValue, paginationNumber]);
 
 	// Если изменили параметры и был первый рендер, то
 	// переводим зависимости useEffect в строку браузера
 	useEffect(() => {
-		if (isMounted.current && a===3) {
+		if (isMounted.current ) {
 			const queryString = qs.stringify({
 				sortProperty: sort.sortProperty,
 				categoryId,
@@ -73,12 +71,12 @@ const Home = () => {
 			});
 			navigate(`?${queryString}`);
 		}
-		// isMounted.current = true;
+		isMounted.current = true;
 	}, [categoryId, sort.sortProperty, paginationNumber]);
 
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
-		if (window.location.search && a===3) {
+		if (window.location.search ) {
 			// const params = qs.parse(
 			// 	window.location.search.substring(1)
 			// ) as unknown as FilterSlice ;
@@ -104,7 +102,7 @@ const Home = () => {
 				)
 			);
 
-			// isSearch.current = true;
+			isSearch.current = true;
 		}
 	}, []);
 	// console.log(window.location.search);
