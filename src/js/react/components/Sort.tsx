@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useWhyDidYouUpdate } from 'ahooks';
 import { sortPropertyEnum } from '../redux/filter/type';
-import { selectorFilter } from '../redux/pizza/selectors';
 import { sortId } from '../redux/filter/slice';
 type SortItem = {
 	name: string;

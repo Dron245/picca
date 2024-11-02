@@ -16,8 +16,8 @@ import {
 	selectorPizzasData,
 } from '../redux/slises/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
-import { selectorFilter } from '../redux/pizza/selectors';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
+import { selectorFilter } from '../redux/filter/selectors';
 const a: number=4
 
 const Home = () => {
