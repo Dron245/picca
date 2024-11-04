@@ -16,8 +16,11 @@ import { selectorFilter } from '../redux/filter/selectors';
 import { selectorPizzasData } from '../redux/pizza/selectors';
 import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
-const a: number=3
-
+// import('../utils/math').then(math)=> {
+// 	console.log(math.add(444,333));
+	
+// }
+// math(10,5)
 const Home = () => {
 	useWhyDidYouUpdate('Home', {})
 	const { categoryId, paginationNumber, sort } = useSelector(selectorFilter);
