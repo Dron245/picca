@@ -17,7 +17,7 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту', sortProperty: sortPropertyEnum.NAME },
 ];
 
-const Sort: React.FC<SortProps> = React.memo(({value}) => {
+export const Sort: React.FC<SortProps> = React.memo(({value}) => {
 	
 	const [sortvisible, setSortvisible] = useState(false);
 	// const sortRedux = useSelector(selectorFilter);
@@ -78,5 +78,3 @@ const Sort: React.FC<SortProps> = React.memo(({value}) => {
 		</div>
 	);
 });
-
-export default Sort;

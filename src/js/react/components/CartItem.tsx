@@ -13,7 +13,7 @@ type CartItemProps = {
 	count: number;
 };
 
-const CartItemBlock: React.FC<CartItemProps> = ({id,title,imageUrl,price,types,sizes,count,}) => {
+export const CartItemBlock: React.FC<CartItemProps> = ({id,title,imageUrl,price,types,sizes,count,}) => {
 	const dispath = useDispatch();
 
 	function onClickMinus() {
@@ -97,5 +97,3 @@ const CartItemBlock: React.FC<CartItemProps> = ({id,title,imageUrl,price,types,s
 		</div>
 	);
 };
-
-export default CartItemBlock;

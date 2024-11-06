@@ -3,12 +3,12 @@ import { useWhyDidYouUpdate } from 'ahooks';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import PizzaBlock from '../components/PizzaBlock';
-import Sceleton from '../components/Sceleton';
-import Pagination from '../components/Pagination/Pagination';
-import { list } from '../components/Sort';
+import {Categories, Sort, PizzaBlock, Sceleton, Pagination, list} from '../components';
+// import Sort from '../components/Sort';
+// import PizzaBlock from '../components/PizzaBlock';
+// import Sceleton from '../components/Sceleton';
+// import Pagination from '../components/Pagination/Pagination';
+// import { list } from '../components/Sort';
 
 import { useAppDispatch } from '../redux/store';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';

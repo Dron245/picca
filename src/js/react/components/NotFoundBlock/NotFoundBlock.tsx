@@ -1,7 +1,7 @@
 import React from 'react'
 // import CSSModules from 'react-css-modules';
 import './NotFoundBlock.scss'
-const NotFoundBlock: React.FC = () => {
+export const NotFoundBlock: React.FC = () => {
   return (
 	 <div className="notfound" >
 		<h1 className='notfound__title'>
@@ -15,5 +15,3 @@ const NotFoundBlock: React.FC = () => {
 	 </div>
   )
 }
-
-export default NotFoundBlock

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Search from './Search/Search';
+import {Search} from '../components';
 import { cartSelector } from '../redux/cart/selectors';
 import { CartItem } from '../redux/cart/type';
-const Header: React.FC = React.memo(() => {
+export const Header: React.FC = React.memo(() => {
 	const { items, prices } = useSelector(cartSelector);
 	const totalCount = items.reduce((sum: number, item: CartItem) => sum + item.count, 0);
 	const location = useLocation();
@@ -70,4 +70,3 @@ const Header: React.FC = React.memo(() => {
 	);
 });
 
-export default Header;
