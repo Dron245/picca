@@ -27,7 +27,7 @@ export const pizzas = createSlice({
 		});
 		builder.addCase(fetchPizzas.rejected, (state) => {
 			state.status = CartStatusEnum.ERROR;
-			alert('ошибка в получении пицц');
+			// alert('ошибка в получении пицц');
 			state.items = [];
 		});
 	},

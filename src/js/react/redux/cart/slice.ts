@@ -23,7 +23,6 @@ export const cart = createSlice({
 			} else {
 				findItem.count++;
 			}
-			// state.prices = state.items.reduce((sum, obj) => sum + obj.price * obj.count, 0);
 			state.prices = calcPrice(state.items);
 		},
 

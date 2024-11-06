@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { CartItem } from '../redux/cart/type';
+import { addItem } from '../redux/cart/slice';
 const FullPizza: React.FC = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { id } = useParams();
 	const [pizza, setPizza] = useState<{
 		imageUrl: string;
@@ -26,6 +30,13 @@ const FullPizza: React.FC = () => {
 		navigate('/');
 	}
 
+
+	// const addPizza=()=> {
+	// 	dispatch(addItem({
+			
+	// 	}))
+	// }
+
 	return (
 		<div className='container'>
 			{pizza ? (
@@ -33,6 +44,7 @@ const FullPizza: React.FC = () => {
 					<img src={pizza.imageUrl} />
 					<p>{pizza.title}</p>
 					<p>{pizza.price} рублей</p>
+					{/* <button onClick={addPizza} className='button button--outline button--add'>купить</button> */}
 					<Link to='/' className='button button--outline button--add go-back-btn'>
 						<span>Вернуться назад</span>
 					</Link>
