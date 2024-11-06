@@ -9,8 +9,7 @@ const initialState: FilterSlice  = {
 		name: "популярности",
 		sortProperty: sortPropertyEnum.RATING,
 	},
-
-	// sortProperty: sortPropertyEnum.RATING,
+	sortProperty: sortPropertyEnum.RATING,
 };
 
 export const filter = createSlice({

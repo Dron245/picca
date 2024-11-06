@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { addItem, cartSelectorfindById } from '../redux/cart/slice';
+import { addItem } from '../redux/cart/slice';
+import { cartSelectorfindById } from '../redux/cart/selectors';
 
 export type PizzaBlockProps = {
 	id: string;
@@ -29,6 +30,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	const pizzaR = useSelector(cartSelectorfindById(id));
 	const dispatch = useDispatch();
 	const count = pizzaR ? pizzaR.count : 0;
+	
 	// console.log(sizeindexR);
 	function addPizza() {
 		const pizza = {

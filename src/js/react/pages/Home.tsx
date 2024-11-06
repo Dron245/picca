@@ -4,11 +4,6 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {Categories, Sort, PizzaBlock, Sceleton, Pagination, list} from '../components';
-// import Sort from '../components/Sort';
-// import PizzaBlock from '../components/PizzaBlock';
-// import Sceleton from '../components/Sceleton';
-// import Pagination from '../components/Pagination/Pagination';
-// import { list } from '../components/Sort';
 
 import { useAppDispatch } from '../redux/store';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
@@ -16,16 +11,12 @@ import { selectorFilter } from '../redux/filter/selectors';
 import { selectorPizzasData } from '../redux/pizza/selectors';
 import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
-// import('../utils/math').then(math)=> {
-// 	console.log(math.add(444,333));
-	
-// }
-// math(10,5)
+import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
+
 const Home = () => {
 	useWhyDidYouUpdate('Home', {})
-	const { categoryId, paginationNumber, sort } = useSelector(selectorFilter);
+	const { categoryId, paginationNumber, sort, searhValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzasData);
-	const { searhValue } = useSelector(selectorFilter);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
@@ -80,36 +71,55 @@ const Home = () => {
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
 		if (window.location.search ) {
-			// const params = qs.parse(
-			// 	window.location.search.substring(1)
-			// ) as unknown as FilterSlice ;
+			
 			const params = qs.parse(
 				window.location.search.substring(1)
-			) as unknown as SearchPizzaParams;
-			// const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
-			const sort = list.find((obj) => obj.sortProperty === params.sortBy);
-			// if (sort) {
-			// 	params.sort = sort;
-			// }
+			) as unknown as FilterSlice ;
+			// const params = qs.parse(
+			// 	window.location.search.substring(1)
+			// ) as unknown as SearchPizzaParams;
 			console.log(params);
+			const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+			// const sort = list.find((obj) => obj.sortProperty === params.sortBy);
+			if (sort) {
+				params.sort = sort;
+			}
 
 			dispatch(
 				setFilters(
-					{
-						categoryId: Number(params.categoryIndex),
-						paginationNumber: Number(params.paginationNumber),
-						sort: sort ? sort : list[0],
-						searhValue: params.search,
-					}
-					// params
+					// {
+					// 	categoryId: Number(params.categoryIndex),
+					// 	paginationNumber: Number(params.paginationNumber),
+					// 	sort: sort ? sort : list[0],
+					// 	searhValue: params.search,
+					// }
+					params
 				)
 			);
 
 			isSearch.current = true;
-		}
+		} 
 	}, []);
 	// console.log(window.location.search);
 
+	useEffect(() => {
+	  if(!window.location.search) {
+		dispatch(setFilters(
+			{
+				categoryId:Number(0),
+				paginationNumber: 1,
+				searhValue: '',
+				sort: {
+					name: "популярности",
+					sortProperty: sortPropertyEnum.RATING,
+				},
+				sortProperty: sortPropertyEnum.RATING,
+			}
+		))
+	  }
+	  
+	}, [window.location.search])
+	
 	return (
 		<div className='container'>
 			<div className='content__top'>

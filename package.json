@@ -20,7 +20,7 @@
 		"tmp": "gulp -f gulpfile.tmp.js",
 		"bem": "fls-bemtree-from-html",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
+		"deploy": "gh-pages -d dist"
 	},
 	"devDependencies": {
 		"@babel/cli": "latest",

@@ -16,6 +16,5 @@ export interface FilterSlice {
 	categoryId: number,
 	sort: SortType,
 	paginationNumber: number,
-
-	// sortProperty: sortPropertyEnum;
+	sortProperty: sortPropertyEnum.RATING,
 }

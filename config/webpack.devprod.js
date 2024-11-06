@@ -48,7 +48,7 @@ const config = {
 	output: {
 		path: `${paths.build}`,
 		filename: 'app.min.js',
-		publicPath: './chunks/',
+		publicPath: './js/',
 	},
 	module: {
 		rules: [
