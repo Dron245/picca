@@ -697,6 +697,19 @@ body {
   font-weight: 600;
   font-size: 18px
 }
+.fullpizza {
+  display: flex;
+  outline: 1px solid red
+}
+.fullpizza__img {
+  width: 40%
+}
+.fullpizza__content {
+  flex: 0 0 40%
+}
+.fullpizza .pizza-block__selector {
+  margin-block: 30px
+}
 .notfound {
   padding: 100px;
   max-width: 750px;

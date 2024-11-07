@@ -142,14 +142,19 @@
             var navigate = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Zp)();
             var dispatch = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.wA)();
             var id = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_4__.g)().id;
-            var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)(_redux_pizza_selectors__WEBPACK_IMPORTED_MODULE_6__.L).items;
-            var _a = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(), pizza = _a[0], setPizza = _a[1];
-            var findItems = items.find((function(obj) {
-                return obj.id === id;
-            }));
+            (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)(_redux_pizza_selectors__WEBPACK_IMPORTED_MODULE_6__.L).items;
+            var _a = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+                id: "",
+                title: "",
+                imageUrl: "",
+                price: 0,
+                types: [],
+                sizes: [],
+                count: 0
+            }), pizza = _a[0], setPizza = _a[1];
             var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
-            var _c = findItems && findItems.types.length === 1 && findItems.types[0] === 1 ? (0, 
-            react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typePizza = _c[0], settypePizza = _c[1];
+            var _c = pizza.types.length === 1 && pizza.types[0] === 1 ? (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, 
+            react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typePizza = _c[0], settypePizza = _c[1];
             var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_7__.r)(id));
             var count = pizzaR ? pizzaR.count : 0;
             try {
@@ -178,58 +183,68 @@
                 navigate("/");
             }
             var addPizza = function() {
-                var findItemsCorrect = __assign(__assign({}, findItems), {
+                var pizzaCorrect = __assign(__assign({}, pizza), {
                     types: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[typePizza],
-                    sizes: findItems && findItems.sizes[sizeindex],
+                    sizes: pizza.sizes[sizeindex],
                     count
                 });
-                console.log(findItemsCorrect);
-                dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.B5)(findItemsCorrect));
+                dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.B5)(pizzaCorrect));
             };
             return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-                className: "container",
+                className: "container fullpizza",
                 children: pizza ? (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                     children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
-                        src: findItems && findItems.imageUrl
-                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                        children: findItems && findItems.title
-                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                        children: [ findItems && findItems.price, " рублей" ]
+                        className: "fullpizza__img",
+                        src: pizza.imageUrl
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "pizza-block__selector",
-                        children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
-                            children: findItems && findItems.types.map((function(type) {
-                                return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-                                    onClick: function() {
-                                        return settypePizza(type);
-                                    },
-                                    className: typePizza === type ? "active" : "",
-                                    children: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[type]
-                                }, type);
-                            }))
-                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
-                            children: findItems && findItems.sizes.map((function(size, index) {
-                                return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-                                    onClick: function() {
-                                        return setsizeindex(index);
-                                    },
-                                    className: sizeindex === index ? "active" : "",
-                                    children: size
-                                }, index);
-                            }))
+                        className: "fullpizza__content",
+                        children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                            className: "pizza-block__title",
+                            children: pizza.title
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            className: "pizza-block__price",
+                            children: [ pizza.price, " рублей" ]
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "pizza-block__selector",
+                            children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                                children: pizza.types.map((function(type) {
+                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                        onClick: function() {
+                                            return settypePizza(type);
+                                        },
+                                        className: typePizza === type ? "active" : "",
+                                        children: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[type]
+                                    }, type);
+                                }))
+                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                                children: pizza.sizes.map((function(size, index) {
+                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                        onClick: function() {
+                                            return setsizeindex(index);
+                                        },
+                                        className: sizeindex === index ? "active" : "",
+                                        children: size
+                                    }, index);
+                                }))
+                            }) ]
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                            style: {
+                                marginRight: "20px"
+                            },
+                            onClick: addPizza,
+                            className: "button button--outline button--add",
+                            children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                                children: "купить"
+                            }), count > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                children: count
+                            }) ]
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.N_, {
+                            to: "/",
+                            className: "button button--outline button--add go-back-btn",
+                            children: (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                                children: "Вернуться назад"
+                            })
                         }) ]
-                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
-                        onClick: addPizza,
-                        className: "button button--outline button--add",
-                        children: [ "купить", count > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
-                            children: count
-                        }) ]
-                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.N_, {
-                        to: "/",
-                        className: "button button--outline button--add go-back-btn",
-                        children: (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                            children: "Вернуться назад"
-                        })
                     }) ]
                 }) : "Загрузка..."
             });

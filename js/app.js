@@ -8,13 +8,13 @@
                 HS: () => joinPaths,
                 Oi: () => invariant,
                 Rr: () => parsePath,
-                TM: () => createHashHistory,
                 pX: () => isRouteErrorResponse,
                 pb: () => stripBasename,
                 rc: () => Action,
                 tH: () => AbortedDeferredError,
                 ue: () => matchRoutes,
-                yD: () => getResolveToMatches
+                yD: () => getResolveToMatches,
+                zR: () => createBrowserHistory
             });
             /**
  * @remix-run/router v1.19.2
@@ -42,31 +42,20 @@
                 Action["Replace"] = "REPLACE";
             })(Action || (Action = {}));
             const PopStateEventType = "popstate";
-            function createHashHistory(options) {
+            function createBrowserHistory(options) {
                 if (options === void 0) options = {};
-                function createHashLocation(window, globalHistory) {
-                    let {pathname = "/", search = "", hash = ""} = parsePath(window.location.hash.substr(1));
-                    if (!pathname.startsWith("/") && !pathname.startsWith(".")) pathname = "/" + pathname;
+                function createBrowserLocation(window, globalHistory) {
+                    let {pathname, search, hash} = window.location;
                     return createLocation("", {
                         pathname,
                         search,
                         hash
                     }, globalHistory.state && globalHistory.state.usr || null, globalHistory.state && globalHistory.state.key || "default");
                 }
-                function createHashHref(window, to) {
-                    let base = window.document.querySelector("base");
-                    let href = "";
-                    if (base && base.getAttribute("href")) {
-                        let url = window.location.href;
-                        let hashIndex = url.indexOf("#");
-                        href = hashIndex === -1 ? url : url.slice(0, hashIndex);
-                    }
-                    return href + "#" + (typeof to === "string" ? to : createPath(to));
+                function createBrowserHref(window, to) {
+                    return typeof to === "string" ? to : createPath(to);
                 }
-                function validateHashLocation(location, to) {
-                    warning(location.pathname.charAt(0) === "/", "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
-                }
-                return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
+                return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
             }
             function invariant(value, message) {
                 if (value === false || value === null || typeof value === "undefined") throw new Error(message);
@@ -1481,58 +1470,6 @@
                 if (typeof gOPS === "function") for (var j = 0; j < syms.length; j++) if (isEnumerable.call(obj, syms[j])) xs.push("[" + inspect(syms[j]) + "]: " + inspect(obj[syms[j]], obj));
                 return xs;
             }
-        },
-        2694: (module, __unused_webpack_exports, __webpack_require__) => {
-            "use strict";
-            var ReactPropTypesSecret = __webpack_require__(6925);
-            function emptyFunction() {}
-            function emptyFunctionWithReset() {}
-            emptyFunctionWithReset.resetWarningCache = emptyFunction;
-            module.exports = function() {
-                function shim(props, propName, componentName, location, propFullName, secret) {
-                    if (secret === ReactPropTypesSecret) return;
-                    var err = new Error("Calling PropTypes validators directly is not supported by the `prop-types` package. " + "Use PropTypes.checkPropTypes() to call them. " + "Read more at http://fb.me/use-check-prop-types");
-                    err.name = "Invariant Violation";
-                    throw err;
-                }
-                shim.isRequired = shim;
-                function getShim() {
-                    return shim;
-                }
-                var ReactPropTypes = {
-                    array: shim,
-                    bigint: shim,
-                    bool: shim,
-                    func: shim,
-                    number: shim,
-                    object: shim,
-                    string: shim,
-                    symbol: shim,
-                    any: shim,
-                    arrayOf: getShim,
-                    element: shim,
-                    elementType: shim,
-                    instanceOf: getShim,
-                    node: shim,
-                    objectOf: getShim,
-                    oneOf: getShim,
-                    oneOfType: getShim,
-                    shape: getShim,
-                    exact: getShim,
-                    checkPropTypes: emptyFunctionWithReset,
-                    resetWarningCache: emptyFunction
-                };
-                ReactPropTypes.PropTypes = ReactPropTypes;
-                return ReactPropTypes;
-            };
-        },
-        5556: (module, __unused_webpack_exports, __webpack_require__) => {
-            if (false) ; else module.exports = __webpack_require__(2694)();
-        },
-        6925: module => {
-            "use strict";
-            var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
-            module.exports = ReactPropTypesSecret;
         },
         4765: module => {
             "use strict";
@@ -9334,265 +9271,6 @@
                 module.exports = __webpack_require__(2551);
             }
         },
-        3259: (module, __unused_webpack_exports, __webpack_require__) => {
-            "use strict";
-            var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
-                return typeof obj;
-            } : function(obj) {
-                return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-            };
-            function _classCallCheck(instance, Constructor) {
-                if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-            }
-            function _possibleConstructorReturn(self, call) {
-                if (!self) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-                return call && (typeof call === "object" || typeof call === "function") ? call : self;
-            }
-            function _inherits(subClass, superClass) {
-                if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-                subClass.prototype = Object.create(superClass && superClass.prototype, {
-                    constructor: {
-                        value: subClass,
-                        enumerable: false,
-                        writable: true,
-                        configurable: true
-                    }
-                });
-                if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-            }
-            var React = __webpack_require__(6540);
-            var PropTypes = __webpack_require__(5556);
-            var ALL_INITIALIZERS = [];
-            var READY_INITIALIZERS = [];
-            function isWebpackReady(getModuleIds) {
-                if ((false ? 0 : _typeof(__webpack_require__.m)) !== "object") return false;
-                return getModuleIds().every((function(moduleId) {
-                    return typeof moduleId !== "undefined" && typeof __webpack_require__.m[moduleId] !== "undefined";
-                }));
-            }
-            function load(loader) {
-                var promise = loader();
-                var state = {
-                    loading: true,
-                    loaded: null,
-                    error: null
-                };
-                state.promise = promise.then((function(loaded) {
-                    state.loading = false;
-                    state.loaded = loaded;
-                    return loaded;
-                })).catch((function(err) {
-                    state.loading = false;
-                    state.error = err;
-                    throw err;
-                }));
-                return state;
-            }
-            function loadMap(obj) {
-                var state = {
-                    loading: false,
-                    loaded: {},
-                    error: null
-                };
-                var promises = [];
-                try {
-                    Object.keys(obj).forEach((function(key) {
-                        var result = load(obj[key]);
-                        if (!result.loading) {
-                            state.loaded[key] = result.loaded;
-                            state.error = result.error;
-                        } else state.loading = true;
-                        promises.push(result.promise);
-                        result.promise.then((function(res) {
-                            state.loaded[key] = res;
-                        })).catch((function(err) {
-                            state.error = err;
-                        }));
-                    }));
-                } catch (err) {
-                    state.error = err;
-                }
-                state.promise = Promise.all(promises).then((function(res) {
-                    state.loading = false;
-                    return res;
-                })).catch((function(err) {
-                    state.loading = false;
-                    throw err;
-                }));
-                return state;
-            }
-            function resolve(obj) {
-                return obj && obj.__esModule ? obj.default : obj;
-            }
-            function render(loaded, props) {
-                return React.createElement(resolve(loaded), props);
-            }
-            function createLoadableComponent(loadFn, options) {
-                var _class, _temp;
-                if (!options.loading) throw new Error("react-loadable requires a `loading` component");
-                var opts = Object.assign({
-                    loader: null,
-                    loading: null,
-                    delay: 200,
-                    timeout: null,
-                    render,
-                    webpack: null,
-                    modules: null
-                }, options);
-                var res = null;
-                function init() {
-                    if (!res) res = loadFn(opts.loader);
-                    return res.promise;
-                }
-                ALL_INITIALIZERS.push(init);
-                if (typeof opts.webpack === "function") READY_INITIALIZERS.push((function() {
-                    if (isWebpackReady(opts.webpack)) return init();
-                }));
-                return _temp = _class = function(_React$Component) {
-                    _inherits(LoadableComponent, _React$Component);
-                    function LoadableComponent(props) {
-                        _classCallCheck(this, LoadableComponent);
-                        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-                        _this.retry = function() {
-                            _this.setState({
-                                error: null,
-                                loading: true,
-                                timedOut: false
-                            });
-                            res = loadFn(opts.loader);
-                            _this._loadModule();
-                        };
-                        init();
-                        _this.state = {
-                            error: res.error,
-                            pastDelay: false,
-                            timedOut: false,
-                            loading: res.loading,
-                            loaded: res.loaded
-                        };
-                        return _this;
-                    }
-                    LoadableComponent.preload = function preload() {
-                        return init();
-                    };
-                    LoadableComponent.prototype.componentWillMount = function componentWillMount() {
-                        this._mounted = true;
-                        this._loadModule();
-                    };
-                    LoadableComponent.prototype._loadModule = function _loadModule() {
-                        var _this2 = this;
-                        if (this.context.loadable && Array.isArray(opts.modules)) opts.modules.forEach((function(moduleName) {
-                            _this2.context.loadable.report(moduleName);
-                        }));
-                        if (!res.loading) return;
-                        if (typeof opts.delay === "number") if (opts.delay === 0) this.setState({
-                            pastDelay: true
-                        }); else this._delay = setTimeout((function() {
-                            _this2.setState({
-                                pastDelay: true
-                            });
-                        }), opts.delay);
-                        if (typeof opts.timeout === "number") this._timeout = setTimeout((function() {
-                            _this2.setState({
-                                timedOut: true
-                            });
-                        }), opts.timeout);
-                        var update = function update() {
-                            if (!_this2._mounted) return;
-                            _this2.setState({
-                                error: res.error,
-                                loaded: res.loaded,
-                                loading: res.loading
-                            });
-                            _this2._clearTimeouts();
-                        };
-                        res.promise.then((function() {
-                            update();
-                        })).catch((function(err) {
-                            update();
-                        }));
-                    };
-                    LoadableComponent.prototype.componentWillUnmount = function componentWillUnmount() {
-                        this._mounted = false;
-                        this._clearTimeouts();
-                    };
-                    LoadableComponent.prototype._clearTimeouts = function _clearTimeouts() {
-                        clearTimeout(this._delay);
-                        clearTimeout(this._timeout);
-                    };
-                    LoadableComponent.prototype.render = function render() {
-                        if (this.state.loading || this.state.error) return React.createElement(opts.loading, {
-                            isLoading: this.state.loading,
-                            pastDelay: this.state.pastDelay,
-                            timedOut: this.state.timedOut,
-                            error: this.state.error,
-                            retry: this.retry
-                        }); else if (this.state.loaded) return opts.render(this.state.loaded, this.props); else return null;
-                    };
-                    return LoadableComponent;
-                }(React.Component), _class.contextTypes = {
-                    loadable: PropTypes.shape({
-                        report: PropTypes.func.isRequired
-                    })
-                }, _temp;
-            }
-            function Loadable(opts) {
-                return createLoadableComponent(load, opts);
-            }
-            function LoadableMap(opts) {
-                if (typeof opts.render !== "function") throw new Error("LoadableMap requires a `render(loaded, props)` function");
-                return createLoadableComponent(loadMap, opts);
-            }
-            Loadable.Map = LoadableMap;
-            var Capture = function(_React$Component2) {
-                _inherits(Capture, _React$Component2);
-                function Capture() {
-                    _classCallCheck(this, Capture);
-                    return _possibleConstructorReturn(this, _React$Component2.apply(this, arguments));
-                }
-                Capture.prototype.getChildContext = function getChildContext() {
-                    return {
-                        loadable: {
-                            report: this.props.report
-                        }
-                    };
-                };
-                Capture.prototype.render = function render() {
-                    return React.Children.only(this.props.children);
-                };
-                return Capture;
-            }(React.Component);
-            Capture.propTypes = {
-                report: PropTypes.func.isRequired
-            };
-            Capture.childContextTypes = {
-                loadable: PropTypes.shape({
-                    report: PropTypes.func.isRequired
-                }).isRequired
-            };
-            Loadable.Capture = Capture;
-            function flushInitializers(initializers) {
-                var promises = [];
-                while (initializers.length) {
-                    var init = initializers.pop();
-                    promises.push(init());
-                }
-                return Promise.all(promises).then((function() {
-                    if (initializers.length) return flushInitializers(initializers);
-                }));
-            }
-            Loadable.preloadAll = function() {
-                return new Promise((function(resolve, reject) {
-                    flushInitializers(ALL_INITIALIZERS).then(resolve, reject);
-                }));
-            };
-            Loadable.preloadReady = function() {
-                return new Promise((function(resolve, reject) {
-                    flushInitializers(READY_INITIALIZERS).then(resolve, resolve);
-                }));
-            };
-            module.exports = Loadable;
-        },
         9764: function(module, __unused_webpack_exports, __webpack_require__) {
             !function(e, a) {
                 true ? module.exports = a(__webpack_require__(6540)) : 0;
@@ -10142,7 +9820,7 @@
             var react__WEBPACK_IMPORTED_MODULE_0___namespace_cache;
             var react_dom__WEBPACK_IMPORTED_MODULE_1___namespace_cache;
             __webpack_require__.d(__webpack_exports__, {
-                I9: () => HashRouter,
+                Kd: () => BrowserRouter,
                 N_: () => Link
             });
             var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
@@ -10286,10 +9964,10 @@
                 let {routes, future, state} = _ref3;
                 return UNSAFE_useRoutesImpl(routes, void 0, state, future);
             }
-            function HashRouter(_ref5) {
-                let {basename, children, future, window} = _ref5;
+            function BrowserRouter(_ref4) {
+                let {basename, children, future, window} = _ref4;
                 let historyRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
-                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.TM)({
+                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.zR)({
                     window,
                     v5Compat: true
                 });
@@ -16143,427 +15821,6 @@ and limitations under the License.
             var useDispatch = createDispatchHook();
             initializeUseSelector(use_sync_external_store_with_selector_js__WEBPACK_IMPORTED_MODULE_1__.useSyncExternalStoreWithSelector);
             initializeConnect(react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore);
-        },
-        2992: (__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) => {
-            "use strict";
-            var jsx_runtime = __webpack_require__(4848);
-            var client = __webpack_require__(5338);
-            var react = __webpack_require__(6540);
-            var lib = __webpack_require__(3259);
-            var lib_default = __webpack_require__.n(lib);
-            var dist = __webpack_require__(7767);
-            var __assign = function() {
-                __assign = Object.assign || function __assign(t) {
-                    for (var s, i = 1, n = arguments.length; i < n; i++) {
-                        s = arguments[i];
-                        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-                    }
-                    return t;
-                };
-                return __assign.apply(this, arguments);
-            };
-            Object.create;
-            Object.create;
-            typeof SuppressedError === "function" && SuppressedError;
-            function useWhyDidYouUpdate(componentName, props) {
-                var prevProps = (0, react.useRef)({});
-                (0, react.useEffect)((function() {
-                    if (prevProps.current) {
-                        var allKeys = Object.keys(__assign(__assign({}, prevProps.current), props));
-                        var changedProps_1 = {};
-                        allKeys.forEach((function(key) {
-                            if (!Object.is(prevProps.current[key], props[key])) changedProps_1[key] = {
-                                from: prevProps.current[key],
-                                to: props[key]
-                            };
-                        }));
-                        if (Object.keys(changedProps_1).length) console.log("[why-did-you-update]", componentName, changedProps_1);
-                    }
-                    prevProps.current = props;
-                }));
-            }
-            var qs_lib = __webpack_require__(5373);
-            var qs_lib_default = __webpack_require__.n(qs_lib);
-            var react_redux = __webpack_require__(1468);
-            var components = __webpack_require__(267);
-            var redux_toolkit_modern = __webpack_require__(3816);
-            var slice = __webpack_require__(2316);
-            var cart_slice = __webpack_require__(9196);
-            var CartStatusEnum;
-            (function(CartStatusEnum) {
-                CartStatusEnum["LOAD"] = "load";
-                CartStatusEnum["SUCCESS"] = "success";
-                CartStatusEnum["ERROR"] = "error";
-            })(CartStatusEnum || (CartStatusEnum = {}));
-            var axios = __webpack_require__(1083);
-            var asyncfunctions_awaiter = void 0 && (void 0).__awaiter || function(thisArg, _arguments, P, generator) {
-                function adopt(value) {
-                    return value instanceof P ? value : new P((function(resolve) {
-                        resolve(value);
-                    }));
-                }
-                return new (P || (P = Promise))((function(resolve, reject) {
-                    function fulfilled(value) {
-                        try {
-                            step(generator.next(value));
-                        } catch (e) {
-                            reject(e);
-                        }
-                    }
-                    function rejected(value) {
-                        try {
-                            step(generator["throw"](value));
-                        } catch (e) {
-                            reject(e);
-                        }
-                    }
-                    function step(result) {
-                        result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-                    }
-                    step((generator = generator.apply(thisArg, _arguments || [])).next());
-                }));
-            };
-            var asyncfunctions_generator = void 0 && (void 0).__generator || function(thisArg, body) {
-                var f, y, t, _ = {
-                    label: 0,
-                    sent: function() {
-                        if (t[0] & 1) throw t[1];
-                        return t[1];
-                    },
-                    trys: [],
-                    ops: []
-                }, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-                return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-                    return this;
-                }), g;
-                function verb(n) {
-                    return function(v) {
-                        return step([ n, v ]);
-                    };
-                }
-                function step(op) {
-                    if (f) throw new TypeError("Generator is already executing.");
-                    while (g && (g = 0, op[0] && (_ = 0)), _) try {
-                        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 
-                        0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                        if (y = 0, t) op = [ op[0] & 2, t.value ];
-                        switch (op[0]) {
-                          case 0:
-                          case 1:
-                            t = op;
-                            break;
-
-                          case 4:
-                            _.label++;
-                            return {
-                                value: op[1],
-                                done: false
-                            };
-
-                          case 5:
-                            _.label++;
-                            y = op[1];
-                            op = [ 0 ];
-                            continue;
-
-                          case 7:
-                            op = _.ops.pop();
-                            _.trys.pop();
-                            continue;
-
-                          default:
-                            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                                _ = 0;
-                                continue;
-                            }
-                            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                                _.label = op[1];
-                                break;
-                            }
-                            if (op[0] === 6 && _.label < t[1]) {
-                                _.label = t[1];
-                                t = op;
-                                break;
-                            }
-                            if (t && _.label < t[2]) {
-                                _.label = t[2];
-                                _.ops.push(op);
-                                break;
-                            }
-                            if (t[2]) _.ops.pop();
-                            _.trys.pop();
-                            continue;
-                        }
-                        op = body.call(thisArg, _);
-                    } catch (e) {
-                        op = [ 6, e ];
-                        y = 0;
-                    } finally {
-                        f = t = 0;
-                    }
-                    if (op[0] & 5) throw op[1];
-                    return {
-                        value: op[0] ? op[1] : void 0,
-                        done: true
-                    };
-                }
-            };
-            var fetchPizzas = (0, redux_toolkit_modern.zD)("pizzas/pizzasStatus", (function(params) {
-                return asyncfunctions_awaiter(void 0, void 0, void 0, (function() {
-                    var url, categoryIndex, search, sortBy, sortDirection, paginationNumber, data;
-                    return asyncfunctions_generator(this, (function(_a) {
-                        switch (_a.label) {
-                          case 0:
-                            url = params.url, categoryIndex = params.categoryIndex, search = params.search, 
-                            sortBy = params.sortBy, sortDirection = params.sortDirection, paginationNumber = params.paginationNumber;
-                            return [ 4, axios.A.get("".concat(url, "?").concat(categoryIndex, "&").concat(sortBy, "&order=").concat(sortDirection, "&\n\t\t\tpage=").concat(paginationNumber, "&limit=5&").concat(search)) ];
-
-                          case 1:
-                            data = _a.sent().data;
-                            return [ 2, data ];
-                        }
-                    }));
-                }));
-            }));
-            var initialState = {
-                items: [],
-                status: ""
-            };
-            var pizzas = (0, redux_toolkit_modern.Z0)({
-                name: "pizzas",
-                initialState,
-                reducers: {
-                    setpizzas: function(state, action) {
-                        state.items = action.payload;
-                    }
-                },
-                extraReducers: function(builder) {
-                    builder.addCase(fetchPizzas.pending, (function(state) {
-                        state.status = CartStatusEnum.LOAD;
-                        state.items = [];
-                    }));
-                    builder.addCase(fetchPizzas.fulfilled, (function(state, action) {
-                        state.status = CartStatusEnum.SUCCESS;
-                        state.items = action.payload;
-                    }));
-                    builder.addCase(fetchPizzas.rejected, (function(state) {
-                        state.status = CartStatusEnum.ERROR;
-                        state.items = [];
-                    }));
-                }
-            });
-            pizzas.actions.setpizzas;
-            const pizza_slice = pizzas.reducer;
-            var store = (0, redux_toolkit_modern.U1)({
-                reducer: {
-                    filter: slice.Ay,
-                    cart: cart_slice.Ay,
-                    pizzas: pizza_slice
-                }
-            });
-            var useAppDispatch = react_redux.wA.withTypes();
-            var selectors = __webpack_require__(8960);
-            var pizza_selectors = __webpack_require__(1064);
-            var type = __webpack_require__(2288);
-            var Home_assign = void 0 && (void 0).__assign || function() {
-                Home_assign = Object.assign || function(t) {
-                    for (var s, i = 1, n = arguments.length; i < n; i++) {
-                        s = arguments[i];
-                        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-                    }
-                    return t;
-                };
-                return Home_assign.apply(this, arguments);
-            };
-            var Home_spreadArray = void 0 && (void 0).__spreadArray || function(to, from, pack) {
-                if (pack || arguments.length === 2) for (var ar, i = 0, l = from.length; i < l; i++) if (ar || !(i in from)) {
-                    if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-                    ar[i] = from[i];
-                }
-                return to.concat(ar || Array.prototype.slice.call(from));
-            };
-            var Home = function() {
-                useWhyDidYouUpdate("Home", {});
-                var _a = (0, react_redux.d4)(selectors.c), categoryId = _a.categoryId, paginationNumber = _a.paginationNumber, sort = _a.sort, searhValue = _a.searhValue;
-                var _b = (0, react_redux.d4)(pizza_selectors.L), items = _b.items, status = _b.status;
-                var navigate = (0, dist.Zp)();
-                var dispatch = useAppDispatch();
-                var isSearch = react.useRef(false);
-                var isMounted = react.useRef(false);
-                var changeCategory = (0, react.useCallback)((function(index) {
-                    dispatch((0, slice.Qp)(index));
-                }), []);
-                var changePaginationPage = function(number) {
-                    dispatch((0, slice.aE)(number));
-                };
-                function getPizzas() {
-                    var url = "https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas";
-                    var categoryIndex = categoryId > 0 ? "category=".concat(categoryId) : "";
-                    var search = searhValue ? "search=".concat(searhValue) : "";
-                    var sortBy = "sortBy=".concat(sort.sortProperty.replace("-", ""));
-                    var sortDirection = sort.sortProperty.includes("-") ? "asc" : "desc";
-                    dispatch(fetchPizzas({
-                        url,
-                        categoryIndex,
-                        search,
-                        sortBy,
-                        sortDirection,
-                        paginationNumber: String(paginationNumber)
-                    }));
-                }
-                (0, react.useEffect)((function() {
-                    getPizzas();
-                    isSearch.current = false;
-                }), [ categoryId, sort.sortProperty, searhValue, paginationNumber ]);
-                (0, react.useEffect)((function() {
-                    if (isMounted.current) {
-                        var queryString = qs_lib_default().stringify({
-                            sortProperty: sort.sortProperty,
-                            categoryId,
-                            paginationNumber
-                        });
-                        navigate("?".concat(queryString));
-                    }
-                    isMounted.current = true;
-                }), [ categoryId, sort.sortProperty, paginationNumber ]);
-                (0, react.useEffect)((function() {
-                    if (window.location.search) {
-                        var params_1 = qs_lib_default().parse(window.location.search.substring(1));
-                        console.log(params_1);
-                        var sort_1 = components.p_.find((function(obj) {
-                            return obj.sortProperty === params_1.sortProperty;
-                        }));
-                        if (sort_1) params_1.sort = sort_1;
-                        dispatch((0, slice._F)(params_1));
-                        isSearch.current = true;
-                    }
-                }), []);
-                (0, react.useEffect)((function() {
-                    if (!window.location.search) dispatch((0, slice._F)({
-                        categoryId: Number(0),
-                        paginationNumber: 1,
-                        searhValue: "",
-                        sort: {
-                            name: "популярности",
-                            sortProperty: type.H.RATING
-                        },
-                        sortProperty: type.H.RATING
-                    }));
-                }), [ window.location.search ]);
-                return (0, jsx_runtime.jsxs)("div", {
-                    className: "container",
-                    children: [ (0, jsx_runtime.jsxs)("div", {
-                        className: "content__top",
-                        children: [ (0, jsx_runtime.jsx)(components.LJ, {
-                            value: categoryId,
-                            changeCategory
-                        }), (0, jsx_runtime.jsx)(components.FU, {
-                            value: sort
-                        }) ]
-                    }), (0, jsx_runtime.jsx)("h2", {
-                        className: "content__title",
-                        children: "Все пиццы"
-                    }), (0, jsx_runtime.jsx)("div", {
-                        className: "content__items",
-                        children: status === "error" ? (0, jsx_runtime.jsxs)("div", {
-                            className: "content__error-info",
-                            children: [ (0, jsx_runtime.jsx)("h2", {
-                                children: "Нет такой пиццы 😕"
-                            }), (0, jsx_runtime.jsx)("p", {
-                                children: "К сожалению, не удалось получить пиццы."
-                            }) ]
-                        }) : status === "load" ? (0, jsx_runtime.jsx)(jsx_runtime.Fragment, {
-                            children: Home_spreadArray([], Array(8), true).map((function(_, i) {
-                                return (0, jsx_runtime.jsx)(components.mr, {}, i);
-                            }))
-                        }) : items.filter((function(pizza) {
-                            return pizza.title.toLowerCase().includes(searhValue.toLowerCase());
-                        })).map((function(pizza) {
-                            return (0, jsx_runtime.jsx)(components.wq, Home_assign({}, pizza), pizza.id);
-                        }))
-                    }), (0, jsx_runtime.jsx)(components.dK, {
-                        onChangePage: changePaginationPage
-                    }) ]
-                });
-            };
-            const pages_Home = Home;
-            var MainLayout = function() {
-                return (0, jsx_runtime.jsxs)("div", {
-                    children: [ (0, jsx_runtime.jsx)(components.Y9, {}), (0, jsx_runtime.jsx)("div", {
-                        className: "content",
-                        children: (0, jsx_runtime.jsx)(dist.sv, {})
-                    }) ]
-                });
-            };
-            const components_MainLayout = MainLayout;
-            var Cart = (0, react.lazy)((function() {
-                return __webpack_require__.e(741).then(__webpack_require__.bind(__webpack_require__, 6741));
-            }));
-            var FullPizza = lib_default()({
-                loader: function() {
-                    return __webpack_require__.e(716).then(__webpack_require__.bind(__webpack_require__, 7716));
-                },
-                loading: function() {
-                    return (0, jsx_runtime.jsx)("div", {
-                        children: "Идёт загрузка пиццы"
-                    });
-                }
-            });
-            var NotFound = (0, react.lazy)((function() {
-                return __webpack_require__.e(614).then(__webpack_require__.bind(__webpack_require__, 6614));
-            }));
-            var App = function() {
-                return (0, jsx_runtime.jsx)(jsx_runtime.Fragment, {
-                    children: (0, jsx_runtime.jsx)(dist.BV, {
-                        children: (0, jsx_runtime.jsxs)(dist.qh, {
-                            path: "/",
-                            element: (0, jsx_runtime.jsx)(components_MainLayout, {}),
-                            children: [ (0, jsx_runtime.jsx)(dist.qh, {
-                                path: "",
-                                element: (0, jsx_runtime.jsx)(pages_Home, {})
-                            }), (0, jsx_runtime.jsx)(dist.qh, {
-                                path: "cart",
-                                element: (0, jsx_runtime.jsx)(react.Suspense, {
-                                    fallback: (0, jsx_runtime.jsx)("div", {
-                                        children: "Идёт загрузка корзины..."
-                                    }),
-                                    children: (0, jsx_runtime.jsx)(Cart, {})
-                                })
-                            }), (0, jsx_runtime.jsx)(dist.qh, {
-                                path: "pizza/:id",
-                                element: (0, jsx_runtime.jsx)(FullPizza, {})
-                            }), (0, jsx_runtime.jsx)(dist.qh, {
-                                path: "*",
-                                element: (0, jsx_runtime.jsx)(react.Suspense, {
-                                    fallback: (0, jsx_runtime.jsx)("div", {
-                                        children: "Идёт загрузка "
-                                    }),
-                                    children: (0, jsx_runtime.jsx)(NotFound, {})
-                                })
-                            }) ]
-                        })
-                    })
-                });
-            };
-            const react_App = App;
-            var react_router_dom_dist = __webpack_require__(4976);
-            var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
-            if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.I9, {
-                children: (0, jsx_runtime.jsx)(react_redux.Kq, {
-                    store,
-                    children: (0, jsx_runtime.jsx)(react_App, {})
-                })
-            }));
-            let addWindowScrollEvent = false;
-            setTimeout((() => {
-                if (addWindowScrollEvent) {
-                    let windowScroll = new Event("windowScroll");
-                    window.addEventListener("scroll", (function(e) {
-                        document.dispatchEvent(windowScroll);
-                    }));
-                }
-            }), 0);
-            window["FLS"] = true;
         }
     };
     var __webpack_module_cache__ = {};
@@ -16747,5 +16004,419 @@ and limitations under the License.
         chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
         chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
     })();
-    __webpack_require__(2992);
+    (() => {
+        "use strict";
+        var jsx_runtime = __webpack_require__(4848);
+        var client = __webpack_require__(5338);
+        var react = __webpack_require__(6540);
+        var dist = __webpack_require__(7767);
+        var __assign = function() {
+            __assign = Object.assign || function __assign(t) {
+                for (var s, i = 1, n = arguments.length; i < n; i++) {
+                    s = arguments[i];
+                    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                }
+                return t;
+            };
+            return __assign.apply(this, arguments);
+        };
+        Object.create;
+        Object.create;
+        typeof SuppressedError === "function" && SuppressedError;
+        function useWhyDidYouUpdate(componentName, props) {
+            var prevProps = (0, react.useRef)({});
+            (0, react.useEffect)((function() {
+                if (prevProps.current) {
+                    var allKeys = Object.keys(__assign(__assign({}, prevProps.current), props));
+                    var changedProps_1 = {};
+                    allKeys.forEach((function(key) {
+                        if (!Object.is(prevProps.current[key], props[key])) changedProps_1[key] = {
+                            from: prevProps.current[key],
+                            to: props[key]
+                        };
+                    }));
+                    if (Object.keys(changedProps_1).length) console.log("[why-did-you-update]", componentName, changedProps_1);
+                }
+                prevProps.current = props;
+            }));
+        }
+        var lib = __webpack_require__(5373);
+        var lib_default = __webpack_require__.n(lib);
+        var react_redux = __webpack_require__(1468);
+        var components = __webpack_require__(267);
+        var redux_toolkit_modern = __webpack_require__(3816);
+        var slice = __webpack_require__(2316);
+        var cart_slice = __webpack_require__(9196);
+        var CartStatusEnum;
+        (function(CartStatusEnum) {
+            CartStatusEnum["LOAD"] = "load";
+            CartStatusEnum["SUCCESS"] = "success";
+            CartStatusEnum["ERROR"] = "error";
+        })(CartStatusEnum || (CartStatusEnum = {}));
+        var axios = __webpack_require__(1083);
+        var asyncfunctions_awaiter = void 0 && (void 0).__awaiter || function(thisArg, _arguments, P, generator) {
+            function adopt(value) {
+                return value instanceof P ? value : new P((function(resolve) {
+                    resolve(value);
+                }));
+            }
+            return new (P || (P = Promise))((function(resolve, reject) {
+                function fulfilled(value) {
+                    try {
+                        step(generator.next(value));
+                    } catch (e) {
+                        reject(e);
+                    }
+                }
+                function rejected(value) {
+                    try {
+                        step(generator["throw"](value));
+                    } catch (e) {
+                        reject(e);
+                    }
+                }
+                function step(result) {
+                    result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+                }
+                step((generator = generator.apply(thisArg, _arguments || [])).next());
+            }));
+        };
+        var asyncfunctions_generator = void 0 && (void 0).__generator || function(thisArg, body) {
+            var f, y, t, _ = {
+                label: 0,
+                sent: function() {
+                    if (t[0] & 1) throw t[1];
+                    return t[1];
+                },
+                trys: [],
+                ops: []
+            }, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+            return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+                return this;
+            }), g;
+            function verb(n) {
+                return function(v) {
+                    return step([ n, v ]);
+                };
+            }
+            function step(op) {
+                if (f) throw new TypeError("Generator is already executing.");
+                while (g && (g = 0, op[0] && (_ = 0)), _) try {
+                    if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 
+                    0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                    if (y = 0, t) op = [ op[0] & 2, t.value ];
+                    switch (op[0]) {
+                      case 0:
+                      case 1:
+                        t = op;
+                        break;
+
+                      case 4:
+                        _.label++;
+                        return {
+                            value: op[1],
+                            done: false
+                        };
+
+                      case 5:
+                        _.label++;
+                        y = op[1];
+                        op = [ 0 ];
+                        continue;
+
+                      case 7:
+                        op = _.ops.pop();
+                        _.trys.pop();
+                        continue;
+
+                      default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;
+                            continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];
+                            break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];
+                            t = op;
+                            break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];
+                            _.ops.push(op);
+                            break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();
+                        continue;
+                    }
+                    op = body.call(thisArg, _);
+                } catch (e) {
+                    op = [ 6, e ];
+                    y = 0;
+                } finally {
+                    f = t = 0;
+                }
+                if (op[0] & 5) throw op[1];
+                return {
+                    value: op[0] ? op[1] : void 0,
+                    done: true
+                };
+            }
+        };
+        var fetchPizzas = (0, redux_toolkit_modern.zD)("pizzas/pizzasStatus", (function(params) {
+            return asyncfunctions_awaiter(void 0, void 0, void 0, (function() {
+                var url, categoryIndex, search, sortBy, sortDirection, paginationNumber, data;
+                return asyncfunctions_generator(this, (function(_a) {
+                    switch (_a.label) {
+                      case 0:
+                        url = params.url, categoryIndex = params.categoryIndex, search = params.search, 
+                        sortBy = params.sortBy, sortDirection = params.sortDirection, paginationNumber = params.paginationNumber;
+                        return [ 4, axios.A.get("".concat(url, "?").concat(categoryIndex, "&").concat(sortBy, "&order=").concat(sortDirection, "&\n\t\t\tpage=").concat(paginationNumber, "&limit=5&").concat(search)) ];
+
+                      case 1:
+                        data = _a.sent().data;
+                        return [ 2, data ];
+                    }
+                }));
+            }));
+        }));
+        var initialState = {
+            items: [],
+            status: ""
+        };
+        var pizzas = (0, redux_toolkit_modern.Z0)({
+            name: "pizzas",
+            initialState,
+            reducers: {
+                setpizzas: function(state, action) {
+                    state.items = action.payload;
+                }
+            },
+            extraReducers: function(builder) {
+                builder.addCase(fetchPizzas.pending, (function(state) {
+                    state.status = CartStatusEnum.LOAD;
+                    state.items = [];
+                }));
+                builder.addCase(fetchPizzas.fulfilled, (function(state, action) {
+                    state.status = CartStatusEnum.SUCCESS;
+                    state.items = action.payload;
+                }));
+                builder.addCase(fetchPizzas.rejected, (function(state) {
+                    state.status = CartStatusEnum.ERROR;
+                    state.items = [];
+                }));
+            }
+        });
+        pizzas.actions.setpizzas;
+        const pizza_slice = pizzas.reducer;
+        var store = (0, redux_toolkit_modern.U1)({
+            reducer: {
+                filter: slice.Ay,
+                cart: cart_slice.Ay,
+                pizzas: pizza_slice
+            }
+        });
+        var useAppDispatch = react_redux.wA.withTypes();
+        var selectors = __webpack_require__(8960);
+        var pizza_selectors = __webpack_require__(1064);
+        var type = __webpack_require__(2288);
+        var Home_assign = void 0 && (void 0).__assign || function() {
+            Home_assign = Object.assign || function(t) {
+                for (var s, i = 1, n = arguments.length; i < n; i++) {
+                    s = arguments[i];
+                    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                }
+                return t;
+            };
+            return Home_assign.apply(this, arguments);
+        };
+        var Home_spreadArray = void 0 && (void 0).__spreadArray || function(to, from, pack) {
+            if (pack || arguments.length === 2) for (var ar, i = 0, l = from.length; i < l; i++) if (ar || !(i in from)) {
+                if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+            return to.concat(ar || Array.prototype.slice.call(from));
+        };
+        var Home = function() {
+            useWhyDidYouUpdate("Home", {});
+            var _a = (0, react_redux.d4)(selectors.c), categoryId = _a.categoryId, paginationNumber = _a.paginationNumber, sort = _a.sort, searhValue = _a.searhValue;
+            var _b = (0, react_redux.d4)(pizza_selectors.L), items = _b.items, status = _b.status;
+            var navigate = (0, dist.Zp)();
+            var dispatch = useAppDispatch();
+            var isSearch = react.useRef(false);
+            var isMounted = react.useRef(false);
+            var changeCategory = (0, react.useCallback)((function(index) {
+                dispatch((0, slice.Qp)(index));
+            }), []);
+            var changePaginationPage = function(number) {
+                dispatch((0, slice.aE)(number));
+            };
+            function getPizzas() {
+                var url = "https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas";
+                var categoryIndex = categoryId > 0 ? "category=".concat(categoryId) : "";
+                var search = searhValue ? "search=".concat(searhValue) : "";
+                var sortBy = "sortBy=".concat(sort.sortProperty.replace("-", ""));
+                var sortDirection = sort.sortProperty.includes("-") ? "asc" : "desc";
+                dispatch(fetchPizzas({
+                    url,
+                    categoryIndex,
+                    search,
+                    sortBy,
+                    sortDirection,
+                    paginationNumber: String(paginationNumber)
+                }));
+            }
+            (0, react.useEffect)((function() {
+                getPizzas();
+                isSearch.current = false;
+            }), [ categoryId, sort.sortProperty, searhValue, paginationNumber ]);
+            (0, react.useEffect)((function() {
+                if (isMounted.current) {
+                    var queryString = lib_default().stringify({
+                        sortProperty: sort.sortProperty,
+                        categoryId,
+                        paginationNumber
+                    });
+                    navigate("?".concat(queryString));
+                }
+                isMounted.current = true;
+            }), [ categoryId, sort.sortProperty, paginationNumber ]);
+            (0, react.useEffect)((function() {
+                if (window.location.search) {
+                    var params_1 = lib_default().parse(window.location.search.substring(1));
+                    console.log(params_1);
+                    var sort_1 = components.p_.find((function(obj) {
+                        return obj.sortProperty === params_1.sortProperty;
+                    }));
+                    if (sort_1) params_1.sort = sort_1;
+                    dispatch((0, slice._F)(params_1));
+                    isSearch.current = true;
+                }
+            }), []);
+            (0, react.useEffect)((function() {
+                if (!window.location.search) dispatch((0, slice._F)({
+                    categoryId: Number(0),
+                    paginationNumber: 1,
+                    searhValue: "",
+                    sort: {
+                        name: "популярности",
+                        sortProperty: type.H.RATING
+                    },
+                    sortProperty: type.H.RATING
+                }));
+            }), [ window.location.search ]);
+            return (0, jsx_runtime.jsxs)("div", {
+                className: "container",
+                children: [ (0, jsx_runtime.jsxs)("div", {
+                    className: "content__top",
+                    children: [ (0, jsx_runtime.jsx)(components.LJ, {
+                        value: categoryId,
+                        changeCategory
+                    }), (0, jsx_runtime.jsx)(components.FU, {
+                        value: sort
+                    }) ]
+                }), (0, jsx_runtime.jsx)("h2", {
+                    className: "content__title",
+                    children: "Все пиццы"
+                }), (0, jsx_runtime.jsx)("div", {
+                    className: "content__items",
+                    children: status === "error" ? (0, jsx_runtime.jsxs)("div", {
+                        className: "content__error-info",
+                        children: [ (0, jsx_runtime.jsx)("h2", {
+                            children: "Нет такой пиццы 😕"
+                        }), (0, jsx_runtime.jsx)("p", {
+                            children: "К сожалению, не удалось получить пиццы."
+                        }) ]
+                    }) : status === "load" ? (0, jsx_runtime.jsx)(jsx_runtime.Fragment, {
+                        children: Home_spreadArray([], Array(8), true).map((function(_, i) {
+                            return (0, jsx_runtime.jsx)(components.mr, {}, i);
+                        }))
+                    }) : items.filter((function(pizza) {
+                        return pizza.title.toLowerCase().includes(searhValue.toLowerCase());
+                    })).map((function(pizza) {
+                        return (0, jsx_runtime.jsx)(components.wq, Home_assign({}, pizza), pizza.id);
+                    }))
+                }), (0, jsx_runtime.jsx)(components.dK, {
+                    onChangePage: changePaginationPage
+                }) ]
+            });
+        };
+        const pages_Home = Home;
+        var MainLayout = function() {
+            return (0, jsx_runtime.jsxs)("div", {
+                children: [ (0, jsx_runtime.jsx)(components.Y9, {}), (0, jsx_runtime.jsx)("div", {
+                    className: "content",
+                    children: (0, jsx_runtime.jsx)(dist.sv, {})
+                }) ]
+            });
+        };
+        const components_MainLayout = MainLayout;
+        var Cart = (0, react.lazy)((function() {
+            return __webpack_require__.e(741).then(__webpack_require__.bind(__webpack_require__, 6741));
+        }));
+        var FullPizza = (0, react.lazy)((function() {
+            return __webpack_require__.e(716).then(__webpack_require__.bind(__webpack_require__, 7716));
+        }));
+        var NotFound = (0, react.lazy)((function() {
+            return __webpack_require__.e(614).then(__webpack_require__.bind(__webpack_require__, 6614));
+        }));
+        var App = function() {
+            return (0, jsx_runtime.jsx)(dist.BV, {
+                children: (0, jsx_runtime.jsxs)(dist.qh, {
+                    path: "/",
+                    element: (0, jsx_runtime.jsx)(components_MainLayout, {}),
+                    children: [ (0, jsx_runtime.jsx)(dist.qh, {
+                        path: "",
+                        element: (0, jsx_runtime.jsx)(pages_Home, {})
+                    }), (0, jsx_runtime.jsx)(dist.qh, {
+                        path: "cart",
+                        element: (0, jsx_runtime.jsx)(react.Suspense, {
+                            fallback: (0, jsx_runtime.jsx)("div", {
+                                children: "Идёт загрузка корзины..."
+                            }),
+                            children: (0, jsx_runtime.jsx)(Cart, {})
+                        })
+                    }), (0, jsx_runtime.jsx)(dist.qh, {
+                        path: "pizza/:id",
+                        element: (0, jsx_runtime.jsx)(react.Suspense, {
+                            fallback: (0, jsx_runtime.jsx)("div", {
+                                children: "Идёт загрузка "
+                            }),
+                            children: (0, jsx_runtime.jsx)(FullPizza, {})
+                        })
+                    }), (0, jsx_runtime.jsx)(dist.qh, {
+                        path: "*",
+                        element: (0, jsx_runtime.jsx)(react.Suspense, {
+                            fallback: (0, jsx_runtime.jsx)("div", {
+                                children: "Идёт загрузка "
+                            }),
+                            children: (0, jsx_runtime.jsx)(NotFound, {})
+                        })
+                    }) ]
+                })
+            });
+        };
+        const react_App = App;
+        var react_router_dom_dist = __webpack_require__(4976);
+        var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
+        if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.Kd, {
+            children: (0, jsx_runtime.jsx)(react_redux.Kq, {
+                store,
+                children: (0, jsx_runtime.jsx)(react_App, {})
+            })
+        }));
+        let addWindowScrollEvent = false;
+        setTimeout((() => {
+            if (addWindowScrollEvent) {
+                let windowScroll = new Event("windowScroll");
+                window.addEventListener("scroll", (function(e) {
+                    document.dispatchEvent(windowScroll);
+                }));
+            }
+        }), 0);
+        window["FLS"] = true;
+    })();
 })();
