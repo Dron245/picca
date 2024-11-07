@@ -25,6 +25,8 @@ export const CartItemBlock: React.FC<CartItemProps> = ({id,title,imageUrl,price,
 	function removePizzas() {
 		dispath(delItem(id));
 	}
+	console.log(types, sizes);
+	
 	return (
 		<div className="cart__item">
 			<div className="cart__item-img">

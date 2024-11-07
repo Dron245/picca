@@ -33,7 +33,7 @@ export const filter = createSlice({
 			state.categoryId = Number(action.payload.categoryId);
 			state.sort = action.payload.sort;
 			state.paginationNumber = Number(action.payload.paginationNumber);
-			console.log(action.payload);
+			// console.log(action.payload);
 			
 		}
 	},

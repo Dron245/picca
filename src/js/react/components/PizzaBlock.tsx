@@ -14,7 +14,7 @@ export type PizzaBlockProps = {
 	sizes: number[];
 	count: number;
 };
-const typeNames = ['тонкое', 'традиционное'];
+export const typeNames = ['тонкое', 'традиционное'];
 
 export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	id,
@@ -27,11 +27,11 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	const [sizeindex, setsizeindex] = useState(0);
 	const [typePizza, settypePizza] =
 		types.length === 1 && types[0] === 1 ? useState(1) : useState(0);
+		const dispatch = useDispatch();
 	const pizzaR = useSelector(cartSelectorfindById(id));
-	const dispatch = useDispatch();
 	const count = pizzaR ? pizzaR.count : 0;
+	// console.log(pizzaR, 444);
 	
-	// console.log(sizeindexR);
 	function addPizza() {
 		const pizza = {
 			id,
