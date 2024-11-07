@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Axios from 'axios';
@@ -17,17 +15,26 @@ const FullPizza: React.FC = () => {
 	const { id } = useParams();
 	const { items } = useSelector(selectorPizzasData);
 	const [pizza, setPizza] = useState<{
-		imageUrl: string;
-		title: string;
-		price: number;
 		id: string;
-	}>();
-	
-	const findItems = items.find(obj=>obj.id===id)
-	// console.log(findItems);
+		title: string;
+		imageUrl: string;
+		price: number;
+		types: number[];
+		sizes: number[];
+		count: number;
+	}>({
+		id: '',
+		title: '',
+		imageUrl: '',
+		price: 0,
+		types: [],
+		sizes: [],
+		count: 0,
+	});
+
 	const [sizeindex, setsizeindex] = useState(0);
 	const [typePizza, settypePizza] =
-	findItems && findItems.types.length === 1 && findItems.types[0] === 1 ? useState(1) : useState(0);
+		pizza.types.length === 1 && pizza.types[0] === 1 ? useState(1) : useState(0);
 	const pizzaR = useSelector(cartSelectorfindById(id as string));
 	const count = pizzaR ? pizzaR.count : 0;
 	try {
@@ -39,7 +46,6 @@ const FullPizza: React.FC = () => {
 				setPizza(data);
 			};
 			fethdata();
-			
 		}, []);
 	} catch (error) {
 		alert('ошибка в получении пицц');
@@ -47,54 +53,58 @@ const FullPizza: React.FC = () => {
 		navigate('/');
 	}
 
-		const addPizza=()=> {
-			const findItemsCorrect = {...findItems,
-				types: typeNames[typePizza],
-			sizes: findItems && findItems.sizes[sizeindex],
+	const addPizza = () => {
+		const pizzaCorrect = {
+			...pizza,
+			types: typeNames[typePizza],
+			sizes: pizza.sizes[sizeindex],
 			count,
-			}
-			console.log(findItemsCorrect);
-			
-		dispatch(addItem(findItemsCorrect))
-	}
-	
+		};
+		dispatch(addItem(pizzaCorrect));
+	};
+
 	return (
-		<div className='container'>
-			{pizza  ? (
+		<div className='container fullpizza'>
+			{pizza ? (
 				<>
-					<img src={findItems && findItems.imageUrl} />
-					<p>{findItems && findItems.title}</p>
-					<p>{findItems && findItems.price} рублей</p>
+					<img src={pizza.imageUrl} />
+					<div className="fullpizza__content">
+					<p>{pizza.title}</p>
+					<p>{pizza.price} рублей</p>
 					<div className='pizza-block__selector'>
-					<ul>
-						{findItems && findItems.types.map((type) => (
-							<li
-								onClick={() => settypePizza(type)}
-								key={type}
-								className={typePizza === type ? 'active' : ''}
-							>
-								{typeNames[type]}
-							</li>
-						))}
-					</ul>
-					<ul>
-						{findItems && findItems.sizes.map((size, index) => (
-							<li
-								key={index}
-								onClick={() => setsizeindex(index)}
-								className={sizeindex === index ? 'active' : ''}
-							>
-								{size}
-							</li>
-						))}
-					</ul>
-				</div>
-				
-					<button onClick={addPizza} className='button button--outline button--add'>купить
-					{count > 0 &&<i>{count}</i>}</button>
+						<ul>
+							{pizza.types.map((type) => (
+								<li
+									onClick={() => settypePizza(type)}
+									key={type}
+									className={typePizza === type ? 'active' : ''}
+								>
+									{typeNames[type]}
+								</li>
+							))}
+						</ul>
+						<ul>
+							{pizza.sizes.map((size, index) => (
+								<li
+									key={index}
+									onClick={() => setsizeindex(index)}
+									className={sizeindex === index ? 'active' : ''}
+								>
+									{size}
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<button onClick={addPizza} className='button button--outline button--add'>
+						купить
+						{count > 0 && <i>{count}</i>}
+					</button>
 					<Link to='/' className='button button--outline button--add go-back-btn'>
 						<span>Вернуться назад</span>
 					</Link>
+					</div>
+					
 				</>
 			) : (
 				'Загрузка...'
