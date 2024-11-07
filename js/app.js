@@ -12087,7 +12087,7 @@ and limitations under the License.
                     }), (0, jsx_runtime.jsxs)("p", {
                         children: [ "Вероятней всего, вы не заказывали ещё пиццу.", (0, jsx_runtime.jsx)("br", {}), "Для того, чтобы заказать пиццу, перейди на главную страницу." ]
                     }), (0, jsx_runtime.jsx)("img", {
-                        src: "img/empty-cart.png",
+                        src: "./img/empty-cart.png",
                         alt: "Empty cart"
                     }), (0, jsx_runtime.jsx)(react_router_dom_dist.N_, {
                         to: "/",
@@ -16369,7 +16369,7 @@ and limitations under the License.
                     path: "/",
                     element: (0, jsx_runtime.jsx)(components_MainLayout, {}),
                     children: [ (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "",
+                        path: "/",
                         element: (0, jsx_runtime.jsx)(pages_Home, {})
                     }), (0, jsx_runtime.jsx)(dist.qh, {
                         path: "cart",
@@ -16380,7 +16380,7 @@ and limitations under the License.
                             children: (0, jsx_runtime.jsx)(Cart, {})
                         })
                     }), (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "pizza/:id",
+                        path: "./pizza/:id",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
                                 children: "Идёт загрузка "
