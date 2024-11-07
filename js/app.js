@@ -16372,7 +16372,7 @@ and limitations under the License.
                         path: "/",
                         element: (0, jsx_runtime.jsx)(pages_Home, {})
                     }), (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "/cart",
+                        path: "cart",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
                                 children: "Идёт загрузка корзины..."
