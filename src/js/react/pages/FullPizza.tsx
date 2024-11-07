@@ -67,10 +67,10 @@ const FullPizza: React.FC = () => {
 		<div className='container fullpizza'>
 			{pizza ? (
 				<>
-					<img src={pizza.imageUrl} />
+					<img className='fullpizza__img' src={pizza.imageUrl} />
 					<div className="fullpizza__content">
-					<p>{pizza.title}</p>
-					<p>{pizza.price} рублей</p>
+					<p className='pizza-block__title'>{pizza.title}</p>
+					<p className='pizza-block__price'>{pizza.price} рублей</p>
 					<div className='pizza-block__selector'>
 						<ul>
 							{pizza.types.map((type) => (
@@ -96,8 +96,8 @@ const FullPizza: React.FC = () => {
 						</ul>
 					</div>
 
-					<button onClick={addPizza} className='button button--outline button--add'>
-						купить
+					<button style={{marginRight:'20px'}} onClick={addPizza} className='button button--outline button--add'>
+						<span>купить</span>
 						{count > 0 && <i>{count}</i>}
 					</button>
 					<Link to='/' className='button button--outline button--add go-back-btn'>

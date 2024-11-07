@@ -19,7 +19,7 @@
 		"noimgbuild": "gulp build --build --noimgopt",
 		"tmp": "gulp -f gulpfile.tmp.js",
 		"bem": "fls-bemtree-from-html",
-		"predeploy": "npm run build",
+		"predeploy": "npm run devbuild",
 		"deploy": "gh-pages -d dist"
 	},
 	"devDependencies": {

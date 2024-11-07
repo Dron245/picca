@@ -67,7 +67,7 @@ const Home = () => {
 		}
 		isMounted.current = true;
 	}, [categoryId, sort.sortProperty, paginationNumber]);
-
+	
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
 		if (window.location.search ) {

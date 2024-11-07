@@ -11,7 +11,7 @@ const root = document.querySelector('#root')
 
 if (root) {
 	ReactDOM.createRoot(root).render(
-		<HashRouter>
+		<HashRouter >
 			<Provider store={store}>
 				<App />
 			</Provider>
