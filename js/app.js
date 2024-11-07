@@ -8,13 +8,13 @@
                 HS: () => joinPaths,
                 Oi: () => invariant,
                 Rr: () => parsePath,
-                TM: () => createHashHistory,
                 pX: () => isRouteErrorResponse,
                 pb: () => stripBasename,
                 rc: () => Action,
                 tH: () => AbortedDeferredError,
                 ue: () => matchRoutes,
-                yD: () => getResolveToMatches
+                yD: () => getResolveToMatches,
+                zR: () => createBrowserHistory
             });
             /**
  * @remix-run/router v1.19.2
@@ -42,31 +42,20 @@
                 Action["Replace"] = "REPLACE";
             })(Action || (Action = {}));
             const PopStateEventType = "popstate";
-            function createHashHistory(options) {
+            function createBrowserHistory(options) {
                 if (options === void 0) options = {};
-                function createHashLocation(window, globalHistory) {
-                    let {pathname = "/", search = "", hash = ""} = parsePath(window.location.hash.substr(1));
-                    if (!pathname.startsWith("/") && !pathname.startsWith(".")) pathname = "/" + pathname;
+                function createBrowserLocation(window, globalHistory) {
+                    let {pathname, search, hash} = window.location;
                     return createLocation("", {
                         pathname,
                         search,
                         hash
                     }, globalHistory.state && globalHistory.state.usr || null, globalHistory.state && globalHistory.state.key || "default");
                 }
-                function createHashHref(window, to) {
-                    let base = window.document.querySelector("base");
-                    let href = "";
-                    if (base && base.getAttribute("href")) {
-                        let url = window.location.href;
-                        let hashIndex = url.indexOf("#");
-                        href = hashIndex === -1 ? url : url.slice(0, hashIndex);
-                    }
-                    return href + "#" + (typeof to === "string" ? to : createPath(to));
+                function createBrowserHref(window, to) {
+                    return typeof to === "string" ? to : createPath(to);
                 }
-                function validateHashLocation(location, to) {
-                    warning(location.pathname.charAt(0) === "/", "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
-                }
-                return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
+                return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
             }
             function invariant(value, message) {
                 if (value === false || value === null || typeof value === "undefined") throw new Error(message);
@@ -10142,7 +10131,7 @@
             var react__WEBPACK_IMPORTED_MODULE_0___namespace_cache;
             var react_dom__WEBPACK_IMPORTED_MODULE_1___namespace_cache;
             __webpack_require__.d(__webpack_exports__, {
-                I9: () => HashRouter,
+                Kd: () => BrowserRouter,
                 N_: () => Link
             });
             var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
@@ -10286,10 +10275,10 @@
                 let {routes, future, state} = _ref3;
                 return UNSAFE_useRoutesImpl(routes, void 0, state, future);
             }
-            function HashRouter(_ref5) {
-                let {basename, children, future, window} = _ref5;
+            function BrowserRouter(_ref4) {
+                let {basename, children, future, window} = _ref4;
                 let historyRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
-                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.TM)({
+                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.zR)({
                     window,
                     v5Compat: true
                 });
@@ -11759,7 +11748,106 @@
                 return channel;
             };
         },
-        7983: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+        9087: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+            "use strict";
+            __webpack_require__.d(__webpack_exports__, {
+                D: () => typeNames,
+                w: () => PizzaBlock
+            });
+            var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4848);
+            var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6540);
+            var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1468);
+            var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4976);
+            var _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9196);
+            var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4636);
+            var typeNames = [ "тонкое", "традиционное" ];
+            var PizzaBlock = function(_a) {
+                var id = _a.id, title = _a.title, price = _a.price, imageUrl = _a.imageUrl, sizes = _a.sizes, types = _a.types;
+                var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
+                var _c = types.length === 1 && types[0] === 1 ? (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, 
+                react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typePizza = _c[0], settypePizza = _c[1];
+                var dispatch = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.wA)();
+                var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__.r)(id));
+                var count = pizzaR ? pizzaR.count : 0;
+                function addPizza() {
+                    var pizza = {
+                        id,
+                        title,
+                        imageUrl,
+                        price,
+                        types: typeNames[typePizza],
+                        sizes: sizes[sizeindex],
+                        count
+                    };
+                    dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.B5)(pizza));
+                }
+                return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                    className: "pizza-block-wrapper",
+                    children: (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "pizza-block",
+                        children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.N_, {
+                            to: "/pizza/".concat(id),
+                            children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
+                                className: "pizza-block__image",
+                                src: imageUrl,
+                                alt: "Pizza"
+                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
+                                className: "pizza-block__title",
+                                children: title
+                            }) ]
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "pizza-block__selector",
+                            children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                                children: types.map((function(type) {
+                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                        onClick: function() {
+                                            return settypePizza(type);
+                                        },
+                                        className: typePizza === type ? "active" : "",
+                                        children: typeNames[type]
+                                    }, type);
+                                }))
+                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                                children: sizes.map((function(size, index) {
+                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                        onClick: function() {
+                                            return setsizeindex(index);
+                                        },
+                                        className: sizeindex === index ? "active" : "",
+                                        children: size
+                                    }, index);
+                                }))
+                            }) ]
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "pizza-block__bottom",
+                            children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "pizza-block__price",
+                                children: [ "от ", price, " ₽" ]
+                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                                className: "button button--outline button--add",
+                                children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
+                                    width: "12",
+                                    height: "12",
+                                    viewBox: "0 0 12 12",
+                                    fill: "none",
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    children: (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+                                        d: "M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z",
+                                        fill: "white"
+                                    })
+                                }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                                    onClick: addPizza,
+                                    children: "Добавить"
+                                }), count > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                    children: count
+                                }) ]
+                            }) ]
+                        }) ]
+                    })
+                });
+            };
+        },
+        267: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Ah: () => CartEmpty,
@@ -11768,7 +11856,7 @@
                 Y9: () => Header,
                 T6: () => NotFoundBlock,
                 dK: () => Pagination,
-                wq: () => PizzaBlock,
+                wq: () => PizzaBlock.w,
                 mr: () => Sceleton,
                 vj: () => Search,
                 FU: () => Sort,
@@ -12021,92 +12109,7 @@
                     }) ]
                 });
             }));
-            var cart_slice = __webpack_require__(9196);
-            var typeNames = [ "тонкое", "традиционное" ];
-            var PizzaBlock = function(_a) {
-                var id = _a.id, title = _a.title, price = _a.price, imageUrl = _a.imageUrl, sizes = _a.sizes, types = _a.types;
-                var _b = (0, react.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
-                var _c = types.length === 1 && types[0] === 1 ? (0, react.useState)(1) : (0, react.useState)(0), typePizza = _c[0], settypePizza = _c[1];
-                var pizzaR = (0, react_redux.d4)((0, cart_slice.r5)(id));
-                var dispatch = (0, react_redux.wA)();
-                var count = pizzaR ? pizzaR.count : 0;
-                function addPizza() {
-                    var pizza = {
-                        id,
-                        title,
-                        imageUrl,
-                        price,
-                        types: typeNames[typePizza],
-                        sizes: sizes[sizeindex],
-                        count
-                    };
-                    dispatch((0, cart_slice.B5)(pizza));
-                }
-                return (0, jsx_runtime.jsx)("div", {
-                    className: "pizza-block-wrapper",
-                    children: (0, jsx_runtime.jsxs)("div", {
-                        className: "pizza-block",
-                        children: [ (0, jsx_runtime.jsxs)(react_router_dom_dist.N_, {
-                            to: "/pizza/".concat(id),
-                            children: [ (0, jsx_runtime.jsx)("img", {
-                                className: "pizza-block__image",
-                                src: imageUrl,
-                                alt: "Pizza"
-                            }), (0, jsx_runtime.jsx)("h4", {
-                                className: "pizza-block__title",
-                                children: title
-                            }) ]
-                        }), (0, jsx_runtime.jsxs)("div", {
-                            className: "pizza-block__selector",
-                            children: [ (0, jsx_runtime.jsx)("ul", {
-                                children: types.map((function(type) {
-                                    return (0, jsx_runtime.jsx)("li", {
-                                        onClick: function() {
-                                            return settypePizza(type);
-                                        },
-                                        className: typePizza === type ? "active" : "",
-                                        children: typeNames[type]
-                                    }, type);
-                                }))
-                            }), (0, jsx_runtime.jsx)("ul", {
-                                children: sizes.map((function(size, index) {
-                                    return (0, jsx_runtime.jsx)("li", {
-                                        onClick: function() {
-                                            return setsizeindex(index);
-                                        },
-                                        className: sizeindex === index ? "active" : "",
-                                        children: size
-                                    }, index);
-                                }))
-                            }) ]
-                        }), (0, jsx_runtime.jsxs)("div", {
-                            className: "pizza-block__bottom",
-                            children: [ (0, jsx_runtime.jsxs)("div", {
-                                className: "pizza-block__price",
-                                children: [ "от ", price, " ₽" ]
-                            }), (0, jsx_runtime.jsxs)("button", {
-                                className: "button button--outline button--add",
-                                children: [ (0, jsx_runtime.jsx)("svg", {
-                                    width: "12",
-                                    height: "12",
-                                    viewBox: "0 0 12 12",
-                                    fill: "none",
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    children: (0, jsx_runtime.jsx)("path", {
-                                        d: "M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z",
-                                        fill: "white"
-                                    })
-                                }), (0, jsx_runtime.jsx)("span", {
-                                    onClick: addPizza,
-                                    children: "Добавить"
-                                }), count > 0 && (0, jsx_runtime.jsx)("i", {
-                                    children: count
-                                }) ]
-                            }) ]
-                        }) ]
-                    })
-                });
-            };
+            var PizzaBlock = __webpack_require__(9087);
             /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -12285,6 +12288,7 @@ and limitations under the License.
                     }) ]
                 });
             };
+            var cart_slice = __webpack_require__(9196);
             var CartItemBlock = function(_a) {
                 var id = _a.id, title = _a.title, imageUrl = _a.imageUrl, price = _a.price, types = _a.types, sizes = _a.sizes, count = _a.count;
                 var dispath = (0, react_redux.wA)();
@@ -12299,6 +12303,7 @@ and limitations under the License.
                 function removePizzas() {
                     dispath((0, cart_slice.V_)(id));
                 }
+                console.log(types, sizes);
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "cart__item",
                     children: [ (0, jsx_runtime.jsx)("div", {
@@ -12408,8 +12413,16 @@ and limitations under the License.
         4636: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
-                a: () => cartSelector
+                a: () => cartSelector,
+                r: () => cartSelectorfindById
             });
+            var cartSelectorfindById = function(id) {
+                return function(state) {
+                    return state.cart.items.find((function(obj) {
+                        return obj.id === id;
+                    }));
+                };
+            };
             var cartSelector = function(state) {
                 return state.cart;
             };
@@ -12418,7 +12431,6 @@ and limitations under the License.
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 B5: () => addItem,
-                r5: () => cartSelectorfindById,
                 N2: () => clearItem,
                 Ay: () => slice,
                 V_: () => delItem,
@@ -12485,17 +12497,11 @@ and limitations under the License.
                     },
                     clearItem: function(state) {
                         state.items = [];
+                        state.prices = 0;
                     }
                 }
             });
             var addItem = (_a = cart.actions, _a.addItem), delItem = _a.delItem, minusItem = _a.minusItem, clearItem = _a.clearItem;
-            var cartSelectorfindById = function(id) {
-                return function(state) {
-                    return state.cart.items.find((function(obj) {
-                        return obj.id === id;
-                    }));
-                };
-            };
             const slice = cart.reducer;
         },
         8960: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12527,7 +12533,8 @@ and limitations under the License.
                 sort: {
                     name: "популярности",
                     sortProperty: _type__WEBPACK_IMPORTED_MODULE_0__.H.RATING
-                }
+                },
+                sortProperty: _type__WEBPACK_IMPORTED_MODULE_0__.H.RATING
             };
             var filter = (0, _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.Z0)({
                 name: "filter",
@@ -12549,7 +12556,6 @@ and limitations under the License.
                         state.categoryId = Number(action.payload.categoryId);
                         state.sort = action.payload.sort;
                         state.paginationNumber = Number(action.payload.paginationNumber);
-                        console.log(action.payload);
                     }
                 }
             });
@@ -12569,6 +12575,15 @@ and limitations under the License.
                 sortPropertyEnum["PRICEASC"] = "-price";
                 sortPropertyEnum["NAME"] = "-name";
             })(sortPropertyEnum || (sortPropertyEnum = {}));
+        },
+        1064: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+            "use strict";
+            __webpack_require__.d(__webpack_exports__, {
+                L: () => selectorPizzasData
+            });
+            var selectorPizzasData = function(state) {
+                return state.pizzas;
+            };
         },
         7154: (__unused_webpack_module, exports, __webpack_require__) => {
             "use strict";
@@ -16118,7 +16133,7 @@ and limitations under the License.
             initializeUseSelector(use_sync_external_store_with_selector_js__WEBPACK_IMPORTED_MODULE_1__.useSyncExternalStoreWithSelector);
             initializeConnect(react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore);
         },
-        4551: (__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) => {
+        2992: (__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) => {
             "use strict";
             var jsx_runtime = __webpack_require__(4848);
             var client = __webpack_require__(5338);
@@ -16159,7 +16174,7 @@ and limitations under the License.
             var qs_lib = __webpack_require__(5373);
             var qs_lib_default = __webpack_require__.n(qs_lib);
             var react_redux = __webpack_require__(1468);
-            var components = __webpack_require__(7983);
+            var components = __webpack_require__(267);
             var redux_toolkit_modern = __webpack_require__(3816);
             var slice = __webpack_require__(2316);
             var cart_slice = __webpack_require__(9196);
@@ -16322,7 +16337,6 @@ and limitations under the License.
                     }));
                     builder.addCase(fetchPizzas.rejected, (function(state) {
                         state.status = CartStatusEnum.ERROR;
-                        alert("ошибка в получении пицц");
                         state.items = [];
                     }));
                 }
@@ -16338,9 +16352,8 @@ and limitations under the License.
             });
             var useAppDispatch = react_redux.wA.withTypes();
             var selectors = __webpack_require__(8960);
-            var selectorPizzasData = function(state) {
-                return state.pizzas;
-            };
+            var pizza_selectors = __webpack_require__(1064);
+            var type = __webpack_require__(2288);
             var Home_assign = void 0 && (void 0).__assign || function() {
                 Home_assign = Object.assign || function(t) {
                     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -16360,9 +16373,8 @@ and limitations under the License.
             };
             var Home = function() {
                 useWhyDidYouUpdate("Home", {});
-                var _a = (0, react_redux.d4)(selectors.c), categoryId = _a.categoryId, paginationNumber = _a.paginationNumber, sort = _a.sort;
-                var _b = (0, react_redux.d4)(selectorPizzasData), items = _b.items, status = _b.status;
-                var searhValue = (0, react_redux.d4)(selectors.c).searhValue;
+                var _a = (0, react_redux.d4)(selectors.c), categoryId = _a.categoryId, paginationNumber = _a.paginationNumber, sort = _a.sort, searhValue = _a.searhValue;
+                var _b = (0, react_redux.d4)(pizza_selectors.L), items = _b.items, status = _b.status;
                 var navigate = (0, dist.Zp)();
                 var dispatch = useAppDispatch();
                 var isSearch = react.useRef(false);
@@ -16406,19 +16418,27 @@ and limitations under the License.
                 (0, react.useEffect)((function() {
                     if (window.location.search) {
                         var params_1 = qs_lib_default().parse(window.location.search.substring(1));
-                        var sort_1 = components.p_.find((function(obj) {
-                            return obj.sortProperty === params_1.sortBy;
-                        }));
                         console.log(params_1);
-                        dispatch((0, slice._F)({
-                            categoryId: Number(params_1.categoryIndex),
-                            paginationNumber: Number(params_1.paginationNumber),
-                            sort: sort_1 ? sort_1 : components.p_[0],
-                            searhValue: params_1.search
+                        var sort_1 = components.p_.find((function(obj) {
+                            return obj.sortProperty === params_1.sortProperty;
                         }));
+                        if (sort_1) params_1.sort = sort_1;
+                        dispatch((0, slice._F)(params_1));
                         isSearch.current = true;
                     }
                 }), []);
+                (0, react.useEffect)((function() {
+                    if (!window.location.search) dispatch((0, slice._F)({
+                        categoryId: Number(0),
+                        paginationNumber: 1,
+                        searhValue: "",
+                        sort: {
+                            name: "популярности",
+                            sortProperty: type.H.RATING
+                        },
+                        sortProperty: type.H.RATING
+                    }));
+                }), [ window.location.search ]);
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "container",
                     children: [ (0, jsx_runtime.jsxs)("div", {
@@ -16437,9 +16457,9 @@ and limitations under the License.
                         children: status === "error" ? (0, jsx_runtime.jsxs)("div", {
                             className: "content__error-info",
                             children: [ (0, jsx_runtime.jsx)("h2", {
-                                children: "Произошла ошибка 😕"
+                                children: "Нет такой пиццы 😕"
                             }), (0, jsx_runtime.jsx)("p", {
-                                children: "К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже."
+                                children: "К сожалению, не удалось получить пиццы."
                             }) ]
                         }) : status === "load" ? (0, jsx_runtime.jsx)(jsx_runtime.Fragment, {
                             children: Home_spreadArray([], Array(8), true).map((function(_, i) {
@@ -16517,7 +16537,7 @@ and limitations under the License.
             const react_App = App;
             var react_router_dom_dist = __webpack_require__(4976);
             var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
-            if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.I9, {
+            if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.Kd, {
                 children: (0, jsx_runtime.jsx)(react_redux.Kq, {
                     store,
                     children: (0, jsx_runtime.jsx)(react_App, {})
@@ -16716,5 +16736,5 @@ and limitations under the License.
         chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
         chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
     })();
-    __webpack_require__(4551);
+    __webpack_require__(2992);
 })();

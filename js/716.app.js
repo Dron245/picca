@@ -8,9 +8,24 @@
         });
         var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4848);
         var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6540);
-        var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7767);
-        var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4976);
-        var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1083);
+        var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7767);
+        var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4976);
+        var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1083);
+        var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1468);
+        var _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9196);
+        var _redux_pizza_selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1064);
+        var _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9087);
+        var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4636);
+        var __assign = void 0 && (void 0).__assign || function() {
+            __assign = Object.assign || function(t) {
+                for (var s, i = 1, n = arguments.length; i < n; i++) {
+                    s = arguments[i];
+                    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                }
+                return t;
+            };
+            return __assign.apply(this, arguments);
+        };
         var __awaiter = void 0 && (void 0).__awaiter || function(thisArg, _arguments, P, generator) {
             function adopt(value) {
                 return value instanceof P ? value : new P((function(resolve) {
@@ -124,9 +139,19 @@
             }
         };
         var FullPizza = function() {
-            var navigate = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Zp)();
-            var id = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_2__.g)().id;
+            var navigate = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Zp)();
+            var dispatch = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.wA)();
+            var id = (0, react_router_dom__WEBPACK_IMPORTED_MODULE_4__.g)().id;
+            var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)(_redux_pizza_selectors__WEBPACK_IMPORTED_MODULE_6__.L).items;
             var _a = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(), pizza = _a[0], setPizza = _a[1];
+            var findItems = items.find((function(obj) {
+                return obj.id === id;
+            }));
+            var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
+            var _c = findItems && findItems.types.length === 1 && findItems.types[0] === 1 ? (0, 
+            react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typePizza = _c[0], settypePizza = _c[1];
+            var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_7__.r)(id));
+            var count = pizzaR ? pizzaR.count : 0;
             try {
                 (0, react__WEBPACK_IMPORTED_MODULE_1__.useEffect)((function() {
                     var fethdata = function() {
@@ -135,7 +160,7 @@
                             return __generator(this, (function(_a) {
                                 switch (_a.label) {
                                   case 0:
-                                    return [ 4, axios__WEBPACK_IMPORTED_MODULE_3__.A.get("https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas/" + "".concat(id)) ];
+                                    return [ 4, axios__WEBPACK_IMPORTED_MODULE_8__.A.get("https://66853f80b3f57b06dd4bf714.mockapi.io/pizzas/" + "".concat(id)) ];
 
                                   case 1:
                                     data = _a.sent().data;
@@ -152,16 +177,54 @@
                 console.log(error);
                 navigate("/");
             }
+            var addPizza = function() {
+                var findItemsCorrect = __assign(__assign({}, findItems), {
+                    types: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[typePizza],
+                    sizes: findItems && findItems.sizes[sizeindex],
+                    count
+                });
+                console.log(findItemsCorrect);
+                dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.B5)(findItemsCorrect));
+            };
             return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "container",
                 children: pizza ? (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                     children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
-                        src: pizza.imageUrl
+                        src: findItems && findItems.imageUrl
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                        children: pizza.title
+                        children: findItems && findItems.title
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                        children: [ pizza.price, " рублей" ]
-                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.N_, {
+                        children: [ findItems && findItems.price, " рублей" ]
+                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "pizza-block__selector",
+                        children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                            children: findItems && findItems.types.map((function(type) {
+                                return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                    onClick: function() {
+                                        return settypePizza(type);
+                                    },
+                                    className: typePizza === type ? "active" : "",
+                                    children: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[type]
+                                }, type);
+                            }))
+                        }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
+                            children: findItems && findItems.sizes.map((function(size, index) {
+                                return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                    onClick: function() {
+                                        return setsizeindex(index);
+                                    },
+                                    className: sizeindex === index ? "active" : "",
+                                    children: size
+                                }, index);
+                            }))
+                        }) ]
+                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                        onClick: addPizza,
+                        className: "button button--outline button--add",
+                        children: [ "купить", count > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                            children: count
+                        }) ]
+                    }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.N_, {
                         to: "/",
                         className: "button button--outline button--add go-back-btn",
                         children: (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
