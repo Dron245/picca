@@ -16372,7 +16372,7 @@ and limitations under the License.
                         path: "/",
                         element: (0, jsx_runtime.jsx)(pages_Home, {})
                     }), (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "cart",
+                        path: "/cart",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
                                 children: "Идёт загрузка корзины..."
@@ -16380,7 +16380,7 @@ and limitations under the License.
                             children: (0, jsx_runtime.jsx)(Cart, {})
                         })
                     }), (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "./pizza/:id",
+                        path: "/pizza/:id",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
                                 children: "Идёт загрузка "
@@ -16403,6 +16403,7 @@ and limitations under the License.
         var react_router_dom_dist = __webpack_require__(4976);
         var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
         if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.Kd, {
+            basename: "",
             children: (0, jsx_runtime.jsx)(react_redux.Kq, {
                 store,
                 children: (0, jsx_runtime.jsx)(react_App, {})
