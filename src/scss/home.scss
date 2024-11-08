@@ -46,6 +46,12 @@ body {
 		margin-bottom: 50px;
 	}
 
+	&__center {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
 	&__items {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
