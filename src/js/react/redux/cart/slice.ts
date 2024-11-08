@@ -16,9 +16,11 @@ export const cart = createSlice({
 	reducers: {
 		addItem(state, action: PayloadAction<CartItem>) {
 			console.log(action.payload);
-			const findItem = state.items.find(obj =>obj.id === action.payload.id)
-			const findItem2 = state.items.find(obj =>obj.types === action.payload.types)
-			const findItem3 = state.items.find(obj =>obj.sizes === action.payload.sizes);
+			const findItem = state.items.filter(obj =>obj.id === action.payload.id)
+			.filter(obj=>obj.types===action.payload.types)
+			.find(obj=>obj.sizes===action.payload.sizes)
+			// const findItem2 = state.items.find(obj =>obj.types === action.payload.types)
+			// const findItem3 = state.items.find(obj =>obj.sizes === action.payload.sizes);
 		
 		// const findItem = state.items.filter(obj=>obj.id===action.payload.id)
 		console.log(findItem);
@@ -26,9 +28,11 @@ export const cart = createSlice({
 		if (!findItem) {
 				state.items.push({ ...action.payload, count: 1 });
 				// console.log(action.payload);
+				console.log('finditem нет');
 				
 			} else {
 				console.log('finditem:',`${findItem.title}`,`${findItem.id}`,`${findItem.types}`, `${findItem.sizes}`);
+				console.log('finditem есть');
 				
 				findItem.count++;
 			}
@@ -53,3 +57,6 @@ export const cart = createSlice({
 export const { addItem, delItem, minusItem, clearItem } = cart.actions;
 
 export default cart.reducer;
+
+
+
