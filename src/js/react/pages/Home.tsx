@@ -3,7 +3,7 @@ import { useWhyDidYouUpdate } from 'ahooks';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {Categories, Sort, PizzaBlock, Sceleton, Pagination, list} from '../components';
+import { Categories, Sort, PizzaBlock, Sceleton, Pagination, list } from '../components';
 
 import { useAppDispatch } from '../redux/store';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
@@ -12,9 +12,10 @@ import { selectorPizzasData } from '../redux/pizza/selectors';
 import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
 import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
+import { clearItem } from '../redux/cart/slice';
 
 const Home = () => {
-	useWhyDidYouUpdate('Home', {})
+	useWhyDidYouUpdate('Home', {});
 	const { categoryId, paginationNumber, sort, searhValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzasData);
 	const navigate = useNavigate();
@@ -22,10 +23,10 @@ const Home = () => {
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	// console.log(items);
-		
+
 	const changeCategory = useCallback((index: number) => {
-			dispatch(changeCategoryId(index));
-	}, [])
+		dispatch(changeCategoryId(index));
+	}, []);
 	const changePaginationPage = (number: number) => {
 		dispatch(paginationId(number));
 	};
@@ -49,6 +50,9 @@ const Home = () => {
 		);
 	}
 
+	function clearCart() {
+		dispatch(clearItem());
+	}
 	useEffect(() => {
 		getPizzas();
 		isSearch.current = false;
@@ -57,7 +61,7 @@ const Home = () => {
 	// Если изменили параметры и был первый рендер, то
 	// переводим зависимости useEffect в строку браузера
 	useEffect(() => {
-		if (isMounted.current ) {
+		if (isMounted.current) {
 			const queryString = qs.stringify({
 				sortProperty: sort.sortProperty,
 				categoryId,
@@ -67,14 +71,13 @@ const Home = () => {
 		}
 		isMounted.current = true;
 	}, [categoryId, sort.sortProperty, paginationNumber]);
-	
+
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
-		if (window.location.search ) {
-			
+		if (window.location.search) {
 			const params = qs.parse(
 				window.location.search.substring(1)
-			) as unknown as FilterSlice ;
+			) as unknown as FilterSlice;
 			// const params = qs.parse(
 			// 	window.location.search.substring(1)
 			// ) as unknown as SearchPizzaParams;
@@ -98,42 +101,81 @@ const Home = () => {
 			);
 
 			isSearch.current = true;
-		} 
+		}
 	}, []);
 	// console.log(window.location.search);
 
 	useEffect(() => {
-	  if(!window.location.search) {
-		dispatch(setFilters(
-			{
-				categoryId:Number(0),
-				paginationNumber: 1,
-				searhValue: '',
-				sort: {
-					name: "популярности",
+		if (!window.location.search) {
+			dispatch(
+				setFilters({
+					categoryId: Number(0),
+					paginationNumber: 1,
+					searhValue: '',
+					sort: {
+						name: 'популярности',
+						sortProperty: sortPropertyEnum.RATING,
+					},
 					sortProperty: sortPropertyEnum.RATING,
-				},
-				sortProperty: sortPropertyEnum.RATING,
-			}
-		))
-	  }
-	  
-	}, [window.location.search])
-	
+				})
+			);
+		}
+	}, [window.location.search]);
+
 	return (
 		<div className='container'>
 			<div className='content__top'>
 				<Categories value={categoryId} changeCategory={changeCategory} />
 				<Sort value={sort} />
 			</div>
-			<h2 className='content__title'>Все пиццы</h2>
+			<div className='content__center'>
+				<h2 className='content__title'>Все пиццы</h2>
+				<div onClick={clearCart} className='cart__clear'>
+					<svg
+						width='20'
+						height='20'
+						viewBox='0 0 20 20'
+						fill='none'
+						xmlns='http://www.w3.org/2000/svg'
+					>
+						<path
+							d='M2.5 5H4.16667H17.5'
+							stroke='#B6B6B6'
+							strokeWidth='1.2'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+						></path>
+						<path
+							d='M6.66663 5.00001V3.33334C6.66663 2.89131 6.84222 2.46739 7.15478 2.15483C7.46734 1.84227 7.89127 1.66667 8.33329 1.66667H11.6666C12.1087 1.66667 12.5326 1.84227 12.8451 2.15483C13.1577 2.46739 13.3333 2.89131 13.3333 3.33334V5.00001M15.8333 5.00001V16.6667C15.8333 17.1087 15.6577 17.5326 15.3451 17.8452C15.0326 18.1577 14.6087 18.3333 14.1666 18.3333H5.83329C5.39127 18.3333 4.96734 18.1577 4.65478 17.8452C4.34222 17.5326 4.16663 17.1087 4.16663 16.6667V5.00001H15.8333Z'
+							stroke='#B6B6B6'
+							strokeWidth='1.2'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+						></path>
+						<path
+							d='M8.33337 9.16667V14.1667'
+							stroke='#B6B6B6'
+							strokeWidth='1.2'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+						></path>
+						<path
+							d='M11.6666 9.16667V14.1667'
+							stroke='#B6B6B6'
+							strokeWidth='1.2'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+						></path>
+					</svg>
+					<span>Очистить корзину</span>
+				</div>
+			</div>
+
 			<div className='content__items'>
 				{status === 'error' ? (
 					<div className='content__error-info'>
 						<h2>Нет такой пиццы 😕</h2>
-						<p>
-							К сожалению, не удалось получить пиццы.
-						</p>
+						<p>К сожалению, не удалось получить пиццы.</p>
 					</div>
 				) : status === 'load' ? (
 					<>

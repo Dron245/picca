@@ -39,6 +39,12 @@ body {
 		}
 	}
 
+	&__center {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	&__title {
 		font-weight: 800;
 		font-size: 38px;
