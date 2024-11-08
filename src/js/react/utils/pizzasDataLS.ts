@@ -1,6 +1,5 @@
 import { CartItem } from '../redux/cart/type';
 import { calcPrice } from './calcPrice';
-// import { PizzaBlock } from "../redux/slises/pizzaSlice";
 
 export const pizzasDataLS = () => {
 	const json = localStorage.getItem('Cart');

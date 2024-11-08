@@ -15,7 +15,6 @@ export type PizzaBlockProps = {
 	count: number;
 };
 export const typeNames = ['тонкое', 'традиционное'];
-
 export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	id,
 	title,
@@ -30,7 +29,6 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 		const dispatch = useDispatch();
 	const pizzaR = useSelector(cartSelectorfindById(id));
 	const count = pizzaR ? pizzaR.count : 0;
-	// console.log(pizzaR, 444);
 	
 	function addPizza() {
 		const pizza = {

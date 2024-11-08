@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { pizzasDataLS } from "../../utils/pizzasDataLS";
-import { RootState } from "../store";
 import { CartItem, CartItemsSlice } from "./type";
 import { calcPrice } from "../../utils/calcPrice";
 
@@ -41,7 +40,6 @@ export const cart = createSlice({
 		},
 	},
 });
-// console.log(filter);
 export const { addItem, delItem, minusItem, clearItem } = cart.actions;
 
 export default cart.reducer;

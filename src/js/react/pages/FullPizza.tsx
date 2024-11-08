@@ -3,17 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CartItem } from '../redux/cart/type';
 import { addItem } from '../redux/cart/slice';
-import { PizzaBlock } from '../redux/pizza/type';
-import { selectorPizzasData } from '../redux/pizza/selectors';
-import { PizzaBlockProps, typeNames } from '../components/PizzaBlock';
+import { typeNames } from '../components/PizzaBlock';
 import { cartSelectorfindById } from '../redux/cart/selectors';
 const FullPizza: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { id } = useParams();
-	const { items } = useSelector(selectorPizzasData);
 	const [pizza, setPizza] = useState<{
 		id: string;
 		title: string;
@@ -68,43 +64,46 @@ const FullPizza: React.FC = () => {
 			{pizza ? (
 				<>
 					<img className='fullpizza__img' src={pizza.imageUrl} />
-					<div className="fullpizza__content">
-					<p className='pizza-block__title'>{pizza.title}</p>
-					<p className='pizza-block__price'>{pizza.price} рублей</p>
-					<div className='pizza-block__selector'>
-						<ul>
-							{pizza.types.map((type) => (
-								<li
-									onClick={() => settypePizza(type)}
-									key={type}
-									className={typePizza === type ? 'active' : ''}
-								>
-									{typeNames[type]}
-								</li>
-							))}
-						</ul>
-						<ul>
-							{pizza.sizes.map((size, index) => (
-								<li
-									key={index}
-									onClick={() => setsizeindex(index)}
-									className={sizeindex === index ? 'active' : ''}
-								>
-									{size}
-								</li>
-							))}
-						</ul>
-					</div>
+					<div className='fullpizza__content'>
+						<p className='pizza-block__title'>{pizza.title}</p>
+						<p className='pizza-block__price'>{pizza.price} рублей</p>
+						<div className='pizza-block__selector'>
+							<ul>
+								{pizza.types.map((type) => (
+									<li
+										onClick={() => settypePizza(type)}
+										key={type}
+										className={typePizza === type ? 'active' : ''}
+									>
+										{typeNames[type]}
+									</li>
+								))}
+							</ul>
+							<ul>
+								{pizza.sizes.map((size, index) => (
+									<li
+										key={index}
+										onClick={() => setsizeindex(index)}
+										className={sizeindex === index ? 'active' : ''}
+									>
+										{size}
+									</li>
+								))}
+							</ul>
+						</div>
 
-					<button style={{marginRight:'20px'}} onClick={addPizza} className='button button--outline button--add'>
-						<span>купить</span>
-						{count > 0 && <i>{count}</i>}
-					</button>
-					<Link to='/' className='button button--outline button--add go-back-btn'>
-						<span>Вернуться назад</span>
-					</Link>
+						<button
+							style={{ marginRight: '20px' }}
+							onClick={addPizza}
+							className='button button--outline button--add'
+						>
+							<span>купить</span>
+							{count > 0 && <i>{count}</i>}
+						</button>
+						<Link to='/' className='button button--outline button--add go-back-btn'>
+							<span>Вернуться назад</span>
+						</Link>
 					</div>
-					
 				</>
 			) : (
 				'Загрузка...'
