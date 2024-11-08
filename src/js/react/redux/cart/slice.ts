@@ -16,7 +16,7 @@ export const cart = createSlice({
 		addItem(state, action: PayloadAction<CartItem>) {
 			const findItem = state.items.find((obj) => {
 				return(
-				obj.id === action.payload.id,
+				obj.id === action.payload.id
 				// obj.types === action.payload.types,
 				// obj.sizes === action.payload.sizes
 				)}
