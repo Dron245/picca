@@ -69,4 +69,3 @@ export const Header: React.FC = React.memo(() => {
 		</div>
 	);
 });
-

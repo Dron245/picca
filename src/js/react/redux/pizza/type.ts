@@ -12,6 +12,7 @@ export type PizzaBlock = {
 	types: number[];
 	sizes: number[];
 	count: number;
+	cartId:number;
 };
 
 export interface PizzasSLice {

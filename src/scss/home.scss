@@ -423,13 +423,20 @@ body {
 
 .fullpizza {
 	display: flex;
-	outline: 1px solid red;
 	&__img {
 		width: 40%;
 	}
 
 	&__content {
 		flex: 0 0 40%;
+	}
+	.pizza-block__info {
+		margin-top: 50px;
+		display: grid;
+		row-gap: 20px;
+		.pizza-block__title {
+			margin-bottom: 0;
+		}
 	}
 	.pizza-block__selector {
 		margin-block: 30px;

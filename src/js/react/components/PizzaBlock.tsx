@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { addItem } from '../redux/cart/slice';
+import { addItem} from '../redux/cart/slice';
 import { cartSelectorfindById } from '../redux/cart/selectors';
-
 export type PizzaBlockProps = {
 	id: string;
 	title: string;
@@ -13,6 +12,7 @@ export type PizzaBlockProps = {
 	types: number[];
 	sizes: number[];
 	count: number;
+	cartId: number
 };
 export const typeNames = ['тонкое', 'традиционное'];
 export const PizzaBlock: React.FC<PizzaBlockProps> = ({
@@ -21,28 +21,30 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	price,
 	imageUrl,
 	sizes,
+	count,
 	types,
+	cartId
 }) => {
 	const [sizeindex, setsizeindex] = useState(0);
-	const [typePizza, settypePizza] =
+	const [typeIndex, settypeIndex] =
 		types.length === 1 && types[0] === 1 ? useState(1) : useState(0);
-		const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const pizzaR = useSelector(cartSelectorfindById(id));
-	const count = pizzaR ? pizzaR.count : 0;
-	
+	const countPizzaBlock = pizzaR ? pizzaR.countPizzaBlock : 0;
 	function addPizza() {
 		const pizza = {
 			id,
 			title,
 			imageUrl,
 			price,
-			types: typeNames[typePizza],
+			types: typeNames[typeIndex],
 			sizes: sizes[sizeindex],
 			count,
+			countPizzaBlock,
+			cartId
 		};
 		dispatch(addItem(pizza));
 	}
-
 	return (
 		<div className='pizza-block-wrapper'>
 			<div className='pizza-block'>
@@ -54,9 +56,9 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 					<ul>
 						{types.map((type) => (
 							<li
-								onClick={() => settypePizza(type)}
+								onClick={() => settypeIndex(type)}
 								key={type}
-								className={typePizza === type ? 'active' : ''}
+								className={typeIndex === type ? 'active' : ''}
 							>
 								{typeNames[type]}
 							</li>
@@ -90,7 +92,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 							/>
 						</svg>
 						<span onClick={addPizza}>Добавить</span>
-						{ count > 0 && <i>{count}</i>}
+						{countPizzaBlock>0 && <i>{countPizzaBlock}</i>}
 					</button>
 				</div>
 			</div>

@@ -25,7 +25,7 @@ const App: React.FC = () => {
 					}
 				></Route>
 				<Route
-					path='pizza/:id'
+					path='pizza/:idPizza'
 					element={
 						<Suspense fallback={<div>Идёт загрузка </div>}>
 							<FullPizza />
