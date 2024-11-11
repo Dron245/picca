@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {Search} from '../components';
 import { cartSelector } from '../redux/cart/selectors';
@@ -9,6 +9,7 @@ export const Header: React.FC = React.memo(() => {
 	const totalCount = items.reduce((sum: number, item: CartItem) => sum + item.count, 0);
 	const location = useLocation();
 	const ismounted = useRef(false);
+	const { idPizza } = useParams();
 	
 	useEffect(() => {
 		if ((ismounted.current = true)) {
@@ -28,7 +29,7 @@ export const Header: React.FC = React.memo(() => {
 						<p>самая вкусная пицца во вселенной</p>
 					</div>
 				</Link>
-				{location.pathname !== '/cart' && <Search />}
+				{(location.pathname !== '/cart' && location.pathname !== `/pizza/${idPizza}`) && <Search />}
 				<div className='header__cart'>
 					<Link to='/cart' className='button button--cart'>
 						<span>{prices} ₽</span>

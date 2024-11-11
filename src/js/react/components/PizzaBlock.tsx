@@ -8,7 +8,7 @@ export type PizzaBlockProps = {
 	id: string;
 	title: string;
 	imageUrl: string;
-	price: number;
+	price: number[];
 	types: number[];
 	sizes: number[];
 	count: number;
@@ -36,7 +36,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 			id,
 			title,
 			imageUrl,
-			price,
+			price: price[sizeindex],
 			types: typeNames[typeIndex],
 			sizes: sizes[sizeindex],
 			count,
@@ -77,7 +77,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 					</ul>
 				</div>
 				<div className='pizza-block__bottom'>
-					<div className='pizza-block__price'>от {price} ₽</div>
+					<div className='pizza-block__price'>от {price[sizeindex]} ₽</div>
 					<button className='button button--outline button--add'>
 						<svg
 							width='12'

@@ -15,7 +15,7 @@ const FullPizza: React.FC = () => {
 		id: string;
 		title: string;
 		imageUrl: string;
-		price: number;
+		price: number[];
 		types: number[];
 		sizes: number[];
 		count: number;
@@ -83,7 +83,7 @@ const FullPizza: React.FC = () => {
 					<img className="fullpizza__img" src={pizza.imageUrl} />
 					<div className="fullpizza__content">
 						<p className="pizza-block__title">{pizza.title}</p>
-						<p className="pizza-block__price">{pizza.price} рублей</p>
+						<p className="pizza-block__price">{pizza.price[sizeindex]} рублей</p>
 						<div className="pizza-block__selector">
 							<ul>
 								{pizza.types.map((type) => (
@@ -122,7 +122,7 @@ const FullPizza: React.FC = () => {
 								Всего куплено пицц {pizza.title}: {countPizzaBlock}
 							</span>
 							<span className="pizza-block__price">
-								Куплено пицц {pizza.title} {typeNames[typeIndex]} {pizza.sizes[sizeindex]}:{" "}
+								Куплено пицц {pizza.title} {typeNames[typeIndex]} размер "{pizza.sizes[sizeindex]}" :{" "}
 								{count}
 							</span>
 						</div>
