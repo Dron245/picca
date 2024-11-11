@@ -3,7 +3,7 @@ import { useWhyDidYouUpdate } from 'ahooks';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {Categories, Sort, PizzaBlock, Sceleton, Pagination, list} from '../components';
+import { Categories, Sort, PizzaBlock, Sceleton, Pagination, list } from '../components';
 
 import { useAppDispatch } from '../redux/store';
 import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slice';
@@ -13,9 +13,10 @@ import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
 import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
 import { clearItem } from '../redux/cart/slice';
+import { clearItem } from '../redux/cart/slice';
 
 const Home = () => {
-	useWhyDidYouUpdate('Home', {})
+	useWhyDidYouUpdate('Home', {});
 	const { categoryId, paginationNumber, sort, searhValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzasData);
 	const navigate = useNavigate();
@@ -23,10 +24,10 @@ const Home = () => {
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	// console.log(items);
-		
+
 	const changeCategory = useCallback((index: number) => {
-			dispatch(changeCategoryId(index));
-	}, [])
+		dispatch(changeCategoryId(index));
+	}, []);
 	const changePaginationPage = (number: number) => {
 		dispatch(paginationId(number));
 	};
@@ -62,7 +63,7 @@ const Home = () => {
 	// Если изменили параметры и был первый рендер, то
 	// переводим зависимости useEffect в строку браузера
 	useEffect(() => {
-		if (isMounted.current ) {
+		if (isMounted.current) {
 			const queryString = qs.stringify({
 				sortProperty: sort.sortProperty,
 				categoryId,
@@ -72,14 +73,13 @@ const Home = () => {
 		}
 		isMounted.current = true;
 	}, [categoryId, sort.sortProperty, paginationNumber]);
-	
+
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
-		if (window.location.search ) {
-			
+		if (window.location.search) {
 			const params = qs.parse(
 				window.location.search.substring(1)
-			) as unknown as FilterSlice ;
+			) as unknown as FilterSlice;
 			// const params = qs.parse(
 			// 	window.location.search.substring(1)
 			// ) as unknown as SearchPizzaParams;
@@ -103,28 +103,27 @@ const Home = () => {
 			);
 
 			isSearch.current = true;
-		} 
+		}
 	}, []);
 	// console.log(window.location.search);
 
 	useEffect(() => {
-	  if(!window.location.search) {
-		dispatch(setFilters(
-			{
-				categoryId:Number(0),
-				paginationNumber: 1,
-				searhValue: '',
-				sort: {
-					name: "популярности",
+		if (!window.location.search) {
+			dispatch(
+				setFilters({
+					categoryId: Number(0),
+					paginationNumber: 1,
+					searhValue: '',
+					sort: {
+						name: 'популярности',
+						sortProperty: sortPropertyEnum.RATING,
+					},
 					sortProperty: sortPropertyEnum.RATING,
-				},
-				sortProperty: sortPropertyEnum.RATING,
-			}
-		))
-	  }
-	  
-	}, [window.location.search])
-	
+				})
+			);
+		}
+	}, [window.location.search]);
+
 	return (
 		<div className='container'>
 			<div className='content__top'>
@@ -177,9 +176,7 @@ const Home = () => {
 				{status === 'error' ? (
 					<div className='content__error-info'>
 						<h2>Нет такой пиццы 😕</h2>
-						<p>
-							К сожалению, не удалось получить пиццы.
-						</p>
+						<p>К сожалению, не удалось получить пиццы.</p>
 					</div>
 				) : status === 'load' ? (
 					<>

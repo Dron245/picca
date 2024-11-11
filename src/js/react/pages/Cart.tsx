@@ -11,9 +11,7 @@ const Cart: React.FC = () => {
 	const totalCount = items.reduce((sum: number, item:any)=> sum+item.count,0)
 	const dispatch = useDispatch();
 	function clearCart() {
-		if (window.confirm("Точно хотите удалить всё")) {
 			dispatch(clearItem())
-		}
 	}
 	if (totalCount === 0) {
 		return <CartEmpty/>
