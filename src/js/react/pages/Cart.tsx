@@ -92,9 +92,10 @@ const Cart: React.FC = () => {
 						<span>Очистить корзину</span>
 					</div>
 				</div>
+				
 				<div className='content__items'>
-					{items.map((item: any) => (
-						<CartItem key={item.id} {...item} />
+					{items.map((item) => (
+						<CartItem key={item.cartId} {...item}/>
 					))}
 				</div>
 				<div className='cart__bottom'>

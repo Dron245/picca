@@ -1,7 +1,9 @@
+
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../redux/cart/type";
 import { addItem, delItem, minusItem } from "../redux/cart/slice";
+import { cartSelectorDelId } from "../redux/cart/selectors";
 
 type CartItemProps = {
 	id: string;
@@ -11,21 +13,33 @@ type CartItemProps = {
 	types: string;
 	sizes: number;
 	count: number;
+	cartId:number
 };
 
-export const CartItemBlock: React.FC<CartItemProps> = ({id,title,imageUrl,price,types,sizes,count,}) => {
+export const CartItemBlock: React.FC<CartItemProps> = ({
+	id,
+	title,
+	imageUrl,
+	price,
+	types,
+	sizes,
+	count,
+	cartId
+}) => {
 	const dispath = useDispatch();
-
+	const pizzaR = useSelector(cartSelectorDelId(cartId));
+	const cartIdd = pizzaR ? pizzaR.cartId :0
+	// console.log(cartId);
+	
 	function onClickMinus() {
 		dispath(minusItem(id));
 	}
 	function onClickPlus() {
-		dispath(addItem({ id } as CartItem));
+		dispath(addItem({ id,types, sizes } as CartItem));
 	}
 	function removePizzas() {
-		dispath(delItem(id));
+		dispath(delItem(cartIdd));
 	}
-	console.log(types, sizes);
 	
 	return (
 		<div className="cart__item">

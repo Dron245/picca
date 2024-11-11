@@ -13,6 +13,7 @@ import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
 import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
 import { clearItem } from '../redux/cart/slice';
+import { clearItem } from '../redux/cart/slice';
 
 const Home = () => {
 	useWhyDidYouUpdate('Home', {});
@@ -53,6 +54,7 @@ const Home = () => {
 	function clearCart() {
 		dispatch(clearItem());
 	}
+	
 	useEffect(() => {
 		getPizzas();
 		isSearch.current = false;
@@ -170,7 +172,6 @@ const Home = () => {
 					<span>Очистить корзину</span>
 				</div>
 			</div>
-
 			<div className='content__items'>
 				{status === 'error' ? (
 					<div className='content__error-info'>

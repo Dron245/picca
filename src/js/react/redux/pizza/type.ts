@@ -8,10 +8,11 @@ export type PizzaBlock = {
 	id: string;
 	title: string;
 	imageUrl: string;
-	price: number;
+	price: number[];
 	types: number[];
 	sizes: number[];
 	count: number;
+	cartId:number;
 };
 
 export interface PizzasSLice {

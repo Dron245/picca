@@ -6,6 +6,8 @@ export type CartItem = {
 	types: string;
 	sizes: number;
 	count: number;
+	countPizzaBlock: number;
+	cartId: number
 };
 
 export interface CartItemsSlice {
