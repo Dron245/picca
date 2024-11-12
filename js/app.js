@@ -11572,8 +11572,6 @@
             var selectors = __webpack_require__(4636);
             var LastOrderItem = function(_a) {
                 var imageUrl = _a.imageUrl, title = _a.title, types = _a.types, sizes = _a.sizes, price = _a.price;
-                (0, react_redux.d4)(selectors.aJ).items;
-                console.log(price);
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "last-order",
                     children: [ (0, jsx_runtime.jsxs)("div", {

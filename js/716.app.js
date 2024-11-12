@@ -145,16 +145,17 @@
                 id: "",
                 title: "",
                 imageUrl: "",
-                price: 0,
+                price: [],
                 types: [],
                 sizes: [],
                 count: 0,
-                countPizzaBlock: 0
+                countPizzaBlock: 0,
+                cartId: 555
             }), pizza = _a[0], setPizza = _a[1];
             var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)(_redux_cart_selectors__WEBPACK_IMPORTED_MODULE_6__.aJ).items;
-            var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
+            var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setSizeindex = _b[1];
             var _c = pizza.types.length === 1 && pizza.types[0] === 1 ? (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, 
-            react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typeIndex = _c[0], settypeIndex = _c[1];
+            react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typeIndex = _c[0], setTypeIndex = _c[1];
             var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_6__.r5)(idPizza));
             var findItem = items.find((function(obj) {
                 return obj.title === pizza.title && obj.types === _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[typeIndex] && obj.sizes === pizza.sizes[sizeindex];
@@ -215,7 +216,7 @@
                                 children: pizza.types.map((function(type) {
                                     return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
                                         onClick: function() {
-                                            return settypeIndex(type);
+                                            return setTypeIndex(type);
                                         },
                                         className: typeIndex === type ? "active" : "",
                                         children: _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[type]
@@ -225,7 +226,7 @@
                                 children: pizza.sizes.map((function(size, index) {
                                     return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
                                         onClick: function() {
-                                            return setsizeindex(index);
+                                            return setSizeindex(index);
                                         },
                                         className: sizeindex === index ? "active" : "",
                                         children: [ size, " см." ]
@@ -254,7 +255,7 @@
                                 children: [ "Всего куплено пицц ", pizza.title, ": ", countPizzaBlock ]
                             }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
                                 className: "pizza-block__price",
-                                children: [ "Куплено пицц ", pizza.title, ", тесто: ", _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[typeIndex], ' размер "', pizza.sizes[sizeindex], '" : ', " ", count ]
+                                children: [ 'Куплено пицц "', pizza.title, '" тесто: ', _components_PizzaBlock__WEBPACK_IMPORTED_MODULE_3__.D[typeIndex], ' размер "', pizza.sizes[sizeindex], ' см" : ', count, " шт." ]
                             }) ]
                         }) ]
                     }) ]
