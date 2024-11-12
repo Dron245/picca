@@ -8,13 +8,13 @@
                 HS: () => joinPaths,
                 Oi: () => invariant,
                 Rr: () => parsePath,
-                TM: () => createHashHistory,
                 pX: () => isRouteErrorResponse,
                 pb: () => stripBasename,
                 rc: () => Action,
                 tH: () => AbortedDeferredError,
                 ue: () => matchRoutes,
-                yD: () => getResolveToMatches
+                yD: () => getResolveToMatches,
+                zR: () => createBrowserHistory
             });
             /**
  * @remix-run/router v1.19.2
@@ -42,31 +42,20 @@
                 Action["Replace"] = "REPLACE";
             })(Action || (Action = {}));
             const PopStateEventType = "popstate";
-            function createHashHistory(options) {
+            function createBrowserHistory(options) {
                 if (options === void 0) options = {};
-                function createHashLocation(window, globalHistory) {
-                    let {pathname = "/", search = "", hash = ""} = parsePath(window.location.hash.substr(1));
-                    if (!pathname.startsWith("/") && !pathname.startsWith(".")) pathname = "/" + pathname;
+                function createBrowserLocation(window, globalHistory) {
+                    let {pathname, search, hash} = window.location;
                     return createLocation("", {
                         pathname,
                         search,
                         hash
                     }, globalHistory.state && globalHistory.state.usr || null, globalHistory.state && globalHistory.state.key || "default");
                 }
-                function createHashHref(window, to) {
-                    let base = window.document.querySelector("base");
-                    let href = "";
-                    if (base && base.getAttribute("href")) {
-                        let url = window.location.href;
-                        let hashIndex = url.indexOf("#");
-                        href = hashIndex === -1 ? url : url.slice(0, hashIndex);
-                    }
-                    return href + "#" + (typeof to === "string" ? to : createPath(to));
+                function createBrowserHref(window, to) {
+                    return typeof to === "string" ? to : createPath(to);
                 }
-                function validateHashLocation(location, to) {
-                    warning(location.pathname.charAt(0) === "/", "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
-                }
-                return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
+                return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
             }
             function invariant(value, message) {
                 if (value === false || value === null || typeof value === "undefined") throw new Error(message);
@@ -9831,7 +9820,7 @@
             var react__WEBPACK_IMPORTED_MODULE_0___namespace_cache;
             var react_dom__WEBPACK_IMPORTED_MODULE_1___namespace_cache;
             __webpack_require__.d(__webpack_exports__, {
-                I9: () => HashRouter,
+                Kd: () => BrowserRouter,
                 N_: () => Link
             });
             var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
@@ -9975,10 +9964,10 @@
                 let {routes, future, state} = _ref3;
                 return UNSAFE_useRoutesImpl(routes, void 0, state, future);
             }
-            function HashRouter(_ref5) {
-                let {basename, children, future, window} = _ref5;
+            function BrowserRouter(_ref4) {
+                let {basename, children, future, window} = _ref4;
                 let historyRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
-                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.TM)({
+                if (historyRef.current == null) historyRef.current = (0, _remix_run_router__WEBPACK_IMPORTED_MODULE_2__.zR)({
                     window,
                     v5Compat: true
                 });
@@ -16550,7 +16539,7 @@ and limitations under the License.
         const react_App = App;
         var react_router_dom_dist = __webpack_require__(4976);
         var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
-        if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.I9, {
+        if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.Kd, {
             children: (0, jsx_runtime.jsx)(react_redux.Kq, {
                 store,
                 children: (0, jsx_runtime.jsx)(react_App, {})
