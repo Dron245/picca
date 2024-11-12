@@ -5,7 +5,7 @@ import { CartItem } from "../redux/cart/type";
 import { addItem, delItem, minusItem } from "../redux/cart/slice";
 import { cartSelectorDelId } from "../redux/cart/selectors";
 
-type CartItemProps = {
+export type CartItemProps = {
 	id: string;
 	title: string;
 	imageUrl: string;
@@ -35,7 +35,7 @@ export const CartItemBlock: React.FC<CartItemProps> = ({
 		dispath(minusItem(id));
 	}
 	function onClickPlus() {
-		dispath(addItem({ id,types, sizes } as CartItem));
+		dispath(addItem({ id,types, sizes, price, imageUrl } as CartItem));
 	}
 	function removePizzas() {
 		dispath(delItem(cartIdd));

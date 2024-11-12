@@ -1,16 +1,19 @@
-import React, { useCallback, useRef } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import './Search.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/filter/slice';
 import { selectorFilter } from '../../redux/filter/selectors';
-
-export const Search: React.FC = () => {
+type SearchProps ={
+	value: string,
+	setValue: Dispatch<SetStateAction<string>>;
+}
+export const Search: React.FC<SearchProps> = ({value, setValue}) => {
 	const dispatch = useDispatch();
 	const {searhValue} = useSelector(selectorFilter);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [value, setValue] = React.useState<string>('');
-	const searhValueFunction = () => {
+	
+	 const searhValueReset = () => {
 		dispatch(setSearchValue(''));
 		setValue('');
 		inputRef.current?.focus();
@@ -40,7 +43,7 @@ export const Search: React.FC = () => {
 			/>
 			{searhValue && (
 				<img
-					onClick={searhValueFunction}
+					onClick={searhValueReset}
 					className='input-search__icon'
 					src='img/close-svgrepo-com.svg'
 					alt='Image'

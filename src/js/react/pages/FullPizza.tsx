@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Axios from "axios";
@@ -20,25 +19,24 @@ const FullPizza: React.FC = () => {
 		sizes: number[];
 		count: number;
 		countPizzaBlock: number;
+		cartId: number;
 	}>({
 		id: "",
 		title: "",
 		imageUrl: "",
-		price: 0,
+		price: [],
 		types: [],
 		sizes: [],
 		count: 0,
 		countPizzaBlock: 0,
+		cartId: 555,
 	});
 	const { items } = useSelector(cartSelector);
-	const [sizeindex, setsizeindex] = useState(0);
-	const [typeIndex, settypeIndex] =
+	const [sizeindex, setSizeindex] = useState(0);
+	const [typeIndex, setTypeIndex] =
 		pizza.types.length === 1 && pizza.types[0] === 1 ? useState(1) : useState(0);
 	const pizzaR = useSelector(cartSelectorfindById(idPizza as string));
-	// const findPizzaName = items.find(item=>item.title===pizza.title)
-	// const findPizzaType = items.find(item=>item.types===typeNames[typeIndex])
-	// const findPizzaSize = items.find(item=>item.sizes===pizza.sizes[sizeindex])
-	// const count = (findPizzaName && findPizzaType && findPizzaSize) ? 987 : 0
+
 	const findItem = items.find(
 		(obj) =>
 			obj.title === pizza.title &&
@@ -68,13 +66,12 @@ const FullPizza: React.FC = () => {
 	const addPizza = () => {
 		const pizzaCorrect = {
 			...pizza,
+			price: pizza.price[sizeindex],
 			types: typeNames[typeIndex],
 			sizes: pizza.sizes[sizeindex],
-			// count:pizza.count,
 		};
 		dispatch(addItem(pizzaCorrect));
 	};
-	// console.log(typeIndex);
 
 	return (
 		<div className="container fullpizza">
@@ -88,7 +85,7 @@ const FullPizza: React.FC = () => {
 							<ul>
 								{pizza.types.map((type) => (
 									<li
-										onClick={() => settypeIndex(type)}
+										onClick={() => setTypeIndex(type)}
 										key={type}
 										className={typeIndex === type ? "active" : ""}>
 										{typeNames[type]}
@@ -99,9 +96,9 @@ const FullPizza: React.FC = () => {
 								{pizza.sizes.map((size, index) => (
 									<li
 										key={index}
-										onClick={() => setsizeindex(index)}
+										onClick={() => setSizeindex(index)}
 										className={sizeindex === index ? "active" : ""}>
-										{size}
+										{size} см.
 									</li>
 								))}
 							</ul>
@@ -122,8 +119,8 @@ const FullPizza: React.FC = () => {
 								Всего куплено пицц {pizza.title}: {countPizzaBlock}
 							</span>
 							<span className="pizza-block__price">
-								Куплено пицц {pizza.title} {typeNames[typeIndex]} размер "{pizza.sizes[sizeindex]}" :{" "}
-								{count}
+								Куплено пицц "{pizza.title}" тесто: {typeNames[typeIndex]} размер "
+								{pizza.sizes[sizeindex]} см" : {count} шт.
 							</span>
 						</div>
 					</div>

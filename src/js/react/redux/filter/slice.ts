@@ -34,7 +34,6 @@ export const filter = createSlice({
 			state.sort = action.payload.sort;
 			state.paginationNumber = Number(action.payload.paginationNumber);
 			// console.log(action.payload);
-			
 		}
 	},
 });

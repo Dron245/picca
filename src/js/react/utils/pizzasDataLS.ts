@@ -7,7 +7,8 @@ export const pizzasDataLS = () => {
 	const data = {
 		prices: calcPrice(items),
 		items: items,
-		countBlock: 0
+		countBlock: 0,
+		// allitems: []
 	};
 	return data;
 };

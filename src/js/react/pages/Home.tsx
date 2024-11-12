@@ -13,7 +13,6 @@ import { fetchPizzas } from '../redux/pizza/asyncfunctions';
 import { SearchPizzaParams } from '../redux/pizza/type';
 import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
 import { clearItem } from '../redux/cart/slice';
-import { clearItem } from '../redux/cart/slice';
 
 const Home = () => {
 	useWhyDidYouUpdate('Home', {});
@@ -192,7 +191,7 @@ const Home = () => {
 						.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
 				)}
 			</div>
-			<Pagination onChangePage={changePaginationPage} />
+			{status !=='error' && <Pagination onChangePage={changePaginationPage} />}
 		</div>
 	);
 };

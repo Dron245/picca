@@ -7,6 +7,7 @@ const { items, prices } = pizzasDataLS();
 const initialState: CartItemsSlice = {
 	prices,
 	items,
+	allitems: [],
 };
 
 export const cart = createSlice({
@@ -15,18 +16,17 @@ export const cart = createSlice({
 	reducers: {
 		addItem(state, action: PayloadAction<CartItem>) {
 			console.log(action.payload);
-			const findItem = state.items
-				// .filter(obj =>obj.id === action.payload.id)
-				// .filter(obj=>obj.types===action.payload.types)
-				// .find(obj=>obj.sizes===action.payload.sizes)
-				.find(
-					(obj) =>
-						obj.id === action.payload.id &&
-						obj.types === action.payload.types &&
-						obj.sizes === action.payload.sizes
-				);
 
-			const findCountItem = state.items.find((obj) => obj.id === action.payload.id);
+			state.allitems.push(action.payload);
+			const findItem = state.items.find(
+				(obj) =>
+					obj.id === action.payload.id &&
+					obj.types === action.payload.types &&
+					obj.sizes === action.payload.sizes
+			);
+
+			const findCountItem = state.items
+			.find((obj) => obj.id === action.payload.id);
 
 			if (!findItem) {
 				state.items.push({
@@ -35,11 +35,8 @@ export const cart = createSlice({
 					countPizzaBlock: 1,
 					cartId: Math.random() * (10 - 1) + 1,
 				});
-				// console.log(action.payload);
 				console.log("finditem нет");
-				console.log(state.items);
 			} else {
-				// console.log('finditem:',`${findItem.title}`,`${findItem.id}`,`${findItem.types}`, `${findItem.sizes}`);
 				console.log("finditem есть");
 				findItem.count++;
 			}
@@ -57,7 +54,9 @@ export const cart = createSlice({
 		},
 
 		delItem(state, action: PayloadAction<number>) {
-			state.items = state.items.filter((obj) => obj.cartId !== action.payload);
+			state.items = state.items
+			.filter((obj) => obj.cartId !== action.payload);
+			state.prices = calcPrice(state.items);
 		},
 		clearItem(state) {
 			state.items = [];

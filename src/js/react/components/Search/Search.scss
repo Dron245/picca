@@ -1,6 +1,9 @@
 .input-search {
 	position: relative;
 	font-size: 20px;
+	@media (max-width: 850px){
+		  width: 200px;
+	}
 	&__input {
 		outline: 1px solid #000;
 		padding: 7px 15px ;

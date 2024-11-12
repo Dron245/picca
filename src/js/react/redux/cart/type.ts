@@ -13,4 +13,5 @@ export type CartItem = {
 export interface CartItemsSlice {
 	prices: number;
 	items: CartItem[];
+	allitems: CartItem[]
 }

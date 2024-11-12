@@ -22,7 +22,7 @@ body {
 
 	&__error-info {
 		margin: 100px auto;
-		width: 500px;
+		// width: 500px;
 		text-align: center;
 		margin-block: 100px;
 		// width: 500px;
@@ -80,25 +80,27 @@ body {
 
 	&__top {
 		display: flex;
-		align-items: center;
+		// align-items: center;
 		justify-content: space-between;
-
+		.sort {
+			@media (min-width:820px){
+			flex: 0 0 225px;
+				  
+			}
+		}
 		@media (max-width: 1260px) {
 			.categories {
-				width: 100%;
-				overflow: auto;
+				// width: 100%;
+				// overflow: auto;
 
 				ul {
-					width: 785px;
+					// width: 785px;
 				}
 			}
 
 			.sort {
-				padding-left: 20px;
-
-				b {
-					display: none;
-				}
+				
+				// padding-left: 20px;
 			}
 		}
 
@@ -129,7 +131,9 @@ body {
 	&--cart {
 		max-width: 820px;
 		margin: 90px auto;
-
+		@media (max-width: 900px){
+			  margin-block: 0;
+		}
 		.content__title {
 			margin: 0;
 		}
@@ -141,6 +145,10 @@ body {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		@media (max-width: 450px){
+			  flex-direction: column;
+			  row-gap: 15px;
+		}
 	}
 
 	.content__title {
@@ -210,10 +218,18 @@ body {
 			align-items: center;
 			margin-right: 15px;
 			width: 10%;
-
+			@media (max-width: 450px){
+				  margin-right: 5px;
+			}
 			img {
-				width: 80px;
+				@media (min-width:800px){
+					  
 				height: 80px;
+				width: 80px;
+				}
+				@media (max-width: 800px){
+					  width: 100%;
+				}
 			}
 		}
 
@@ -226,13 +242,19 @@ body {
 			h3 {
 				font-weight: bold;
 				font-size: 22px;
-				line-height: 27px;
+				line-height: 1.05;
 				letter-spacing: 0.01em;
+				@media (max-width: 560px){
+					  font-size: 18px;
+				}
 			}
 
 			p {
 				font-size: 18px;
 				color: #8d8d8d;
+				@media (max-width: 560px){
+					  font-size: 16px;
+				}
 			}
 		}
 
@@ -241,7 +263,13 @@ body {
 			align-items: center;
 			justify-content: space-between;
 			width: 13%;
-
+			gap: 3px;
+			@media (max-width: 800px){
+				  width: 19%;
+			}
+			@media (max-width: 600px){
+				  flex-direction: column;
+			}
 			&-minus {
 				svg {
 					path:first-of-type {
@@ -286,6 +314,12 @@ body {
 				font-weight: bold;
 				font-size: 22px;
 				letter-spacing: 0.01em;
+				@media (max-width: 560px){
+					font-size: 18px;
+			 }
+			 @media (max-width: 460px){
+				  font-size: 14px;
+			 }
 			}
 		}
 
@@ -302,9 +336,7 @@ body {
 			svg {
 				transform: rotate(45deg);
 
-				path {
-					// fill: darken($color: $gray-line, $amount: 15);
-				}
+				
 			}
 
 			.button {
@@ -314,11 +346,7 @@ body {
 					position: relative;
 				}
 
-				&:hover,
-				&:active {
-					// border-color: darken($color: $gray-line, $amount: 80);
-					// background-color: darken($color: $gray-line, $amount: 80);
-				}
+				
 			}
 		}
 	}
@@ -329,7 +357,10 @@ body {
 		&-details {
 			display: flex;
 			justify-content: space-between;
-
+			@media (max-width: 450px){
+				  flex-direction: column;
+				  row-gap: 10px;
+			}
 			span {
 				font-size: 22px;
 
@@ -345,14 +376,13 @@ body {
 			display: flex;
 			justify-content: space-between;
 			margin-top: 40px;
-
+			gap: 10px;
 			.go-back-btn {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				width: 210px;
 
-				// border-color: darken($color: $gray-line, $amount: 10);
 
 				span {
 					// color: darken($color: $gray-line, $amount: 20);
@@ -361,8 +391,7 @@ body {
 				}
 
 				&:hover {
-					// background-color: darken($color: $gray-line, $amount: 90);
-					// border-color: darken($color: $gray-line, $amount: 90);
+					
 
 					span {
 						color: $gray-line;
@@ -390,7 +419,7 @@ body {
 
 	&--empty {
 		margin: 80px auto;
-		width: 620px;
+		width: auto;
 		text-align: center;
 
 		h2 {
@@ -429,12 +458,22 @@ body {
 
 .fullpizza {
 	display: flex;
+	align-items: flex-start;
+	@media (max-width: 770px){
+		  flex-direction: column;
+		  align-items: center;
+	}
 	&__img {
-		width: 40%;
+		@media (min-width:992px){
+			flex: 0 0 40%;
+		}
 	}
 
 	&__content {
+	@media (min-width: 992px){
 		flex: 0 0 40%;
+		  
+	}
 	}
 	.pizza-block__info {
 		margin-top: 50px;
