@@ -11619,7 +11619,6 @@
             };
             var Orders = function() {
                 var allitems = (0, react_redux.d4)(selectors.aJ).allitems;
-                console.log(allitems);
                 return (0, jsx_runtime.jsx)("div", {
                     className: "Orders",
                     children: allitems.map((function(item, index) {
@@ -11628,6 +11627,7 @@
                 });
             };
             const Orders_Orders = Orders;
+            var slice = __webpack_require__(2316);
             var Header = react.memo((function() {
                 var _a = (0, react_redux.d4)(selectors.aJ), items = _a.items, prices = _a.prices;
                 var totalCount = items.reduce((function(sum, item) {
@@ -11635,7 +11635,13 @@
                 }), 0);
                 var location = (0, dist.zy)();
                 var ismounted = (0, react.useRef)(false);
+                var dispatch = (0, react_redux.wA)();
                 var idPizza = (0, dist.g)().idPizza;
+                var _b = react.useState(""), value = _b[0], setValue = _b[1];
+                var qwe = function() {
+                    dispatch((0, slice.gB)(""));
+                    setValue("");
+                };
                 (0, react.useEffect)((function() {
                     if (ismounted.current = true) {
                         var json = JSON.stringify(items);
@@ -11650,19 +11656,25 @@
                         children: [ (0, jsx_runtime.jsxs)(react_router_dom_dist.N_, {
                             to: "/",
                             className: "header__logo",
+                            onClick: qwe,
                             children: [ (0, jsx_runtime.jsx)("img", {
                                 width: "38",
                                 src: "img/pizza-logo.svg",
                                 alt: "Pizza logo"
                             }), (0, jsx_runtime.jsxs)("div", {
+                                className: "header__logo-wrapper",
                                 children: [ (0, jsx_runtime.jsx)("h1", {
                                     children: "React Pizza"
                                 }), (0, jsx_runtime.jsx)("p", {
+                                    className: "header__text",
                                     children: "самая вкусная пицца во вселенной"
                                 }) ]
                             }) ]
                         }), location.pathname !== "/cart" && location.pathname !== "/pizza/".concat(idPizza) && (0, 
-                        jsx_runtime.jsx)(Search, {}), (0, jsx_runtime.jsx)("div", {
+                        jsx_runtime.jsx)(Search, {
+                            value,
+                            setValue
+                        }), (0, jsx_runtime.jsx)("div", {
                             className: "header__cart",
                             children: (0, jsx_runtime.jsxs)(react_router_dom_dist.N_, {
                                 to: "/cart",
@@ -11738,14 +11750,13 @@
             };
             var lodash_debounce = __webpack_require__(181);
             var lodash_debounce_default = __webpack_require__.n(lodash_debounce);
-            var slice = __webpack_require__(2316);
             var filter_selectors = __webpack_require__(8960);
-            var Search = function() {
+            var Search = function(_a) {
+                var value = _a.value, setValue = _a.setValue;
                 var dispatch = (0, react_redux.wA)();
                 var searhValue = (0, react_redux.d4)(filter_selectors.c).searhValue;
                 var inputRef = (0, react.useRef)(null);
-                var _a = react.useState(""), value = _a[0], setValue = _a[1];
-                var searhValueFunction = function() {
+                var searhValueReset = function() {
                     var _a;
                     dispatch((0, slice.gB)(""));
                     setValue("");
@@ -11771,7 +11782,7 @@
                         type: "text",
                         className: "input-search__input"
                     }), searhValue && (0, jsx_runtime.jsx)("img", {
-                        onClick: searhValueFunction,
+                        onClick: searhValueReset,
                         className: "input-search__icon",
                         src: "img/close-svgrepo-com.svg",
                         alt: "Image"
@@ -12261,7 +12272,6 @@ and limitations under the License.
                                 countPizzaBlock: 1,
                                 cartId: Math.random() * (10 - 1) + 1
                             }));
-                            console.log(action.payload);
                             console.log("finditem нет");
                         } else {
                             console.log("finditem есть");
@@ -16474,7 +16484,7 @@ and limitations under the License.
                     })).map((function(pizza) {
                         return (0, jsx_runtime.jsx)(components.wq, Home_assign({}, pizza), pizza.id);
                     }))
-                }), (0, jsx_runtime.jsx)(components.dK, {
+                }), status !== "error" && (0, jsx_runtime.jsx)(components.dK, {
                     onChangePage: changePaginationPage
                 }) ]
             });
