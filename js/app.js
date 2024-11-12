@@ -12074,7 +12074,9 @@ and limitations under the License.
                     dispath((0, cart_slice.B5)({
                         id,
                         types,
-                        sizes
+                        sizes,
+                        price,
+                        imageUrl
                     }));
                 }
                 function removePizzas() {
@@ -12292,6 +12294,7 @@ and limitations under the License.
                         state.items = state.items.filter((function(obj) {
                             return obj.cartId !== action.payload;
                         }));
+                        state.prices = calcPrice(state.items);
                     },
                     clearItem: function(state) {
                         state.items = [];

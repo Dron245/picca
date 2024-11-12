@@ -795,7 +795,7 @@ body {
 .Orders {
   position: absolute;
   right: 0;
-  top: 0;
+  top: calc(100% + 10px);
   display: flex;
   flex-direction: column-reverse;
   row-gap: 10px
@@ -879,6 +879,9 @@ body {
   }
 }
 @media (min-width:992px) {
+  .fullpizza__img {
+    flex: 0 0 40%
+  }
   .fullpizza__content {
     flex: 0 0 40%
   }
@@ -891,6 +894,11 @@ body {
 @media (max-width:1060px) {
   .content__items {
     grid-template-columns: repeat(2,1fr)
+  }
+}
+@media (max-width:900px) {
+  .container--cart {
+    margin-block: 0
   }
 }
 @media (max-width:850px) {
@@ -957,6 +965,19 @@ body {
 @media (max-width:460px) {
   .cart__item-price b {
     font-size: 14px
+  }
+}
+@media (max-width:450px) {
+  .cart__bottom-details {
+    flex-direction: column;
+    row-gap: 10px
+  }
+}
+@media (max-width:430px) {
+  .button--circle {
+    width: 22px;
+    height: 22px;
+    min-width: 22px
   }
 }
 @media (max-width:61.99875em) {
