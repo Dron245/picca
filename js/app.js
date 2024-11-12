@@ -11462,22 +11462,24 @@
             var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4636);
             var typeNames = [ "тонкое", "традиционное" ];
             var PizzaBlock = function(_a) {
-                var id = _a.id, title = _a.title, price = _a.price, imageUrl = _a.imageUrl, sizes = _a.sizes, types = _a.types;
+                var id = _a.id, title = _a.title, price = _a.price, imageUrl = _a.imageUrl, sizes = _a.sizes, count = _a.count, types = _a.types, cartId = _a.cartId;
                 var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
                 var _c = types.length === 1 && types[0] === 1 ? (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, 
-                react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typePizza = _c[0], settypePizza = _c[1];
+                react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typeIndex = _c[0], settypeIndex = _c[1];
                 var dispatch = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.wA)();
-                var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__.r)(id));
-                var count = pizzaR ? pizzaR.count : 0;
+                var pizzaR = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.d4)((0, _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__.r5)(id));
+                var countPizzaBlock = pizzaR ? pizzaR.countPizzaBlock : 0;
                 function addPizza() {
                     var pizza = {
                         id,
                         title,
                         imageUrl,
-                        price,
-                        types: typeNames[typePizza],
+                        price: price[sizeindex],
+                        types: typeNames[typeIndex],
                         sizes: sizes[sizeindex],
-                        count
+                        count,
+                        countPizzaBlock,
+                        cartId
                     };
                     dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.B5)(pizza));
                 }
@@ -11501,20 +11503,20 @@
                                 children: types.map((function(type) {
                                     return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
                                         onClick: function() {
-                                            return settypePizza(type);
+                                            return settypeIndex(type);
                                         },
-                                        className: typePizza === type ? "active" : "",
+                                        className: typeIndex === type ? "active" : "",
                                         children: typeNames[type]
                                     }, type);
                                 }))
                             }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
                                 children: sizes.map((function(size, index) {
-                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+                                    return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
                                         onClick: function() {
                                             return setsizeindex(index);
                                         },
                                         className: sizeindex === index ? "active" : "",
-                                        children: size
+                                        children: [ size, " см." ]
                                     }, index);
                                 }))
                             }) ]
@@ -11522,7 +11524,7 @@
                             className: "pizza-block__bottom",
                             children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                 className: "pizza-block__price",
-                                children: [ "от ", price, " ₽" ]
+                                children: [ "от ", price[sizeindex], " ₽" ]
                             }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
                                 className: "button button--outline button--add",
                                 children: [ (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
@@ -11538,8 +11540,8 @@
                                 }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
                                     onClick: addPizza,
                                     children: "Добавить"
-                                }), count > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
-                                    children: count
+                                }), countPizzaBlock > 0 && (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                    children: countPizzaBlock
                                 }) ]
                             }) ]
                         }) ]
@@ -11547,7 +11549,7 @@
                 });
             };
         },
-        267: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+        7652: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Ah: () => CartEmpty,
@@ -11568,13 +11570,74 @@
             var react_router_dom_dist = __webpack_require__(4976);
             var react_redux = __webpack_require__(1468);
             var selectors = __webpack_require__(4636);
+            var LastOrderItem = function(_a) {
+                var imageUrl = _a.imageUrl, title = _a.title, types = _a.types, sizes = _a.sizes, price = _a.price;
+                (0, react_redux.d4)(selectors.aJ).items;
+                console.log(price);
+                return (0, jsx_runtime.jsxs)("div", {
+                    className: "last-order",
+                    children: [ (0, jsx_runtime.jsxs)("div", {
+                        className: "last-order__wrapper",
+                        children: [ (0, jsx_runtime.jsx)("div", {
+                            className: "last-order__top",
+                            children: "Вы заказали:"
+                        }), (0, jsx_runtime.jsxs)("div", {
+                            className: "last-order__content",
+                            children: [ (0, jsx_runtime.jsx)("div", {
+                                className: "last-order__img",
+                                children: (0, jsx_runtime.jsx)("img", {
+                                    src: imageUrl,
+                                    alt: "Image"
+                                })
+                            }), (0, jsx_runtime.jsxs)("div", {
+                                className: "last-order__text",
+                                children: [ (0, jsx_runtime.jsx)("div", {
+                                    className: "last-order__title",
+                                    children: title
+                                }), (0, jsx_runtime.jsxs)("div", {
+                                    className: "last-order__details",
+                                    children: [ types, " ", sizes, " см." ]
+                                }), (0, jsx_runtime.jsxs)("div", {
+                                    className: "last-order__details",
+                                    children: [ "цена: ", price, " ₽" ]
+                                }) ]
+                            }) ]
+                        }) ]
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: "last-order__bottom"
+                    }) ]
+                });
+            };
+            const LastOrderItem_LastOrderItem = LastOrderItem;
+            var __assign = void 0 && (void 0).__assign || function() {
+                __assign = Object.assign || function(t) {
+                    for (var s, i = 1, n = arguments.length; i < n; i++) {
+                        s = arguments[i];
+                        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                    }
+                    return t;
+                };
+                return __assign.apply(this, arguments);
+            };
+            var Orders = function() {
+                var allitems = (0, react_redux.d4)(selectors.aJ).allitems;
+                console.log(allitems);
+                return (0, jsx_runtime.jsx)("div", {
+                    className: "Orders",
+                    children: allitems.map((function(item, index) {
+                        return (0, jsx_runtime.jsx)(LastOrderItem_LastOrderItem, __assign({}, item), index);
+                    }))
+                });
+            };
+            const Orders_Orders = Orders;
             var Header = react.memo((function() {
-                var _a = (0, react_redux.d4)(selectors.a), items = _a.items, prices = _a.prices;
+                var _a = (0, react_redux.d4)(selectors.aJ), items = _a.items, prices = _a.prices;
                 var totalCount = items.reduce((function(sum, item) {
                     return sum + item.count;
                 }), 0);
                 var location = (0, dist.zy)();
                 var ismounted = (0, react.useRef)(false);
+                var idPizza = (0, dist.g)().idPizza;
                 (0, react.useEffect)((function() {
                     if (ismounted.current = true) {
                         var json = JSON.stringify(items);
@@ -11600,7 +11663,8 @@
                                     children: "самая вкусная пицца во вселенной"
                                 }) ]
                             }) ]
-                        }), location.pathname !== "/cart" && (0, jsx_runtime.jsx)(Search, {}), (0, jsx_runtime.jsx)("div", {
+                        }), location.pathname !== "/cart" && location.pathname !== "/pizza/".concat(idPizza) && (0, 
+                        jsx_runtime.jsx)(Search, {}), (0, jsx_runtime.jsx)("div", {
                             className: "header__cart",
                             children: (0, jsx_runtime.jsxs)(react_router_dom_dist.N_, {
                                 to: "/cart",
@@ -11638,7 +11702,7 @@
                                     children: totalCount
                                 }) ]
                             })
-                        }) ]
+                        }), (0, jsx_runtime.jsx)(Orders_Orders, {}) ]
                     })
                 });
             }));
@@ -11824,15 +11888,15 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
-            var __assign = function() {
-                __assign = Object.assign || function __assign(t) {
+            var react_content_loader_es_assign = function() {
+                react_content_loader_es_assign = Object.assign || function __assign(t) {
                     for (var s, i = 1, n = arguments.length; i < n; i++) {
                         s = arguments[i];
                         for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
                     }
                     return t;
                 };
-                return __assign.apply(this, arguments);
+                return react_content_loader_es_assign.apply(this, arguments);
             };
             function __rest(s, e) {
                 var t = {};
@@ -11858,10 +11922,10 @@ and limitations under the License.
                 var dur = "".concat(speed, "s");
                 var from = "".concat(gradientRatio * -1, " 0");
                 var to = "".concat(gradientRatio, " 0");
-                return (0, react.createElement)("svg", __assign({
+                return (0, react.createElement)("svg", react_content_loader_es_assign({
                     "aria-labelledby": idAria,
                     role: "img",
-                    style: __assign(__assign({}, style), rtlStyle)
+                    style: react_content_loader_es_assign(react_content_loader_es_assign({}, style), rtlStyle)
                 }, props), title ? (0, react.createElement)("title", {
                     id: idAria
                 }, title) : null, beforeMask && (0, react.isValidElement)(beforeMask) ? beforeMask : null, (0, 
@@ -11901,11 +11965,11 @@ and limitations under the License.
                 }))));
             };
             var ContentLoader = function(props) {
-                return props.children ? (0, react.createElement)(SVG, __assign({}, props)) : (0, 
-                react.createElement)(ReactContentLoaderFacebook, __assign({}, props));
+                return props.children ? (0, react.createElement)(SVG, react_content_loader_es_assign({}, props)) : (0, 
+                react.createElement)(ReactContentLoaderFacebook, react_content_loader_es_assign({}, props));
             };
             var ReactContentLoaderFacebook = function(props) {
-                return (0, react.createElement)(ContentLoader, __assign({
+                return (0, react.createElement)(ContentLoader, react_content_loader_es_assign({
                     viewBox: "0 0 476 124"
                 }, props), (0, react.createElement)("rect", {
                     x: "48",
@@ -11990,20 +12054,23 @@ and limitations under the License.
             };
             var cart_slice = __webpack_require__(9196);
             var CartItemBlock = function(_a) {
-                var id = _a.id, title = _a.title, imageUrl = _a.imageUrl, price = _a.price, types = _a.types, sizes = _a.sizes, count = _a.count;
+                var id = _a.id, title = _a.title, imageUrl = _a.imageUrl, price = _a.price, types = _a.types, sizes = _a.sizes, count = _a.count, cartId = _a.cartId;
                 var dispath = (0, react_redux.wA)();
+                var pizzaR = (0, react_redux.d4)((0, selectors.qP)(cartId));
+                var cartIdd = pizzaR ? pizzaR.cartId : 0;
                 function onClickMinus() {
                     dispath((0, cart_slice.G8)(id));
                 }
                 function onClickPlus() {
                     dispath((0, cart_slice.B5)({
-                        id
+                        id,
+                        types,
+                        sizes
                     }));
                 }
                 function removePizzas() {
-                    dispath((0, cart_slice.V_)(id));
+                    dispath((0, cart_slice.V_)(cartIdd));
                 }
-                console.log(types, sizes);
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "cart__item",
                     children: [ (0, jsx_runtime.jsx)("div", {
@@ -12113,13 +12180,21 @@ and limitations under the License.
         4636: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
-                a: () => cartSelector,
-                r: () => cartSelectorfindById
+                aJ: () => cartSelector,
+                qP: () => cartSelectorDelId,
+                r5: () => cartSelectorfindById
             });
             var cartSelectorfindById = function(id) {
                 return function(state) {
                     return state.cart.items.find((function(obj) {
                         return obj.id === id;
+                    }));
+                };
+            };
+            var cartSelectorDelId = function(cartId) {
+                return function(state) {
+                    return state.cart.items.find((function(obj) {
+                        return obj.cartId === cartId;
                     }));
                 };
             };
@@ -12147,7 +12222,8 @@ and limitations under the License.
                 var items = JSON.parse(json) || [];
                 var data = {
                     prices: calcPrice(items),
-                    items
+                    items,
+                    countBlock: 0
                 };
                 return data;
             };
@@ -12165,23 +12241,37 @@ and limitations under the License.
             var _b = pizzasDataLS(), items = _b.items, prices = _b.prices;
             var initialState = {
                 prices,
-                items
+                items,
+                allitems: []
             };
             var cart = (0, redux_toolkit_modern.Z0)({
                 name: "cart",
                 initialState,
                 reducers: {
                     addItem: function(state, action) {
+                        console.log(action.payload);
+                        state.allitems.push(action.payload);
                         var findItem = state.items.find((function(obj) {
+                            return obj.id === action.payload.id && obj.types === action.payload.types && obj.sizes === action.payload.sizes;
+                        }));
+                        var findCountItem = state.items.find((function(obj) {
                             return obj.id === action.payload.id;
                         }));
                         if (!findItem) {
                             state.items.push(__assign(__assign({}, action.payload), {
-                                count: 1
+                                count: 1,
+                                countPizzaBlock: 1,
+                                cartId: Math.random() * (10 - 1) + 1
                             }));
                             console.log(action.payload);
-                        } else findItem.count++;
+                            console.log("finditem нет");
+                        } else {
+                            console.log("finditem есть");
+                            findItem.count++;
+                        }
+                        if (findCountItem) findCountItem.countPizzaBlock++;
                         state.prices = calcPrice(state.items);
+                        console.log(state.items);
                     },
                     minusItem: function(state, action) {
                         var findItem = state.items.find((function(obj) {
@@ -12192,7 +12282,7 @@ and limitations under the License.
                     },
                     delItem: function(state, action) {
                         state.items = state.items.filter((function(obj) {
-                            return obj.id !== action.payload;
+                            return obj.cartId !== action.payload;
                         }));
                     },
                     clearItem: function(state) {
@@ -12275,15 +12365,6 @@ and limitations under the License.
                 sortPropertyEnum["PRICEASC"] = "-price";
                 sortPropertyEnum["NAME"] = "-name";
             })(sortPropertyEnum || (sortPropertyEnum = {}));
-        },
-        1064: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-            "use strict";
-            __webpack_require__.d(__webpack_exports__, {
-                L: () => selectorPizzasData
-            });
-            var selectorPizzasData = function(state) {
-                return state.pizzas;
-            };
         },
         7154: (__unused_webpack_module, exports, __webpack_require__) => {
             "use strict";
@@ -16054,7 +16135,7 @@ and limitations under the License.
         var lib = __webpack_require__(5373);
         var lib_default = __webpack_require__.n(lib);
         var react_redux = __webpack_require__(1468);
-        var components = __webpack_require__(267);
+        var components = __webpack_require__(7652);
         var redux_toolkit_modern = __webpack_require__(3816);
         var slice = __webpack_require__(2316);
         var cart_slice = __webpack_require__(9196);
@@ -16232,7 +16313,9 @@ and limitations under the License.
         });
         var useAppDispatch = react_redux.wA.withTypes();
         var selectors = __webpack_require__(8960);
-        var pizza_selectors = __webpack_require__(1064);
+        var selectorPizzasData = function(state) {
+            return state.pizzas;
+        };
         var type = __webpack_require__(2288);
         var Home_assign = void 0 && (void 0).__assign || function() {
             Home_assign = Object.assign || function(t) {
@@ -16254,7 +16337,7 @@ and limitations under the License.
         var Home = function() {
             useWhyDidYouUpdate("Home", {});
             var _a = (0, react_redux.d4)(selectors.c), categoryId = _a.categoryId, paginationNumber = _a.paginationNumber, sort = _a.sort, searhValue = _a.searhValue;
-            var _b = (0, react_redux.d4)(pizza_selectors.L), items = _b.items, status = _b.status;
+            var _b = (0, react_redux.d4)(selectorPizzasData), items = _b.items, status = _b.status;
             var navigate = (0, dist.Zp)();
             var dispatch = useAppDispatch();
             var isSearch = react.useRef(false);
@@ -16279,6 +16362,9 @@ and limitations under the License.
                     sortDirection,
                     paginationNumber: String(paginationNumber)
                 }));
+            }
+            function clearCart() {
+                dispatch((0, cart_slice.N2)());
             }
             (0, react.useEffect)((function() {
                 getPizzas();
@@ -16329,9 +16415,49 @@ and limitations under the License.
                     }), (0, jsx_runtime.jsx)(components.FU, {
                         value: sort
                     }) ]
-                }), (0, jsx_runtime.jsx)("h2", {
-                    className: "content__title",
-                    children: "Все пиццы"
+                }), (0, jsx_runtime.jsxs)("div", {
+                    className: "content__center",
+                    children: [ (0, jsx_runtime.jsx)("h2", {
+                        className: "content__title",
+                        children: "Все пиццы"
+                    }), (0, jsx_runtime.jsxs)("div", {
+                        onClick: clearCart,
+                        className: "cart__clear",
+                        children: [ (0, jsx_runtime.jsxs)("svg", {
+                            width: "20",
+                            height: "20",
+                            viewBox: "0 0 20 20",
+                            fill: "none",
+                            xmlns: "http://www.w3.org/2000/svg",
+                            children: [ (0, jsx_runtime.jsx)("path", {
+                                d: "M2.5 5H4.16667H17.5",
+                                stroke: "#B6B6B6",
+                                strokeWidth: "1.2",
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round"
+                            }), (0, jsx_runtime.jsx)("path", {
+                                d: "M6.66663 5.00001V3.33334C6.66663 2.89131 6.84222 2.46739 7.15478 2.15483C7.46734 1.84227 7.89127 1.66667 8.33329 1.66667H11.6666C12.1087 1.66667 12.5326 1.84227 12.8451 2.15483C13.1577 2.46739 13.3333 2.89131 13.3333 3.33334V5.00001M15.8333 5.00001V16.6667C15.8333 17.1087 15.6577 17.5326 15.3451 17.8452C15.0326 18.1577 14.6087 18.3333 14.1666 18.3333H5.83329C5.39127 18.3333 4.96734 18.1577 4.65478 17.8452C4.34222 17.5326 4.16663 17.1087 4.16663 16.6667V5.00001H15.8333Z",
+                                stroke: "#B6B6B6",
+                                strokeWidth: "1.2",
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round"
+                            }), (0, jsx_runtime.jsx)("path", {
+                                d: "M8.33337 9.16667V14.1667",
+                                stroke: "#B6B6B6",
+                                strokeWidth: "1.2",
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round"
+                            }), (0, jsx_runtime.jsx)("path", {
+                                d: "M11.6666 9.16667V14.1667",
+                                stroke: "#B6B6B6",
+                                strokeWidth: "1.2",
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round"
+                            }) ]
+                        }), (0, jsx_runtime.jsx)("span", {
+                            children: "Очистить корзину"
+                        }) ]
+                    }) ]
                 }), (0, jsx_runtime.jsx)("div", {
                     className: "content__items",
                     children: status === "error" ? (0, jsx_runtime.jsxs)("div", {
@@ -16391,7 +16517,7 @@ and limitations under the License.
                             children: (0, jsx_runtime.jsx)(Cart, {})
                         })
                     }), (0, jsx_runtime.jsx)(dist.qh, {
-                        path: "pizza/:id",
+                        path: "pizza/:idPizza",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
                                 children: "Идёт загрузка "

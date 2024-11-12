@@ -9,7 +9,7 @@
         var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4848);
         var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4976);
         var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1468);
-        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(267);
+        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7652);
         var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4636);
         var _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9196);
         var __assign = void 0 && (void 0).__assign || function() {
@@ -23,7 +23,7 @@
             return __assign.apply(this, arguments);
         };
         var Cart = function() {
-            var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.d4)(_redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__.a).items;
+            var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.d4)(_redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__.aJ).items;
             var totalPrice = items.reduce((function(sum, item) {
                 return sum + item.price * item.count;
             }), 0);
@@ -32,7 +32,7 @@
             }), 0);
             var dispatch = (0, react_redux__WEBPACK_IMPORTED_MODULE_3__.wA)();
             function clearCart() {
-                if (window.confirm("Точно хотите удалить всё")) dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.N2)());
+                dispatch((0, _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__.N2)());
             }
             if (totalCount === 0) return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.Ah, {});
             return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
@@ -110,7 +110,7 @@
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                         className: "content__items",
                         children: items.map((function(item) {
-                            return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.m6, __assign({}, item), item.id);
+                            return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.m6, __assign({}, item), item.cartId);
                         }))
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         className: "cart__bottom",
