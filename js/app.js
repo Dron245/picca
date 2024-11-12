@@ -16540,6 +16540,7 @@ and limitations under the License.
         var react_router_dom_dist = __webpack_require__(4976);
         var root = document.querySelector("#root") ? document.querySelector("#root") : document.querySelector(".wrapper");
         if (root) client.createRoot(root).render((0, jsx_runtime.jsx)(react_router_dom_dist.Kd, {
+            basename: "/picca",
             children: (0, jsx_runtime.jsx)(react_redux.Kq, {
                 store,
                 children: (0, jsx_runtime.jsx)(react_App, {})
