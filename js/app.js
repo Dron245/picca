@@ -11712,7 +11712,7 @@
                                     children: totalCount
                                 }) ]
                             })
-                        }), (0, jsx_runtime.jsx)(Orders_Orders, {}) ]
+                        }), window.innerWidth > 700 && (0, jsx_runtime.jsx)(Orders_Orders, {}) ]
                     })
                 });
             }));
