@@ -162,7 +162,7 @@
             }));
             var count = findItem ? findItem.count : 0;
             var countPizzaBlock = pizzaR ? pizzaR.countPizzaBlock : 0;
-            console.log(count, findItem);
+            console.log(pizza);
             try {
                 (0, react__WEBPACK_IMPORTED_MODULE_1__.useEffect)((function() {
                     var fethdata = function() {

@@ -7,7 +7,7 @@
             default: () => __WEBPACK_DEFAULT_EXPORT__
         });
         var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4848);
-        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7652);
+        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5264);
         var NotFound = function() {
             return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "container",

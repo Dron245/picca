@@ -9,7 +9,7 @@
         var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4848);
         var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4976);
         var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1468);
-        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7652);
+        var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5264);
         var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4636);
         var _redux_cart_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9196);
         var __assign = void 0 && (void 0).__assign || function() {

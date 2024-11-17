@@ -11549,7 +11549,7 @@
                 });
             };
         },
-        7652: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+        5264: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Ah: () => CartEmpty,
@@ -11570,6 +11570,7 @@
             var react_router_dom_dist = __webpack_require__(4976);
             var react_redux = __webpack_require__(1468);
             var selectors = __webpack_require__(4636);
+            const pizza_logo = __webpack_require__.p + "src/img/pizza-logo.svg";
             var LastOrderItem = function(_a) {
                 var imageUrl = _a.imageUrl, title = _a.title, types = _a.types, sizes = _a.sizes, price = _a.price;
                 return (0, jsx_runtime.jsxs)("div", {
@@ -11638,7 +11639,7 @@
                 var dispatch = (0, react_redux.wA)();
                 var idPizza = (0, dist.g)().idPizza;
                 var _b = react.useState(""), value = _b[0], setValue = _b[1];
-                var qwe = function() {
+                var clearSearch = function() {
                     dispatch((0, slice.gB)(""));
                     setValue("");
                 };
@@ -11656,10 +11657,10 @@
                         children: [ (0, jsx_runtime.jsxs)(react_router_dom_dist.N_, {
                             to: "/",
                             className: "header__logo",
-                            onClick: qwe,
+                            onClick: clearSearch,
                             children: [ (0, jsx_runtime.jsx)("img", {
                                 width: "38",
-                                src: "img/pizza-logo.svg",
+                                src: pizza_logo,
                                 alt: "Pizza logo"
                             }), (0, jsx_runtime.jsxs)("div", {
                                 className: "header__logo-wrapper",
@@ -11762,12 +11763,12 @@
                     setValue("");
                     (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.focus();
                 };
-                var searchResp = (0, react.useCallback)(lodash_debounce_default()((function(str) {
+                var updateSearchValue = (0, react.useCallback)(lodash_debounce_default()((function(str) {
                     dispatch((0, slice.gB)(str));
                 }), 200), []);
                 var changeSearch = function(event) {
                     setValue(event.target.value);
-                    searchResp(event.target.value);
+                    updateSearchValue(event.target.value);
                 };
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "input-search",
@@ -16146,7 +16147,7 @@ and limitations under the License.
         var lib = __webpack_require__(5373);
         var lib_default = __webpack_require__.n(lib);
         var react_redux = __webpack_require__(1468);
-        var components = __webpack_require__(7652);
+        var components = __webpack_require__(5264);
         var redux_toolkit_modern = __webpack_require__(3816);
         var slice = __webpack_require__(2316);
         var cart_slice = __webpack_require__(9196);
@@ -16269,18 +16270,17 @@ and limitations under the License.
                 };
             }
         };
-        var fetchPizzas = (0, redux_toolkit_modern.zD)("pizzas/pizzasStatus", (function(params) {
-            return asyncfunctions_awaiter(void 0, void 0, void 0, (function() {
-                var url, categoryIndex, search, sortBy, sortDirection, paginationNumber, data;
-                return asyncfunctions_generator(this, (function(_a) {
-                    switch (_a.label) {
+        var fetchPizzas = (0, redux_toolkit_modern.zD)("pizzas/pizzasStatus", (function(_a) {
+            return asyncfunctions_awaiter(void 0, [ _a ], void 0, (function(_b) {
+                var data;
+                var url = _b.url, categoryIndex = _b.categoryIndex, search = _b.search, sortBy = _b.sortBy, sortDirection = _b.sortDirection, paginationNumber = _b.paginationNumber;
+                return asyncfunctions_generator(this, (function(_c) {
+                    switch (_c.label) {
                       case 0:
-                        url = params.url, categoryIndex = params.categoryIndex, search = params.search, 
-                        sortBy = params.sortBy, sortDirection = params.sortDirection, paginationNumber = params.paginationNumber;
                         return [ 4, axios.A.get("".concat(url, "?").concat(categoryIndex, "&").concat(sortBy, "&order=").concat(sortDirection, "&\n\t\t\tpage=").concat(paginationNumber, "&limit=5&").concat(search)) ];
 
                       case 1:
-                        data = _a.sent().data;
+                        data = _c.sent().data;
                         return [ 2, data ];
                     }
                 }));
@@ -16371,7 +16371,7 @@ and limitations under the License.
                     search,
                     sortBy,
                     sortDirection,
-                    paginationNumber: String(paginationNumber)
+                    paginationNumber
                 }));
             }
             function clearCart() {
