@@ -1,6 +1,6 @@
 "use strict";
 
-(self["webpackChunkfls_start"] = self["webpackChunkfls_start"] || []).push([ [ 716 ], {
+(self["webpackChunkfls_start"] = self["webpackChunkfls_start"] || []).push([ [ 102 ], {
     7716: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
         __webpack_require__.r(__webpack_exports__);
         __webpack_require__.d(__webpack_exports__, {
@@ -150,7 +150,7 @@
                 sizes: [],
                 count: 0,
                 countPizzaBlock: 0,
-                cartId: 555
+                cartId: 0
             }), pizza = _a[0], setPizza = _a[1];
             var items = (0, react_redux__WEBPACK_IMPORTED_MODULE_5__.d4)(_redux_cart_selectors__WEBPACK_IMPORTED_MODULE_6__.aJ).items;
             var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setSizeindex = _b[1];
@@ -162,7 +162,6 @@
             }));
             var count = findItem ? findItem.count : 0;
             var countPizzaBlock = pizzaR ? pizzaR.countPizzaBlock : 0;
-            console.log(pizza);
             try {
                 (0, react__WEBPACK_IMPORTED_MODULE_1__.useEffect)((function() {
                     var fethdata = function() {

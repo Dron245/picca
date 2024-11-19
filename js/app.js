@@ -11462,7 +11462,7 @@
             var _redux_cart_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4636);
             var typeNames = [ "тонкое", "традиционное" ];
             var PizzaBlock = function(_a) {
-                var id = _a.id, title = _a.title, price = _a.price, imageUrl = _a.imageUrl, sizes = _a.sizes, count = _a.count, types = _a.types, cartId = _a.cartId;
+                var id = _a.id, title = _a.title, imageUrl = _a.imageUrl, price = _a.price, rating = _a.rating, sizes = _a.sizes, count = _a.count, types = _a.types, cartId = _a.cartId;
                 var _b = (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), sizeindex = _b[0], setsizeindex = _b[1];
                 var _c = types.length === 1 && types[0] === 1 ? (0, react__WEBPACK_IMPORTED_MODULE_1__.useState)(1) : (0, 
                 react__WEBPACK_IMPORTED_MODULE_1__.useState)(0), typeIndex = _c[0], settypeIndex = _c[1];
@@ -11493,9 +11493,9 @@
                                 className: "pizza-block__image",
                                 src: imageUrl,
                                 alt: "Pizza"
-                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
+                            }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h4", {
                                 className: "pizza-block__title",
-                                children: title
+                                children: [ title, ". р(", rating, ")" ]
                             }) ]
                         }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "pizza-block__selector",
@@ -11553,7 +11553,7 @@
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Ah: () => CartEmpty,
-                m6: () => CartItemBlock,
+                NM: () => CartItemBlock,
                 LJ: () => Categories,
                 Y9: () => Header,
                 T6: () => NotFoundBlock,
@@ -11644,7 +11644,7 @@
                     setValue("");
                 };
                 (0, react.useEffect)((function() {
-                    if (ismounted.current = true) {
+                    if (ismounted.current) {
                         var json = JSON.stringify(items);
                         localStorage.setItem("Cart", json);
                     }
@@ -11757,7 +11757,7 @@
                 var dispatch = (0, react_redux.wA)();
                 var searhValue = (0, react_redux.d4)(filter_selectors.c).searhValue;
                 var inputRef = (0, react.useRef)(null);
-                var searhValueReset = function() {
+                var searhValueReset = function(event) {
                     var _a;
                     dispatch((0, slice.gB)(""));
                     setValue("");
@@ -11813,13 +11813,13 @@
                 name: "популярности",
                 sortProperty: type.H.RATING
             }, {
-                name: "популярности (сначала мин)",
+                name: "популярности (с мин)",
                 sortProperty: type.H.RATINGASC
             }, {
                 name: "цене",
                 sortProperty: type.H.PRICE
             }, {
-                name: "цене (сначала мин)",
+                name: "цене (с мин)",
                 sortProperty: type.H.PRICEASC
             }, {
                 name: "алфавиту",
@@ -12066,8 +12066,8 @@ and limitations under the License.
             var CartItemBlock = function(_a) {
                 var id = _a.id, title = _a.title, imageUrl = _a.imageUrl, price = _a.price, types = _a.types, sizes = _a.sizes, count = _a.count, cartId = _a.cartId;
                 var dispath = (0, react_redux.wA)();
-                var pizzaR = (0, react_redux.d4)((0, selectors.qP)(cartId));
-                var cartIdd = pizzaR ? pizzaR.cartId : 0;
+                var pizzaR = (0, react_redux.d4)((0, selectors.YR)(cartId));
+                var cartIdR = pizzaR ? pizzaR.cartId : 0;
                 function onClickMinus() {
                     dispath((0, cart_slice.G8)(id));
                 }
@@ -12081,7 +12081,7 @@ and limitations under the License.
                     }));
                 }
                 function removePizzas() {
-                    dispath((0, cart_slice.V_)(cartIdd));
+                    dispath((0, cart_slice.V_)(cartIdR));
                 }
                 return (0, jsx_runtime.jsxs)("div", {
                     className: "cart__item",
@@ -12192,8 +12192,8 @@ and limitations under the License.
         4636: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
+                YR: () => cartSelectorDelCartId,
                 aJ: () => cartSelector,
-                qP: () => cartSelectorDelId,
                 r5: () => cartSelectorfindById
             });
             var cartSelectorfindById = function(id) {
@@ -12203,7 +12203,7 @@ and limitations under the License.
                     }));
                 };
             };
-            var cartSelectorDelId = function(cartId) {
+            var cartSelectorDelCartId = function(cartId) {
                 return function(state) {
                     return state.cart.items.find((function(obj) {
                         return obj.cartId === cartId;
@@ -12234,8 +12234,7 @@ and limitations under the License.
                 var items = JSON.parse(json) || [];
                 var data = {
                     prices: calcPrice(items),
-                    items,
-                    countBlock: 0
+                    items
                 };
                 return data;
             };
@@ -12261,7 +12260,6 @@ and limitations under the License.
                 initialState,
                 reducers: {
                     addItem: function(state, action) {
-                        console.log(action.payload);
                         state.allitems.push(action.payload);
                         var findItem = state.items.find((function(obj) {
                             return obj.id === action.payload.id && obj.types === action.payload.types && obj.sizes === action.payload.sizes;
@@ -12269,20 +12267,13 @@ and limitations under the License.
                         var findCountItem = state.items.find((function(obj) {
                             return obj.id === action.payload.id;
                         }));
-                        if (!findItem) {
-                            state.items.push(__assign(__assign({}, action.payload), {
-                                count: 1,
-                                countPizzaBlock: 1,
-                                cartId: Math.random() * (10 - 1) + 1
-                            }));
-                            console.log("finditem нет");
-                        } else {
-                            console.log("finditem есть");
-                            findItem.count++;
-                        }
+                        if (!findItem) state.items.push(__assign(__assign({}, action.payload), {
+                            count: 1,
+                            countPizzaBlock: 1,
+                            cartId: Math.random() * (10 - 1) + 1
+                        })); else findItem.count++;
                         if (findCountItem) findCountItem.countPizzaBlock++;
                         state.prices = calcPrice(state.items);
-                        console.log(state.items);
                     },
                     minusItem: function(state, action) {
                         var findItem = state.items.find((function(obj) {
@@ -16288,7 +16279,7 @@ and limitations under the License.
         }));
         var initialState = {
             items: [],
-            status: ""
+            status: CartStatusEnum.LOAD
         };
         var pizzas = (0, redux_toolkit_modern.Z0)({
             name: "pizzas",
@@ -16315,11 +16306,27 @@ and limitations under the License.
         });
         pizzas.actions.setpizzas;
         const pizza_slice = pizzas.reducer;
+        var test_initialState = {
+            t1: "qwe",
+            t2: 123
+        };
+        var test = (0, redux_toolkit_modern.Z0)({
+            name: "test",
+            initialState: test_initialState,
+            reducers: {
+                testReducers: function(state, action) {
+                    state.t1 = action.payload;
+                }
+            }
+        });
+        test.actions.testReducers;
+        const test_test = test.reducer;
         var store = (0, redux_toolkit_modern.U1)({
             reducer: {
+                pizzas: pizza_slice,
                 filter: slice.Ay,
                 cart: cart_slice.Ay,
-                pizzas: pizza_slice
+                test: test_test
             }
         });
         var useAppDispatch = react_redux.wA.withTypes();
@@ -16371,7 +16378,7 @@ and limitations under the License.
                     search,
                     sortBy,
                     sortDirection,
-                    paginationNumber
+                    paginationNumber: String(paginationNumber)
                 }));
             }
             function clearCart() {
@@ -16395,7 +16402,6 @@ and limitations under the License.
             (0, react.useEffect)((function() {
                 if (window.location.search) {
                     var params_1 = lib_default().parse(window.location.search.substring(1));
-                    console.log(params_1);
                     var sort_1 = components.p_.find((function(obj) {
                         return obj.sortProperty === params_1.sortProperty;
                     }));
@@ -16502,14 +16508,14 @@ and limitations under the License.
             });
         };
         const components_MainLayout = MainLayout;
-        var Cart = (0, react.lazy)((function() {
-            return __webpack_require__.e(741).then(__webpack_require__.bind(__webpack_require__, 6741));
-        }));
         var FullPizza = (0, react.lazy)((function() {
-            return __webpack_require__.e(716).then(__webpack_require__.bind(__webpack_require__, 7716));
+            return __webpack_require__.e(102).then(__webpack_require__.bind(__webpack_require__, 7716));
+        }));
+        var Cart = (0, react.lazy)((function() {
+            return __webpack_require__.e(965).then(__webpack_require__.bind(__webpack_require__, 6741));
         }));
         var NotFound = (0, react.lazy)((function() {
-            return __webpack_require__.e(614).then(__webpack_require__.bind(__webpack_require__, 6614));
+            return __webpack_require__.e(810).then(__webpack_require__.bind(__webpack_require__, 6614));
         }));
         var App = function() {
             return (0, jsx_runtime.jsx)(dist.BV, {
@@ -16531,7 +16537,7 @@ and limitations under the License.
                         path: "pizza/:idPizza",
                         element: (0, jsx_runtime.jsx)(react.Suspense, {
                             fallback: (0, jsx_runtime.jsx)("div", {
-                                children: "Идёт загрузка "
+                                children: "Идёт загрузка пиццы..."
                             }),
                             children: (0, jsx_runtime.jsx)(FullPizza, {})
                         })

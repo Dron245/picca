@@ -1,6 +1,6 @@
 "use strict";
 
-(self["webpackChunkfls_start"] = self["webpackChunkfls_start"] || []).push([ [ 741 ], {
+(self["webpackChunkfls_start"] = self["webpackChunkfls_start"] || []).push([ [ 965 ], {
     6741: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
         __webpack_require__.r(__webpack_exports__);
         __webpack_require__.d(__webpack_exports__, {
@@ -110,7 +110,7 @@
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                         className: "content__items",
                         children: items.map((function(item) {
-                            return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.m6, __assign({}, item), item.cartId);
+                            return (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.NM, __assign({}, item), item.cartId);
                         }))
                     }), (0, react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         className: "cart__bottom",
