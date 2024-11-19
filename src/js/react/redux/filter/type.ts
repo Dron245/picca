@@ -14,7 +14,7 @@ export type SortType = {
 export interface FilterSlice {
 	searhValue: string;
 	categoryId: number,
-	sort: SortType,
 	paginationNumber: number,
-	sortProperty: sortPropertyEnum.RATING,
+	sort: SortType,
+	sortProperty: sortPropertyEnum,
 }

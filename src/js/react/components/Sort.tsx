@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { sortPropertyEnum } from '../redux/filter/type';
 import { sortId } from '../redux/filter/slice';
 type SortItem = {
@@ -11,9 +11,9 @@ type SortProps = {
 }
 export const list: SortItem[] = [
 	{ name: 'популярности', sortProperty: sortPropertyEnum.RATING },
-	{ name: 'популярности (сначала мин)', sortProperty: sortPropertyEnum.RATINGASC },
+	{ name: 'популярности (с мин)', sortProperty: sortPropertyEnum.RATINGASC },
 	{ name: 'цене', sortProperty: sortPropertyEnum.PRICE },
-	{ name: 'цене (сначала мин)', sortProperty: sortPropertyEnum.PRICEASC },
+	{ name: 'цене (с мин)', sortProperty: sortPropertyEnum.PRICEASC },
 	{ name: 'алфавиту', sortProperty: sortPropertyEnum.NAME },
 ];
 

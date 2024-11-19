@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Search } from "../components";
 import { cartSelector } from "../redux/cart/selectors";
 import { CartItem } from "../redux/cart/type";
+import logoSvg from './../../../img/pizza-logo.svg';
 import Orders from "./Orders/Orders";
 import { setSearchValue } from "../redux/filter/slice";
 export const Header: React.FC = React.memo(() => {
@@ -14,23 +15,23 @@ export const Header: React.FC = React.memo(() => {
 	const dispatch = useDispatch();
 	const { idPizza } = useParams();
 	const [value, setValue] = React.useState<string>("");
-	const qwe = () => {
+	const clearSearch = () => {
 		dispatch(setSearchValue(""));
 		setValue("");
 	};
 	useEffect(() => {
-		if ((ismounted.current = true)) {
+		if ((ismounted.current)) {
 			const json = JSON.stringify(items);
 			localStorage.setItem("Cart", json);
 		}
 		ismounted.current = true;
 	}, [items]);
-
+	
 	return (
 		<div className="header">
 			<div className="container">
-				<Link to="/" className="header__logo" onClick={qwe}>
-					<img width="38" src="img/pizza-logo.svg" alt="Pizza logo" />
+				<Link to="/" className="header__logo" onClick={clearSearch}>
+					<img width="38" src={logoSvg} alt="Pizza logo" />
 					<div className="header__logo-wrapper">
 						<h1>React Pizza</h1>
 						<p className="header__text">самая вкусная пицца во вселенной</p>

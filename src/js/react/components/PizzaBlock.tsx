@@ -9,6 +9,7 @@ export type PizzaBlockProps = {
 	title: string;
 	imageUrl: string;
 	price: number[];
+	rating: number;
 	types: number[];
 	sizes: number[];
 	count: number;
@@ -18,8 +19,9 @@ export const typeNames = ['тонкое', 'традиционное'];
 export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	id,
 	title,
-	price,
 	imageUrl,
+	price,
+	rating,
 	sizes,
 	count,
 	types,
@@ -50,7 +52,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 			<div className='pizza-block'>
 				<Link to={`/pizza/${id}`}>
 					<img className='pizza-block__image' src={imageUrl} alt='Pizza' />
-					<h4 className='pizza-block__title'>{title}</h4>
+					<h4 className='pizza-block__title'>{title}. р({rating})</h4>
 				</Link>
 				<div className='pizza-block__selector'>
 					<ul>

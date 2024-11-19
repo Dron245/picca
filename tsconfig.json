@@ -20,6 +20,6 @@
       "jsx": "react-jsx"
     },
     "include": [
-      "src",
+      "src", "src/@types/assets.d.ts"
     ]
  }

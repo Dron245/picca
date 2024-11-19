@@ -29,7 +29,7 @@ const FullPizza: React.FC = () => {
 		sizes: [],
 		count: 0,
 		countPizzaBlock: 0,
-		cartId: 555,
+		cartId: 0,
 	});
 	const { items } = useSelector(cartSelector);
 	const [sizeindex, setSizeindex] = useState(0);
@@ -45,7 +45,7 @@ const FullPizza: React.FC = () => {
 	);
 	const count = findItem ? findItem.count : 0;
 	const countPizzaBlock = pizzaR ? pizzaR.countPizzaBlock : 0;
-	console.log(count, findItem);
+	// console.log(pizza);
 
 	try {
 		useEffect(() => {
@@ -108,7 +108,6 @@ const FullPizza: React.FC = () => {
 							onClick={addPizza}
 							className="button button--outline button--add">
 							<span>купить</span>
-							{/* {countPizzaBlock > 0 && <i>{countPizzaBlock}</i>} */}
 						</button>
 						<Link to="/" className="button button--outline button--add go-back-btn">
 							<span>Вернуться назад</span>

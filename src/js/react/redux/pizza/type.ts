@@ -1,3 +1,5 @@
+// import { SortType } from "../filter/type";
+
 export enum CartStatusEnum {
 	LOAD = 'load',
 	SUCCESS = 'success',
@@ -9,6 +11,7 @@ export type PizzaBlock = {
 	title: string;
 	imageUrl: string;
 	price: number[];
+	rating: number;
 	types: number[];
 	sizes: number[];
 	count: number;
@@ -18,7 +21,6 @@ export type PizzaBlock = {
 export interface PizzasSLice {
 	items: PizzaBlock[];
 	status: string;
-	// sizeindex: ,
 }
 
 export type SearchPizzaParams = {
@@ -28,4 +30,5 @@ export type SearchPizzaParams = {
 	sortBy: string;
 	sortDirection: string;
 	paginationNumber: string;
+	// sort: SortType
 };

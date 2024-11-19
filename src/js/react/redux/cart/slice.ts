@@ -15,7 +15,7 @@ export const cart = createSlice({
 	initialState,
 	reducers: {
 		addItem(state, action: PayloadAction<CartItem>) {
-			console.log(action.payload);
+			// console.log(action.payload);
 
 			state.allitems.push(action.payload);
 			const findItem = state.items.find(
@@ -35,9 +35,9 @@ export const cart = createSlice({
 					countPizzaBlock: 1,
 					cartId: Math.random() * (10 - 1) + 1,
 				});
-				console.log("finditem нет");
+				// console.log("finditem нет");
 			} else {
-				console.log("finditem есть");
+				// console.log("finditem есть");
 				findItem.count++;
 			}
 
@@ -45,7 +45,7 @@ export const cart = createSlice({
 				findCountItem.countPizzaBlock++;
 			}
 			state.prices = calcPrice(state.items);
-			console.log(state.items);
+			// console.log(state.items);
 		},
 		minusItem(state, action: PayloadAction<string>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload);

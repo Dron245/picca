@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../redux/cart/type";
 import { addItem, delItem, minusItem } from "../redux/cart/slice";
-import { cartSelectorDelId } from "../redux/cart/selectors";
+import { cartSelectorDelCartId } from "../redux/cart/selectors";
 
 export type CartItemProps = {
 	id: string;
@@ -27,8 +27,8 @@ export const CartItemBlock: React.FC<CartItemProps> = ({
 	cartId
 }) => {
 	const dispath = useDispatch();
-	const pizzaR = useSelector(cartSelectorDelId(cartId));
-	const cartIdd = pizzaR ? pizzaR.cartId :0
+	const pizzaR = useSelector(cartSelectorDelCartId(cartId));
+	const cartIdR = pizzaR ? pizzaR.cartId : 0
 	// console.log(cartId);
 	
 	function onClickMinus() {
@@ -38,7 +38,7 @@ export const CartItemBlock: React.FC<CartItemProps> = ({
 		dispath(addItem({ id,types, sizes, price, imageUrl } as CartItem));
 	}
 	function removePizzas() {
-		dispath(delItem(cartIdd));
+		dispath(delItem(cartIdR));
 	}
 	
 	return (

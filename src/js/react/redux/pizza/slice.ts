@@ -4,8 +4,7 @@ import { fetchPizzas } from "./asyncfunctions";
 
 const initialState: PizzasSLice = {
 	items: [],
-	status: '',
-	// sizeindex: 0,
+	status: CartStatusEnum.LOAD,
 };
 
 export const pizzas = createSlice({

@@ -10,9 +10,9 @@ import { changeCategoryId, paginationId, setFilters } from '../redux/filter/slic
 import { selectorFilter } from '../redux/filter/selectors';
 import { selectorPizzasData } from '../redux/pizza/selectors';
 import { fetchPizzas } from '../redux/pizza/asyncfunctions';
-import { SearchPizzaParams } from '../redux/pizza/type';
 import { FilterSlice, sortPropertyEnum } from '../redux/filter/type';
 import { clearItem } from '../redux/cart/slice';
+import { SearchPizzaParams } from '../redux/pizza/type';
 
 const Home = () => {
 	useWhyDidYouUpdate('Home', {});
@@ -22,7 +22,6 @@ const Home = () => {
 	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
-	// console.log(items);
 
 	const changeCategory = useCallback((index: number) => {
 		dispatch(changeCategoryId(index));
@@ -37,7 +36,7 @@ const Home = () => {
 		const search = searhValue ? `search=${searhValue}` : '';
 		const sortBy = `sortBy=${sort.sortProperty.replace('-', '')}`;
 		const sortDirection = sort.sortProperty.includes('-') ? 'asc' : 'desc';
-
+		
 		dispatch(
 			fetchPizzas({
 				url,
@@ -76,13 +75,12 @@ const Home = () => {
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
 	useEffect(() => {
 		if (window.location.search) {
-			const params = qs.parse(
-				window.location.search.substring(1)
+			const params = qs.parse(window.location.search.substring(1)
 			) as unknown as FilterSlice;
 			// const params = qs.parse(
 			// 	window.location.search.substring(1)
 			// ) as unknown as SearchPizzaParams;
-			console.log(params);
+			// console.log(params);
 			const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
 			// const sort = list.find((obj) => obj.sortProperty === params.sortBy);
 			if (sort) {
